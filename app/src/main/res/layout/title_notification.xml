@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:id="@+id/m_title"
+    android:layout_width="match_parent"
+    android:background="@drawable/shape_title_blue"
+    android:clipToPadding="true"
+    android:layout_height="72dp">
+
+    <ImageButton
+        android:id="@+id/ib_back"
+        android:background="@drawable/back"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="14dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="14dp"/>
+
+    <TextView
+        android:id="@+id/notification_title_textview"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="通知"
+        android:textColor="#ffffff"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="12dp"
+        android:layout_marginLeft="14dp"
+        android:layout_toRightOf="@id/ib_back"/>
+
+    <RelativeLayout
+        android:id="@+id/relat_choose_date"
+        android:layout_width="150dp"
+        android:layout_alignParentEnd="true"
+        android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/choose_date_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="12dp"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:text="2018-5-25"
+        android:textColor="#ffffff"
+        android:layout_toLeftOf="@id/choose_date_button"
+        android:paddingRight="12dp"
+        />
+
+    <ImageButton
+        android:id="@+id/choose_date_button"
+        android:layout_width="22dp"
+        android:layout_height="12dp"
+        android:background="@drawable/drop"
+        android:layout_marginEnd="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="18dp"
+        android:layout_alignParentEnd="true"/>
+</RelativeLayout>
+
+</RelativeLayout>

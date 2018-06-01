@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.yuanyuanlai.legalapp">
+          package="com.example.yuanyuanlai.legalapp">
 
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
+        android:name="org.litepal.LitePalApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -14,15 +15,21 @@
         <activity android:name=".Activity.HomeActivity"></activity>
         <activity android:name=".Guide.GuideActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
         <activity android:name=".Login.LoginActivity" />
         <activity android:name=".Activity.MyActivity" />
         <activity android:name=".Activity.FacialRecognitionActivity" />
         <activity android:name=".Activity.CheckActivity"></activity>
+
+        <activity android:name=".Activity.NotificationActivity"
+                  android:theme="@style/MyTheme">
+        </activity>
+
     </application>
 
 </manifest>
