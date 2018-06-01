@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <LinearLayout
+        android:id="@+id/all_message"
+        android:orientation="horizontal"
+        android:layout_width="150dp"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:textSize="16sp"
+            android:layout_gravity="center_vertical"
+            android:textColor="#707070"
+            android:text="所有通知"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/select_date"
+        android:orientation="horizontal"
+        android:layout_width="150dp"
+        android:layout_height="40dp">
+
+        <TextView
+            android:layout_marginLeft="15dp"
+            android:textSize="16sp"
+            android:layout_gravity="center_vertical"
+            android:textColor="#707070"
+            android:text="选择日期"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</LinearLayout>
