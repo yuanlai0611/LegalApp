@@ -9,11 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.example.yuanyuanlai.legalapp.Base.BaseActivity;
 import com.example.yuanyuanlai.legalapp.R;
 
-public class CheckActivity extends BaseActivity implements BaseActivity.OpenCamera {
+public class FacialRecognitionActivity extends BaseActivity implements BaseActivity.OpenCamera {
 
     private final int TAKE_PHOTO_REQUEST = 1;
     private Button takePhotoAgainButton;
@@ -28,13 +27,13 @@ public class CheckActivity extends BaseActivity implements BaseActivity.OpenCame
     }
 
     public static Intent newIntent(Context context){
-        Intent intent = new Intent(context,CheckActivity.class);
+        Intent intent = new Intent(context,FacialRecognitionActivity.class);
         return intent;
     }
 
     @Override
     public void setContentView() {
-        setContentView(R.layout.activity_check);
+        setContentView(R.layout.activity_facial_recogonition);
     }
 
     @Override
@@ -62,6 +61,7 @@ public class CheckActivity extends BaseActivity implements BaseActivity.OpenCame
 
         switch (v.getId()){
             case R.id.takePhotoAgainButton:
+                askForCamera();
                 break;
             case R.id.uploadButton:
                 break;

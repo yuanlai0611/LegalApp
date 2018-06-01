@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GuideActivity">
+    tools:context=".Guide.GuideActivity"
+    android:background="@drawable/guide_background">
 
-</android.support.constraint.ConstraintLayout>
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_marginTop="@dimen/logoMarginTop"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/logo"
+        android:layout_width="@dimen/logoSize"
+        android:layout_height="@dimen/logoSize" />
+
+    <TextView
+        android:layout_marginTop="@dimen/logoTextMarginTop"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/logo"
+        android:textSize="@dimen/logoTextSize"
+        android:textColor="@color/colorLogoText"
+        android:text="@string/logoName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

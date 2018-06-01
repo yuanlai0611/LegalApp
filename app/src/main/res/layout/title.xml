@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/titleHeight"
+    android:background="@drawable/title_background">
 
-</android.support.constraint.ConstraintLayout>
+  <Button
+      android:id="@+id/back_button"
+      android:layout_marginBottom="@dimen/titleBackButtonMarginBottom"
+      android:layout_marginStart="@dimen/titleBackButtonMarginStart"
+      android:layout_alignParentBottom="true"
+      android:background="@drawable/back_button"
+      android:layout_width="@dimen/titleBackButtonSize"
+      android:layout_height="@dimen/titleBackButtonSize" />
+
+    <TextView
+        android:layout_marginStart="@dimen/titleTextMarginStart"
+        android:textColor="@color/colorTitleText"
+        android:textSize="@dimen/titleTextSize"
+        android:layout_marginBottom="@dimen/titleBackButtonMarginBottom"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/back_button"
+        android:text="@string/titleName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

@@ -1,7 +1,9 @@
-package com.example.yuanyuanlai.legalapp;
+package com.example.yuanyuanlai.legalapp.Login;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.yuanyuanlai.legalapp.R;
 
 public class LoginActivity extends AppCompatActivity {
 

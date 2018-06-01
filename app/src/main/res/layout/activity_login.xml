@@ -1,9 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".Login.LoginActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <ImageView
+        android:scaleType="fitXY"
+        android:src="@drawable/login_top_background"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/loginTopBackgroundHeight" />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_marginTop="@dimen/loginLogoMarginTop"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/logo"
+        android:layout_width="@dimen/logoSize"
+        android:layout_height="@dimen/logoSize" />
+
+    <TextView
+        android:layout_marginTop="@dimen/logoTextMarginTop"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/logo"
+        android:textSize="@dimen/loginLogoTextSize"
+        android:textColor="@color/colorLogoText"
+        android:text="@string/logoName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    
+    <android.support.v7.widget.CardView
+        app:cardCornerRadius="@dimen/loginCardViewCorners"
+        android:layout_marginTop="@dimen/loginCardViewMarginTop"
+        android:layout_marginStart="@dimen/loginCardViewMarginLeft"
+        android:layout_marginEnd="@dimen/loginCardViewMarginLeft"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/loginCardViewHeight">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:layout_marginTop="@dimen/loginPhoneFrameLayoutMarginTop"
+                android:layout_marginStart="@dimen/loginFrameLayoutMarginStart"
+                android:layout_marginEnd="@dimen/loginFrameLayoutMarginStart"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/loginInputEditTextHeight">
+
+                <EditText
+                    android:paddingStart="@dimen/loginEditTextPaddingStart"
+                    android:hint="@string/phoneHint"
+                    android:background="@drawable/input_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/loginInputEditTextHeight" />
+
+                <Button
+                    android:text="@string/phoneButton"
+                    android:background="@drawable/button_yellow"
+                    android:layout_gravity="end"
+                    android:layout_width="@dimen/loginEditTextButtonWidth"
+                    android:layout_height="@dimen/loginInputEditTextHeight" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_marginTop="@dimen/loginVerificationFrameLayoutMarginTop"
+                android:layout_marginStart="@dimen/loginFrameLayoutMarginStart"
+                android:layout_marginEnd="@dimen/loginFrameLayoutMarginStart"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/loginInputEditTextHeight">
+
+                <EditText
+                    android:paddingStart="@dimen/loginEditTextPaddingStart"
+                    android:hint="@string/VerificationHint"
+                    android:background="@drawable/input_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/loginInputEditTextHeight" />
+
+                <Button
+                    android:text="@string/VerificationButton"
+                    android:background="@drawable/button_yellow"
+                    android:layout_gravity="end"
+                    android:layout_width="@dimen/loginEditTextButtonWidth"
+                    android:layout_height="@dimen/loginInputEditTextHeight" />
+
+            </FrameLayout>
+
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <Button
+        android:textSize="@dimen/loginButtonTextSize"
+        android:textColor="@color/colorButtonText"
+        android:text="@string/loginButton"
+        android:layout_marginTop="@dimen/loginButtonMarginTop"
+        android:layout_marginStart="@dimen/loginButtonMarginStart"
+        android:layout_marginEnd="@dimen/loginButtonMarginStart"
+        android:background="@drawable/button_background"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/loginButtonHeight" />
+
+</RelativeLayout>

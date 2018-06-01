@@ -1,18 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".Activity.HomeActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:scaleType="fitXY"
+        android:src="@drawable/home_top_background"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/homeTopBackgroundHeight" />
+    
+    <ImageView
+        android:scaleType="fitXY"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/home_bottom_background"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/homeBottomBackgroundHeight" />
 
-</android.support.constraint.ConstraintLayout>
+    <android.support.v7.widget.CardView
+        app:cardElevation="@dimen/homeCardViewElevation"
+        app:cardCornerRadius="@dimen/homeCardCornerRadius"
+        android:layout_marginTop="@dimen/homeCardViewMarginTop"
+        android:layout_marginStart="@dimen/homeCardViewMarginLeft"
+        android:layout_marginEnd="@dimen/homeCardViewMarginLeft"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/homeCardViewHeight">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:textSize="@dimen/homeLogoTextSize"
+                android:layout_marginTop="@dimen/homeLogoTextMarginTop"
+                android:textColor="@color/colorLogoTextBlack"
+                android:text="@string/logoName"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/homeLogoTextMarginBottom"/>
+
+            <Button
+                android:id="@+id/facialRecognitionButton"
+                android:textSize="@dimen/homeButtonTextSize"
+                android:textColor="@color/colorButtonText"
+                android:text="@string/activityFacialRecognition"
+                android:layout_marginEnd="@dimen/homeButtonMarginLeft"
+                android:layout_marginStart="@dimen/homeButtonMarginLeft"
+                android:background="@drawable/button_background"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/homeButtonHeight" />
+
+            <Button
+                android:id="@+id/checkButton"
+                android:textSize="@dimen/homeButtonTextSize"
+                android:textColor="@color/colorButtonText"
+                android:text="@string/activityCheck"
+                android:layout_marginTop="@dimen/homeButtonMarginTop"
+                android:layout_marginEnd="@dimen/homeButtonMarginLeft"
+                android:layout_marginStart="@dimen/homeButtonMarginLeft"
+                android:background="@drawable/button_background"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/homeButtonHeight" />
+
+            <Button
+                android:id="@+id/notificationButton"
+                android:textSize="@dimen/homeButtonTextSize"
+                android:textColor="@color/colorButtonText"
+                android:text="@string/activityNotification"
+                android:layout_marginTop="@dimen/homeButtonMarginTop"
+                android:layout_marginEnd="@dimen/homeButtonMarginLeft"
+                android:layout_marginStart="@dimen/homeButtonMarginLeft"
+                android:background="@drawable/button_background"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/homeButtonHeight" />
+
+            <Button
+                android:id="@+id/myButton"
+                android:textSize="@dimen/homeButtonTextSize"
+                android:textColor="@color/colorButtonText"
+                android:text="@string/activityMy"
+                android:layout_marginTop="@dimen/homeButtonMarginTop"
+                android:layout_marginEnd="@dimen/homeButtonMarginLeft"
+                android:layout_marginStart="@dimen/homeButtonMarginLeft"
+                android:background="@drawable/button_background"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/homeButtonHeight" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <ImageView
+        android:elevation="@dimen/homeLogoElevation"
+        android:layout_marginTop="@dimen/homeLogoMarginTop"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/logo"
+        android:layout_width="@dimen/logoSize"
+        android:layout_height="@dimen/logoSize" />
+
+</RelativeLayout>
