@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.MyActivity">
+
+    <include
+        layout="@layout/title"/>
+
+    <ImageView
+        android:scaleType="fitXY"
+        android:src="@drawable/my_bottom_background"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/myBottomBackground" />
+
+    <android.support.v7.widget.CardView
+        app:cardCornerRadius="@dimen/myCardViewCorners"
+        app:cardElevation="@dimen/myCardViewElevation"
+        android:layout_marginStart="@dimen/myCardViewMarginLeft"
+        android:layout_marginEnd="@dimen/myCardViewMarginLeft"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/myCardViewHeight"
+        android:layout_marginTop="@dimen/myCardViewMarginTop">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/myLinearLayoutSignHeight">
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/my_sign"
+                    android:layout_width="@dimen/mySignSize"
+                    android:layout_height="@dimen/mySignSize" />
+
+                <TextView
+                    android:layout_marginStart="@dimen/mySignTextMarginLeft"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/mySignTextSize"
+                    android:text="@string/titleName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <TextView
+                android:textSize="@dimen/myTextSize"
+                android:gravity="center_vertical"
+                android:layout_marginStart="@dimen/myTextMarginLeft"
+                android:text="@string/myPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/myTextHeight" />
+
+            <TextView
+                android:textSize="@dimen/myTextSize"
+                android:gravity="center_vertical"
+                android:layout_marginStart="@dimen/myTextMarginLeft"
+                android:text="@string/myDeviceNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/myTextHeight" />
+
+            <TextView
+                android:textSize="@dimen/myTextSize"
+                android:gravity="center_vertical"
+                android:layout_marginStart="@dimen/myTextMarginLeft"
+                android:text="@string/myName"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/myTextHeight" />
+
+            <TextView
+                android:textSize="@dimen/myTextSize"
+                android:gravity="center_vertical"
+                android:layout_marginStart="@dimen/myTextMarginLeft"
+                android:text="@string/myId"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/myTextHeight" />
+
+            <TextView
+                android:textSize="@dimen/myTextSize"
+                android:gravity="center_vertical"
+                android:layout_marginStart="@dimen/myTextMarginLeft"
+                android:text="@string/myBlueTooth"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/myTextHeight" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <ImageView
+        android:elevation="@dimen/myTopBackgroundElevation"
+        android:scaleType="fitXY"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/my_top_background"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/myTopBackground" />
+
+</RelativeLayout>

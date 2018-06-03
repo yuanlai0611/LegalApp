@@ -1,4 +1,4 @@
-package com.example.yuanyuanlai.legalapp;
+package com.example.yuanyuanlai.legalapp.Adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.example.yuanyuanlai.legalapp.ItemNotification;
+import com.example.yuanyuanlai.legalapp.R;
 
 import java.util.ArrayList;
 import java.util.List;

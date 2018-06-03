@@ -1,4 +1,4 @@
-package com.example.yuanyuanlai.legalapp;
+package com.example.yuanyuanlai.legalapp.Activity;
 
 import android.app.DatePickerDialog;
 import android.content.pm.ActivityInfo;
@@ -16,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import com.example.yuanyuanlai.legalapp.R;
 
 import java.util.Calendar;
 

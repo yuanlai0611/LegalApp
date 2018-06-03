@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="logoMarginTop">140dp</dimen>
+    <dimen name="logoTextSize">28sp</dimen>
+    <dimen name="logoTextMarginTop">30dp</dimen>
+    <dimen name="logoSize">90dp</dimen>
+
+    <dimen name="homeCardMarginLeft">30dp</dimen>
+    <dimen name="homeTopBackgroundHeight">210dp</dimen>
+    <dimen name="homeBottomBackgroundHeight">80dp</dimen>
+    <dimen name="homeCardViewElevation">15dp</dimen>
+    <dimen name="homeCardCornerRadius">10dp</dimen>
+    <dimen name="homeLogoElevation">20dp</dimen>
+    <dimen name="homeLogoMarginTop">100dp</dimen>
+    <dimen name="homeCardViewHeight">460dp</dimen>
+    <dimen name="homeCardViewMarginLeft">30dp</dimen>
+    <dimen name="homeCardViewMarginTop">150dp</dimen>
+    <dimen name="homeLogoTextSize">20sp</dimen>
+    <dimen name="homeLogoTextMarginTop">60dp</dimen>
+    <dimen name="homeButtonTextSize">20sp</dimen>
+    <dimen name="homeButtonHeight">50dp</dimen>
+    <dimen name="homeLogoTextMarginBottom">35dp</dimen>
+    <dimen name="homeButtonMarginTop">25dp</dimen>
+    <dimen name="homeButtonMarginLeft">35dp</dimen>
+
+    <dimen name="loginTopBackgroundHeight">350dp</dimen>
+    <dimen name="loginLogoMarginTop">70dp</dimen>
+    <dimen name="loginLogoTextSize">24sp</dimen>
+    <dimen name="loginCardViewCorners">5dp</dimen>
+    <dimen name="loginCardViewMarginTop">300dp</dimen>
+    <dimen name="loginCardViewHeight">200dp</dimen>
+    <dimen name="loginInputEditTextHeight">50dp</dimen>
+    <dimen name="loginEditTextPaddingStart">25dp</dimen>
+    <dimen name="loginButtonHeight">50dp</dimen>
+    <dimen name="loginButtonMarginTop">470dp</dimen>
+    <dimen name="loginButtonTextSize">20sp</dimen>
+    <dimen name="loginEditTextButtonWidth">80dp</dimen>
+    <dimen name="loginButtonMarginStart">45dp</dimen>
+    <dimen name="loginCardViewMarginLeft">25dp</dimen>
+    <dimen name="loginPhoneFrameLayoutMarginTop">25dp</dimen>
+    <dimen name="loginVerificationFrameLayoutMarginTop">10dp</dimen>
+    <dimen name="loginFrameLayoutMarginStart">15dp</dimen>
+
+    <dimen name="titleBackButtonSize">25dp</dimen>
+    <dimen name="titleBackButtonMarginBottom">15dp</dimen>
+    <dimen name="titleTextSize">24sp</dimen>
+    <dimen name="titleHeight">80dp</dimen>
+    <dimen name="titleBackButtonMarginStart">20dp</dimen>
+    <dimen name="titleTextMarginStart">10dp</dimen>
+
+    <dimen name="myBottomBackground">350dp</dimen>
+    <dimen name="myTopBackground">250dp</dimen>
+    <dimen name="myCardViewCorners">5dp</dimen>
+    <dimen name="myCardViewHeight">400dp</dimen>
+    <dimen name="myCardViewMarginTop">180dp</dimen>
+    <dimen name="myCardViewElevation">15dp</dimen>
+    <dimen name="myTopBackgroundElevation">20dp</dimen>
+    <dimen name="myCardViewMarginLeft">50dp</dimen>
+    <dimen name="myLinearLayoutSignHeight">50dp</dimen>
+    <dimen name="mySignSize">30dp</dimen>
+    <dimen name="mySignTextMarginLeft">10dp</dimen>
+    <dimen name="mySignTextSize">24sp</dimen>
+    <dimen name="myTextSize">18sp</dimen>
+    <dimen name="myTextMarginLeft">30dp</dimen>
+    <dimen name="myTextHeight">40dp</dimen>
+
+</resources>
