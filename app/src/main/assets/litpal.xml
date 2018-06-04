@@ -5,6 +5,6 @@
     <version value="1" ></version>
 
     <list>
-        <mapping class="com.example.yuanyuanlai.legalapp.ItemNotification"></mapping>
+        <mapping class="com.example.yuanyuanlai.legalapp.Bean.ItemNotification"></mapping>
     </list>
 </litepal>

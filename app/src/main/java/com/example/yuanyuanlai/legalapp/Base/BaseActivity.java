@@ -21,7 +21,7 @@ import pub.devrel.easypermissions.PermissionRequest;
 public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener,EasyPermissions.PermissionCallbacks{
 
     private static final int RC_CAMERA = 1000;
-    private OpenCamera mOpenCamera;
+    private OpenCamera mOpenCamera = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 
     public abstract void findViewById();
 
-    public abstract void askPermission();
 
     private void setFullScreen(){
         View view = getWindow().getDecorView();
@@ -87,7 +86,11 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         EasyPermissions.onRequestPermissionsResult(requestCode,permissions,grantResults,this);
     }
 
+    public void setOpenCamera(OpenCamera openCamera){
+        mOpenCamera = openCamera;
+    }
+
     public interface OpenCamera{
-        abstract void openCamera();
+        void openCamera();
     }
 }

@@ -7,4 +7,5 @@
     <color name="colorLogoTextBlack">#454647</color>
     <color name="colorButtonText">#ffffff</color>
     <color name="colorTitleText">#ffffff</color>
+    <color name="colorButtonUpload">#00a1ff</color>
 </resources>

@@ -36,10 +36,7 @@ public class HomeActivity extends BaseActivity {
         myButton = (Button)findViewById(R.id.myButton);
     }
 
-    @Override
-    public void askPermission() {
 
-    }
 
 
     @Override
@@ -50,6 +47,8 @@ public class HomeActivity extends BaseActivity {
              startActivity(intent);
              break;
          case R.id.checkButton:
+             intent = CheckActivity.newIntent(this);
+             startActivity(intent);
              break;
          case R.id.notificationButton:
 
