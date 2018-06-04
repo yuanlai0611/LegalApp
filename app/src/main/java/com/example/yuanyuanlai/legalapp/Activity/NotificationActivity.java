@@ -64,27 +64,13 @@ public class NotificationActivity extends BaseActivity implements View.OnClickLi
 
     private void showPopupWindow() {
 
-        // 设置布局文件
         popupWindow.setContentView( LayoutInflater.from(this).inflate(R.layout.popup_window, null));
-        // 设置pop透明效果
         popupWindow.setBackgroundDrawable(new ColorDrawable( Color.WHITE));
-        // 设置pop出入动画
         popupWindow.setAnimationStyle(R.style.pop_add);
-        // 设置pop获取焦点，如果为false点击返回按钮会退出当前Activity，如果pop中有Editor的话，focusable必须要为true
         popupWindow.setFocusable(true);
-        // 设置pop可点击，为false点击事件无效，默认为true
         popupWindow.setTouchable(true);
-        // 设置点击pop外侧消失，默认为false；在focusable为true时点击外侧始终消失
         popupWindow.setOutsideTouchable(true);
-        // 相对于 + 号正下面，同时可以设置偏移量
-        popupWindow.showAsDropDown(choose_date_re, -10, dp2px( 1 ));
-
-        // 设置pop关闭监听，用于改变背景透明度
-        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-            }
-        });
+        popupWindow.showAsDropDown(choose_date_re);
         all_message = (LinearLayout)popupWindow.getContentView().findViewById(R.id.all_message);
         select_date = (LinearLayout)popupWindow.getContentView().findViewById(R.id.select_date);
         all_message.setOnClickListener(this);
