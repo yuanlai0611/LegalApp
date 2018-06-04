@@ -1,4 +1,4 @@
-package com.example.yuanyuanlai.legalapp;
+package com.example.yuanyuanlai.legalapp.Bean;
 
 import org.litepal.crud.DataSupport;
 

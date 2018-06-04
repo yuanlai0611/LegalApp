@@ -2,10 +2,12 @@ package com.example.yuanyuanlai.legalapp.Base;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Toast;
 
@@ -30,6 +32,14 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         setContentView();
         findViewById();
         initListener();
+    }
+
+    @Override
+    protected void onResume() {
+        if(getRequestedOrientation()!= ActivityInfo.SCREEN_ORIENTATION_PORTRAIT){
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+        super.onResume();
     }
 
     public abstract void setContentView();
@@ -85,6 +95,11 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         EasyPermissions.onRequestPermissionsResult(requestCode,permissions,grantResults,this);
+    }
+
+    public int dp2px(int dp) {
+        return (int) TypedValue.applyDimension( TypedValue.COMPLEX_UNIT_DIP, dp,
+                this.getResources().getDisplayMetrics());
     }
 
     public interface OpenCamera{

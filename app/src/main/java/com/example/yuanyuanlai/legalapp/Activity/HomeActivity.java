@@ -52,7 +52,8 @@ public class HomeActivity extends BaseActivity {
          case R.id.checkButton:
              break;
          case R.id.notificationButton:
-
+             intent = NotificationActivity.newIntent( this );
+             startActivity( intent );
              break;
          case R.id.myButton:
              intent = MyActivity.newIntent(this);
