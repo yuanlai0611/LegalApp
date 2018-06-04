@@ -1,12 +1,11 @@
 package com.example.yuanyuanlai.legalapp.Activity;
 
 import android.app.DatePickerDialog;
-import android.content.pm.ActivityInfo;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -17,37 +16,50 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.yuanyuanlai.legalapp.Base.BaseActivity;
 import com.example.yuanyuanlai.legalapp.R;
 
 import java.util.Calendar;
 
-public class NotificationActivity extends AppCompatActivity implements View.OnClickListener{
+public class NotificationActivity extends BaseActivity implements View.OnClickListener{
     private RelativeLayout choose_date_re;
     private ImageButton btn_back;
     private PopupWindow popupWindow;
     private LinearLayout all_message,select_date;
     private int fromYear,fromMonth,fromDay;
 
+    public static Intent newIntent(Context context){
+        Intent intent = new Intent(context,NotificationActivity.class);
+        return intent;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_notification );
         initWindow();
+    }
+
+    @Override
+    public void setContentView() {
+        setContentView( R.layout.activity_notification );
+    }
+
+    @Override
+    public void initListener() {
+        btn_back.setOnClickListener(this);
+        popupWindow = new PopupWindow(this);
+        choose_date_re.setOnClickListener(this);
+    }
+
+    @Override
+    public void findViewById() {
         choose_date_re=findViewById( R.id.relat_choose_date );
         btn_back=findViewById( R.id.ib_back );
-        btn_back.setOnClickListener( new View.OnClickListener( ) {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        } );
-        popupWindow = new PopupWindow(this);
-        choose_date_re.setOnClickListener( new View.OnClickListener( ) {
-            @Override
-            public void onClick(View view) {
-                showPopupWindow();
-            }
-        } );
+    }
+
+    @Override
+    public void askPermission() {
+
     }
 
     private void showPopupWindow() {
@@ -79,19 +91,6 @@ public class NotificationActivity extends AppCompatActivity implements View.OnCl
         select_date.setOnClickListener(this);
     }
 
-    public int dp2px(int dp) {
-        return (int) TypedValue.applyDimension( TypedValue.COMPLEX_UNIT_DIP, dp,
-                this.getResources().getDisplayMetrics());
-    }
-
-    @Override
-    protected void onResume() {
-        if(getRequestedOrientation()!= ActivityInfo.SCREEN_ORIENTATION_PORTRAIT){
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
-        super.onResume();
-    }
-
     public void initWindow(){
         //透明状态栏
         getWindow().addFlags( WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -111,6 +110,12 @@ public class NotificationActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onClick(View view) {
         switch (view.getId()){
+            case R.id.relat_choose_date:
+                showPopupWindow();
+                break;
+            case R.id.ib_back:
+                finish();
+                break;
             case R.id.all_message:
                 popupWindow.dismiss();
                 Toast.makeText( this,"全部通知",Toast.LENGTH_SHORT ).show();
@@ -135,31 +140,6 @@ public class NotificationActivity extends AppCompatActivity implements View.OnCl
 //                int second = calendar.get(Calendar.SECOND);
                 DatePickerDialog dialog = new DatePickerDialog(this, DatePickerDialog.THEME_HOLO_LIGHT, dateSetListener, year, month-1, day);
                 dialog.show();
-//                Toast.makeText( this,"选择日期",Toast.LENGTH_SHORT ).show();
-//                final DatePicker date = new DatePicker(MainActivity.this);
-//                date.setCalendarViewShown(false);
-//                date.setSpinnersShown( true );
-////                date.init(0, 0, 0, new DatePicker.OnDateChangedListener() {
-////                    @Override
-////                    public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-////                    }
-////                });
-//                AlertDialog.Builder mDatePickerDialogBuilder = new AlertDialog.Builder(MainActivity.this);
-//                mDatePickerDialogBuilder.setView(date);
-//                mDatePickerDialogBuilder.setTitle("请选择日期");
-//                mDatePickerDialogBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//
-//                        //只有点击确定按钮时，才更改时间，并设置在文本中显示
-//                        fromYear = date.getYear();
-//                        fromMonth = date.getMonth()+1;
-//                        fromDay = date.getDayOfMonth();
-//                        setDateFrom();
-//                    }
-//                });
-//                mDatePickerDialogBuilder.setNegativeButton("取消",null);
-//                mDatePickerDialogBuilder.show();
                 break;
             default:
         }
