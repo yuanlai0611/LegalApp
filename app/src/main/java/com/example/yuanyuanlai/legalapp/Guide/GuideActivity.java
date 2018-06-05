@@ -70,10 +70,7 @@ public class GuideActivity extends BaseActivity {
 
     }
 
-    @Override
-    public void askPermission() {
 
-    }
 
     @Override
     public void onClick(View v) {

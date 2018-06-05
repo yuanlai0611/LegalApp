@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:scaleType="fitXY"
+        android:src="@drawable/home_top_background"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/homeTopBackgroundHeight" />
+
+    <ImageView
+        android:scaleType="fitXY"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/home_bottom_background"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/homeBottomBackgroundHeight" />
+
+    <android.support.v7.widget.CardView
+        app:cardElevation="@dimen/homeCardViewElevation"
+        app:cardCornerRadius="@dimen/homeCardCornerRadius"
+        android:layout_marginTop="@dimen/homeCardViewMarginTop"
+        android:layout_marginStart="@dimen/homeCardViewMarginLeft"
+        android:layout_marginEnd="@dimen/homeCardViewMarginLeft"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/homeCardViewHeight">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:textSize="@dimen/homeLogoTextSize"
+                android:layout_marginTop="@dimen/homeLogoTextMarginTop"
+                android:textColor="@color/colorLogoTextBlack"
+                android:text="@string/logoName"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/homeLogoTextMarginBottom"/>
+
+            <LinearLayout
+                android:visibility="visible"
+                android:id="@+id/result_ok_linearLayout"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:textColor="@color/colorLogoTextBlack"
+                    android:layout_marginTop="30dp"
+                    android:textSize="22sp"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/check_result_ok"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:textColor="@color/colorLogoTextBlack"
+                    android:layout_marginTop="40dp"
+                    android:textSize="26sp"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/check_ok_guide"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:src="@drawable/check_result_sign"
+                    android:layout_marginTop="60dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/result_fail_linearLayout"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:textColor="@color/colorLogoTextBlack"
+                    android:layout_marginTop="30dp"
+                    android:textSize="22sp"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/check_fail_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:textColor="@color/colorLogoTextBlack"
+                    android:layout_marginTop="40dp"
+                    android:textSize="26sp"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/check_fail_guide"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:src="@drawable/check_result_sign"
+                    android:layout_marginTop="60dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp" />
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <ImageView
+        android:elevation="@dimen/homeLogoElevation"
+        android:layout_marginTop="@dimen/homeLogoMarginTop"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/logo"
+        android:layout_width="@dimen/logoSize"
+        android:layout_height="@dimen/logoSize" />
+
+</RelativeLayout>

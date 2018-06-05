@@ -7,10 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.example.yuanyuanlai.legalapp.Bean.ItemNotification;
 import com.example.yuanyuanlai.legalapp.R;
-
 import java.util.ArrayList;
 import java.util.List;
 

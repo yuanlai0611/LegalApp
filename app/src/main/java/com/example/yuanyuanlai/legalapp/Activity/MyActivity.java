@@ -2,7 +2,6 @@ package com.example.yuanyuanlai.legalapp.Activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
@@ -50,11 +49,6 @@ public class MyActivity extends BaseActivity implements BlueToothUtil.DeviceId{
 
     @Override
     public void initListener() {
-
-    }
-
-    @Override
-    public void askPermission() {
 
     }
 

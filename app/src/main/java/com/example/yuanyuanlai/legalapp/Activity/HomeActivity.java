@@ -37,12 +37,6 @@ public class HomeActivity extends BaseActivity {
     }
 
     @Override
-    public void askPermission() {
-
-    }
-
-
-    @Override
     public void onClick(View v) {
      switch (v.getId()){
          case R.id.facialRecognitionButton:
@@ -50,6 +44,8 @@ public class HomeActivity extends BaseActivity {
              startActivity(intent);
              break;
          case R.id.checkButton:
+             intent = CheckActivity.newIntent(this);
+             startActivity(intent);
              break;
          case R.id.notificationButton:
              intent = NotificationActivity.newIntent( this );

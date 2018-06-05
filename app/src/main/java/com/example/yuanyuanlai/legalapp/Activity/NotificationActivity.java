@@ -5,10 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -24,6 +22,7 @@ import java.util.Calendar;
 public class NotificationActivity extends BaseActivity implements View.OnClickListener{
     private RelativeLayout chooseDateRe;
     private ImageButton backButton;
+
     private PopupWindow popupWindow;
     private LinearLayout allMessage,selectDate;
     private int fromYear,fromMonth,fromDay;
@@ -33,11 +32,6 @@ public class NotificationActivity extends BaseActivity implements View.OnClickLi
         return intent;
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate( savedInstanceState );
-        initWindow();
-    }
 
     @Override
     public void setContentView() {
@@ -57,10 +51,6 @@ public class NotificationActivity extends BaseActivity implements View.OnClickLi
         backButton=findViewById( R.id.ib_back );
     }
 
-    @Override
-    public void askPermission() {
-
-    }
 
     private void showPopupWindow() {
 
@@ -77,10 +67,6 @@ public class NotificationActivity extends BaseActivity implements View.OnClickLi
         selectDate.setOnClickListener(this);
     }
 
-    public void initWindow(){
-        //透明状态栏
-        getWindow().addFlags( WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-    }
 
     DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener( ) {
         @Override
@@ -116,14 +102,7 @@ public class NotificationActivity extends BaseActivity implements View.OnClickLi
                 int month = calendar.get(Calendar.MONTH)+1;
                 //日
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
-//                Toast.makeText( MainActivity.this,year+"  "+month+"  "+day,Toast.LENGTH_SHORT ).show();
-//                //获取系统时间
-//                //小时
-//                int hour = calendar.get(Calendar.HOUR_OF_DAY);
-//                //分钟
-//                int minute = calendar.get(Calendar.MINUTE);
-//                //秒
-//                int second = calendar.get(Calendar.SECOND);
+
                 DatePickerDialog dialog = new DatePickerDialog(this, DatePickerDialog.THEME_HOLO_LIGHT, dateSetListener, year, month-1, day);
                 dialog.show();
                 break;
