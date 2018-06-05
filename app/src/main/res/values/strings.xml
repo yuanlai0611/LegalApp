@@ -16,6 +16,8 @@
     <string name="myName">姓           名 ：张某某</string>
     <string name="myId">身份证 ：123456789123456789</string>
     <string name="myBlueTooth">蓝牙配码 ：QWERTYUIOP</string>
+    <string name="successful">操作成功</string>
+    <string name="failed">操作失败</string>
     <string name="check_result_ok">识别成功！</string>
     <string name="check_ok_guide">你已成功认证！</string>
     <string name="check_fail_result">识别失败！</string>

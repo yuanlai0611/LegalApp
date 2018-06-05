@@ -20,11 +20,11 @@ import com.example.yuanyuanlai.legalapp.R;
 import java.util.Calendar;
 
 public class NotificationActivity extends BaseActivity implements View.OnClickListener{
+    private RelativeLayout chooseDateRe;
+    private ImageButton backButton;
 
-    private RelativeLayout choose_date_re;
-    private ImageButton btn_back;
     private PopupWindow popupWindow;
-    private LinearLayout all_message,select_date;
+    private LinearLayout allMessage,selectDate;
     private int fromYear,fromMonth,fromDay;
 
     public static Intent newIntent(Context context){
@@ -40,15 +40,15 @@ public class NotificationActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void initListener() {
-        btn_back.setOnClickListener(this);
+        backButton.setOnClickListener(this);
         popupWindow = new PopupWindow(this);
-        choose_date_re.setOnClickListener(this);
+        chooseDateRe.setOnClickListener(this);
     }
 
     @Override
     public void findViewById() {
-        choose_date_re=findViewById( R.id.relat_choose_date );
-        btn_back=findViewById( R.id.ib_back );
+        chooseDateRe=findViewById( R.id.relat_choose_date );
+        backButton=findViewById( R.id.ib_back );
     }
 
 
@@ -60,11 +60,11 @@ public class NotificationActivity extends BaseActivity implements View.OnClickLi
         popupWindow.setFocusable(true);
         popupWindow.setTouchable(true);
         popupWindow.setOutsideTouchable(true);
-        popupWindow.showAsDropDown(choose_date_re);
-        all_message = (LinearLayout)popupWindow.getContentView().findViewById(R.id.all_message);
-        select_date = (LinearLayout)popupWindow.getContentView().findViewById(R.id.select_date);
-        all_message.setOnClickListener(this);
-        select_date.setOnClickListener(this);
+        popupWindow.showAsDropDown(chooseDateRe);
+        allMessage = (LinearLayout)popupWindow.getContentView().findViewById(R.id.all_message);
+        selectDate = (LinearLayout)popupWindow.getContentView().findViewById(R.id.select_date);
+        allMessage.setOnClickListener(this);
+        selectDate.setOnClickListener(this);
     }
 
 
