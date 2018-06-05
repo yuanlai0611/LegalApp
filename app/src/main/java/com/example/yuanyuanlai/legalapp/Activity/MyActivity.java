@@ -2,8 +2,6 @@ package com.example.yuanyuanlai.legalapp.Activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 
 import com.example.yuanyuanlai.legalapp.Base.BaseActivity;
@@ -28,11 +26,6 @@ public class MyActivity extends BaseActivity {
 
     @Override
     public void initListener() {
-
-    }
-
-    @Override
-    public void askPermission() {
 
     }
 

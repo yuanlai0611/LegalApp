@@ -1,20 +1,14 @@
 package com.example.yuanyuanlai.legalapp.Base;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.Toast;
-
-import com.example.yuanyuanlai.legalapp.R;
-
 import java.util.List;
-
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -23,7 +17,7 @@ import pub.devrel.easypermissions.PermissionRequest;
 public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener,EasyPermissions.PermissionCallbacks{
 
     private static final int RC_CAMERA = 1000;
-    private OpenCamera mOpenCamera;
+    private OpenCamera mOpenCamera = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +42,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 
     public abstract void findViewById();
 
-    public abstract void askPermission();
 
     private void setFullScreen(){
         View view = getWindow().getDecorView();
@@ -97,12 +90,14 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         EasyPermissions.onRequestPermissionsResult(requestCode,permissions,grantResults,this);
     }
 
-    public int dp2px(int dp) {
-        return (int) TypedValue.applyDimension( TypedValue.COMPLEX_UNIT_DIP, dp,
-                this.getResources().getDisplayMetrics());
+
+    public void setOpenCamera(OpenCamera openCamera) {
+        mOpenCamera = openCamera;
     }
 
+
+
     public interface OpenCamera{
-        abstract void openCamera();
+        void openCamera();
     }
 }

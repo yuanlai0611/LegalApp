@@ -21,7 +21,8 @@ public class FacialRecognitionActivity extends BaseActivity implements BaseActiv
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        openCamera();
+        setOpenCamera(this);
+        askForCamera();
         super.onCreate(savedInstanceState);
 
     }
@@ -48,13 +49,11 @@ public class FacialRecognitionActivity extends BaseActivity implements BaseActiv
 
         takePhotoAgainButton.setOnClickListener(this);
         uploadButton.setOnClickListener(this);
+        setOpenCamera(this);
 
     }
 
-    @Override
-    public void askPermission() {
 
-    }
 
     @Override
     public void onClick(View v) {
