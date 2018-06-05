@@ -36,9 +36,6 @@ public class HomeActivity extends BaseActivity {
         myButton = (Button)findViewById(R.id.myButton);
     }
 
-
-
-
     @Override
     public void onClick(View v) {
      switch (v.getId()){
@@ -51,7 +48,8 @@ public class HomeActivity extends BaseActivity {
              startActivity(intent);
              break;
          case R.id.notificationButton:
-
+             intent = NotificationActivity.newIntent( this );
+             startActivity( intent );
              break;
          case R.id.myButton:
              intent = MyActivity.newIntent(this);

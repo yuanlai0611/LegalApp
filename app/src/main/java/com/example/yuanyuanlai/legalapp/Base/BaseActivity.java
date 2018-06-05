@@ -1,18 +1,14 @@
 package com.example.yuanyuanlai.legalapp.Base;
 
 import android.Manifest;
-import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
-
-import com.example.yuanyuanlai.legalapp.R;
-
 import java.util.List;
-
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -30,6 +26,14 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         setContentView();
         findViewById();
         initListener();
+    }
+
+    @Override
+    protected void onResume() {
+        if(getRequestedOrientation()!= ActivityInfo.SCREEN_ORIENTATION_PORTRAIT){
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+        super.onResume();
     }
 
     public abstract void setContentView();
@@ -86,9 +90,12 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         EasyPermissions.onRequestPermissionsResult(requestCode,permissions,grantResults,this);
     }
 
-    public void setOpenCamera(OpenCamera openCamera){
+
+    public void setOpenCamera(OpenCamera openCamera) {
         mOpenCamera = openCamera;
     }
+
+
 
     public interface OpenCamera{
         void openCamera();

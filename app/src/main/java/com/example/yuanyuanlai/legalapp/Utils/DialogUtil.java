@@ -2,7 +2,7 @@ package com.example.yuanyuanlai.legalapp.Utils;
 
 import android.content.Context;
 
-public class Dialog {
+public class DialogUtil {
 
     public static void showProgressDialog(Context context){
 
