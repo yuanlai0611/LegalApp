@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.yuanyuanlai.legalapp">
+          package="com.example.yuanyuanlai.legalapp">
 
-    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
         android:name=".Application.GlobalApp"
@@ -12,22 +12,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.HomeActivity" />
+        <activity android:name=".Activity.HomeActivity"/>
         <activity android:name=".Guide.GuideActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".Login.LoginActivity" />
-        <activity android:name=".Activity.MyActivity" />
-        <activity android:name=".Activity.FacialRecognitionActivity" />
-        <activity android:name=".Activity.CheckActivity" />
+        <activity android:name=".Login.LoginActivity"/>
+        <activity android:name=".Activity.MyActivity"/>
+        <activity android:name=".Activity.FacialRecognitionActivity"/>
+        <activity android:name=".Activity.CheckActivity"/>
         <activity
             android:name=".Activity.NotificationActivity"
-            android:theme="@style/MyTheme"></activity>
-        <activity android:name=".Activity.CheckResultActivity"></activity>
+            android:theme="@style/MyTheme"/>
+        <activity android:name=".Activity.CheckResultActivity"/>
+        <activity android:name=".Activity.ScanActivity">
+        </activity>
+
     </application>
 
 </manifest>

@@ -29,7 +29,6 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
     }
 
     @Override
@@ -78,6 +77,7 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.loginButton:
                 //登录
+
                 animator.end();
                 sendButton.setEnabled( true );
                 break;
