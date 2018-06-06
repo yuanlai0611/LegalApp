@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 import com.example.yuanyuanlai.legalapp.Base.BaseActivity;
+import com.example.yuanyuanlai.legalapp.Internet.NetworkType;
 import com.example.yuanyuanlai.legalapp.R;
 
 public class FacialRecognitionActivity extends BaseActivity implements BaseActivity.OpenCamera {
@@ -95,6 +96,16 @@ public class FacialRecognitionActivity extends BaseActivity implements BaseActiv
                 break;
 
         }
+
+    }
+
+    @Override
+    public void onNetDisconnected() {
+
+    }
+
+    @Override
+    public void onNetConnected(NetworkType networkType) {
 
     }
 }

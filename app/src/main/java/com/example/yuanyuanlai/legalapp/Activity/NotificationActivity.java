@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.yuanyuanlai.legalapp.Base.BaseActivity;
+import com.example.yuanyuanlai.legalapp.Internet.NetworkType;
 import com.example.yuanyuanlai.legalapp.R;
 
 import java.util.Calendar;
@@ -114,4 +115,13 @@ public class NotificationActivity extends BaseActivity implements View.OnClickLi
 
     }
 
+    @Override
+    public void onNetDisconnected() {
+
+    }
+
+    @Override
+    public void onNetConnected(NetworkType networkType) {
+
+    }
 }

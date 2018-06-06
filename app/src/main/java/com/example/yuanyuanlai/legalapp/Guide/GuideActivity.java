@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.yuanyuanlai.legalapp.Activity.HomeActivity;
 import com.example.yuanyuanlai.legalapp.Base.BaseActivity;
+import com.example.yuanyuanlai.legalapp.Internet.NetworkType;
 import com.example.yuanyuanlai.legalapp.Login.LoginActivity;
 import com.example.yuanyuanlai.legalapp.R;
 
@@ -30,16 +31,20 @@ public class GuideActivity extends BaseActivity {
             super.handleMessage(msg);
             switch (msg.what){
                 case GO_MAIN:
-                    Boolean il=sharedPreferences.getBoolean( isLogin,false );
-                    if(!il){
-                        mIntent = LoginActivity.newIntent( GuideActivity.this );
-                        startActivity( mIntent );
-                        finish();
-                    }else {
+//                    Boolean il=sharedPreferences.getBoolean( isLogin,false );
+//                    if(!il){
+//                        mIntent = LoginActivity.newIntent( GuideActivity.this );
+//                        startActivity( mIntent );
+//                        finish();
+//                    }else {
+//                        mIntent = HomeActivity.newIntent(GuideActivity.this);
+//                        startActivity(mIntent);
+//                        finish();
+//                    }
+
                         mIntent = HomeActivity.newIntent(GuideActivity.this);
                         startActivity(mIntent);
                         finish();
-                    }
                     break;
                 default:
                     break;
@@ -70,7 +75,15 @@ public class GuideActivity extends BaseActivity {
 
     }
 
+    @Override
+    public void onNetDisconnected() {
 
+    }
+
+    @Override
+    public void onNetConnected(NetworkType networkType) {
+
+    }
 
     @Override
     public void onClick(View v) {

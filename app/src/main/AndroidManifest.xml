@@ -3,6 +3,13 @@
     package="com.example.yuanyuanlai.legalapp">
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <application
         android:name=".Application.GlobalApp"
@@ -24,9 +31,8 @@
         <activity android:name=".Activity.MyActivity" />
         <activity android:name=".Activity.FacialRecognitionActivity" />
         <activity android:name=".Activity.CheckActivity" />
-        <activity
-            android:name=".Activity.NotificationActivity"
-            android:theme="@style/MyTheme"></activity>
+        <activity android:name=".Activity.NotificationActivity"
+                  android:theme="@style/MyTheme"></activity>
         <activity android:name=".Activity.CheckResultActivity"></activity>
     </application>
 
