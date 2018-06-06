@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
-import com.example.yuanyuanlai.legalapp.Utils.NetworkUtils;
+import com.example.yuanyuanlai.legalapp.utils.NetworkUtils;
 import java.util.ArrayList;
 import java.util.List;
 

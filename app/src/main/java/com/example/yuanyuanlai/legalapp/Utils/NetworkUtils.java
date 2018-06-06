@@ -1,4 +1,4 @@
-package com.example.yuanyuanlai.legalapp.Utils;
+package com.example.yuanyuanlai.legalapp.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

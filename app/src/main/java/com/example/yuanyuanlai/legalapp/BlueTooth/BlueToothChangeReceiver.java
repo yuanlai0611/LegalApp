@@ -11,9 +11,19 @@ import android.util.Log;
 public class BlueToothChangeReceiver extends BroadcastReceiver {
 
     private static final String TAG = "BlueToothChangeReceiver";
+    private BlueToothChange mBlueToothChange = null;
 
     private static class InstanceHolder{
         private static final BlueToothChangeReceiver INSTANCE = new BlueToothChangeReceiver();
+    }
+
+    public interface BlueToothChange{
+        void BlueToothIsOpen();
+        void BlueToothIsClose();
+    }
+
+    public void setBlueToothListener(BlueToothChange blueToothListener){
+        mBlueToothChange = blueToothListener;
     }
 
     @Override
@@ -28,12 +38,13 @@ public class BlueToothChangeReceiver extends BroadcastReceiver {
                         Log.d(TAG,"STATE_TURNING_ON");
                         break;
                     case BluetoothAdapter.STATE_ON:
+                        mBlueToothChange.BlueToothIsOpen();
                         Log.d(TAG,"STATE_ON");
                         break;
                     case BluetoothAdapter.STATE_TURNING_OFF:
-                        Log.d(TAG,"STATE_TURNING_OFF");
                         break;
                     case BluetoothAdapter.STATE_OFF:
+                        mBlueToothChange.BlueToothIsClose();
                         Log.d(TAG,"STATE_OFF");
                         break;
                 }

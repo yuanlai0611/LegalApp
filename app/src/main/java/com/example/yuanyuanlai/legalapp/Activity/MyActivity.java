@@ -7,7 +7,7 @@ import android.view.View;
 import com.example.yuanyuanlai.legalapp.Base.BaseActivity;
 import com.example.yuanyuanlai.legalapp.Internet.NetworkType;
 import com.example.yuanyuanlai.legalapp.R;
-import com.example.yuanyuanlai.legalapp.Utils.BlueToothUtil;
+import com.example.yuanyuanlai.legalapp.utils.BlueToothUtil;
 
 public class MyActivity extends BaseActivity implements BlueToothUtil.DeviceId{
 

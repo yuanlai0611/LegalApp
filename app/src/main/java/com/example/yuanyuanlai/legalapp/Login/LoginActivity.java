@@ -11,6 +11,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.yuanyuanlai.legalapp.Activity.ScanActivity;
 import com.example.yuanyuanlai.legalapp.Base.BaseActivity;
 import com.example.yuanyuanlai.legalapp.Internet.NetworkType;
 import com.example.yuanyuanlai.legalapp.R;
@@ -88,9 +89,13 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.loginButton:
                 //登录
-
-                animator.end();
+                Intent intent= ScanActivity.newIntent( LoginActivity.this );
+                startActivity( intent );
+                if (animator!=null){
+                    animator.end();
+                }
                 sendButton.setEnabled( true );
+                finish();
                 break;
         }
     }
