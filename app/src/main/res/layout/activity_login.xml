@@ -59,6 +59,7 @@
                     android:layout_height="@dimen/loginInputEditTextHeight" />
 
                 <Button
+                    android:id="@+id/sendButton"
                     android:text="@string/phoneButton"
                     android:background="@drawable/button_yellow"
                     android:layout_gravity="end"
@@ -81,8 +82,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/loginInputEditTextHeight" />
 
-                <Button
+                <TextView
+                    android:id="@+id/countDown"
                     android:text="@string/VerificationButton"
+                    android:gravity="center"
+                    android:textColor="@color/colorBlack"
                     android:background="@drawable/button_yellow"
                     android:layout_gravity="end"
                     android:layout_width="@dimen/loginEditTextButtonWidth"
@@ -96,6 +100,7 @@
     </android.support.v7.widget.CardView>
 
     <Button
+        android:id="@+id/loginButton"
         android:textSize="@dimen/loginButtonTextSize"
         android:textColor="@color/colorButtonText"
         android:text="@string/loginButton"

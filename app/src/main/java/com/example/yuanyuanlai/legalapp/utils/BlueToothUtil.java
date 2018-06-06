@@ -60,6 +60,8 @@ import com.sdk.bluetooth.utils.DateUtil;
 public class BlueToothUtil {
 
     private DeviceId mDeviceId = null;
+    private DeviceVersion2 mDeviceVersion = null;
+    private HeartRate mHeartRate = null;
     private AlertDialog alertDialog;
 
     public void showTipDialog(String tip){
@@ -79,8 +81,29 @@ public class BlueToothUtil {
         void getDeviceId(String id);
     }
 
-    public void setDeviceId(DeviceId deviceId){
-        mDeviceId = deviceId;
+//    public void setDeviceId(DeviceId deviceId){
+//        mDeviceId = deviceId;
+//    }
+
+    public interface DeviceVersion2{
+        Void getDeviceVersion(String deviceVersion);
+    }
+
+    public interface BatteryPower2{
+        void getBatteryPower(int batteryPower);
+    }
+
+//         "heartRate":101,
+//         "deviceId":"haha",
+//         "timestamp":"2018-06-04 00:00:06",
+//         "sportSteps":101,
+//         "sportCal":21,
+//         "sportEnergy":41,
+//         "longitude":"101",
+//         "latitude":"201"
+
+    public interface HeartRate{
+        void getHeartRate(int heartrate);
     }
 
     /**
@@ -95,6 +118,7 @@ public class BlueToothUtil {
                 showTipDialog(watch);
             } else if (command instanceof DeviceVersion) {
                 String localVersion = GlobalVarManager.getInstance().getSoftVersion();
+                mDeviceVersion.getDeviceVersion( localVersion );
                 showTipDialog(localVersion);
             } else if (command instanceof BatteryPower) {
                 showTipDialog(GlobalVarManager.getInstance().getBatteryPower() + "%");
@@ -279,7 +303,9 @@ public class BlueToothUtil {
                 String heartDatas = "";
                 for (HeartData heartData : GlobalDataManager.getInstance().getHeartDatas()) {
                     heartDatas += "value:" + heartData.heartRate_value + "---time:" + DateUtil.dateToSec(DateUtil.timeStampToDate(heartData.time_stamp * 1000)) + "\n";
+                    mHeartRate.getHeartRate( heartData.heartRate_value );
                 }
+
                 showTipDialog(heartDatas);
             }
             if (command instanceof ClearHeartData) {
@@ -326,4 +352,10 @@ public class BlueToothUtil {
             }
         }
     };
+
+    public void getWatchId(){
+        AppsBluetoothManager.getInstance(GlobalApp.getAppContext())
+                .sendCommand(new WatchID(commandResultCallback));
+    }
+
 }

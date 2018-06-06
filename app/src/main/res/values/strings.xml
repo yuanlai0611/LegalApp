@@ -9,7 +9,7 @@
     <string name="VerificationHint">发送验证码</string>
     <string name="phoneButton">发送验证码</string>
     <string name="loginButton">登录</string>
-    <string name="VerificationButton">45秒</string>
+    <string name="VerificationButton">时间</string>
     <string name="titleName">我的</string>
     <string name="myPhone">手机号 ：17607110024</string>
     <string name="myDeviceNumber">设备号 ：ASDFGJKL</string>

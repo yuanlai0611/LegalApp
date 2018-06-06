@@ -8,5 +8,6 @@
     <color name="colorButtonText">#ffffff</color>
     <color name="colorTitleText">#ffffff</color>
     <color name="transparent">#00ffffff</color>
+    <color name="colorBlack">#000000</color>
     <color name="colorButtonUpload">#00a1ff</color>
 </resources>

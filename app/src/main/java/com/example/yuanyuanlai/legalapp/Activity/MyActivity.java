@@ -14,13 +14,13 @@ public class MyActivity extends BaseActivity implements BlueToothUtil.DeviceId{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
-        BlueToothUtil blueToothUtil = new BlueToothUtil();
-        blueToothUtil.setDeviceId( new BlueToothUtil.DeviceId( ) {
-            @Override
-            public void getDeviceId(String id) {
-
-            }
-        } );
+//        BlueToothUtil blueToothUtil = new BlueToothUtil();
+//        blueToothUtil.setDeviceId( new BlueToothUtil.DeviceId( ) {
+//            @Override
+//            public void getDeviceId(String id) {
+//
+//            }
+//        } );
 
     }
 
