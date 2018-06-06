@@ -4,13 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-
-import com.example.yuanyuanlai.legalapp.Application.GlobalApp;
 import com.example.yuanyuanlai.legalapp.Base.BaseActivity;
+import com.example.yuanyuanlai.legalapp.Internet.NetworkType;
 import com.example.yuanyuanlai.legalapp.R;
-import com.example.yuanyuanlai.legalapp.utils.BlueToothUtil;
-import com.sdk.bluetooth.manage.AppsBluetoothManager;
-import com.sdk.bluetooth.protocol.command.device.WatchID;
+import com.example.yuanyuanlai.legalapp.Utils.BlueToothUtil;
 
 public class MyActivity extends BaseActivity implements BlueToothUtil.DeviceId{
 
@@ -54,6 +51,16 @@ public class MyActivity extends BaseActivity implements BlueToothUtil.DeviceId{
 
     @Override
     public void onClick(View v) {
+
+    }
+
+    @Override
+    public void onNetDisconnected() {
+
+    }
+
+    @Override
+    public void onNetConnected(NetworkType networkType) {
 
     }
 }

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.yuanyuanlai.legalapp.Base.BaseActivity;
+import com.example.yuanyuanlai.legalapp.Internet.NetworkType;
 import com.example.yuanyuanlai.legalapp.R;
 
 public class CheckActivity extends BaseActivity implements BaseActivity.OpenCamera {
@@ -91,5 +92,15 @@ public class CheckActivity extends BaseActivity implements BaseActivity.OpenCame
                 break;
 
         }
+    }
+
+    @Override
+    public void onNetDisconnected() {
+
+    }
+
+    @Override
+    public void onNetConnected(NetworkType networkType) {
+
     }
 }

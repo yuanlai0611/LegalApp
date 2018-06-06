@@ -6,8 +6,8 @@ public class AlarmSummaryInfo {
 
     private Integer typeId;
     private String deviceId;
-    private String longitude;// 经度
-    private String latitude;// 纬度
+    private String longitude; // 经度
+    private String latitude;  // 纬度
     private Date timestamp;
 
     public Integer getTypeId() {

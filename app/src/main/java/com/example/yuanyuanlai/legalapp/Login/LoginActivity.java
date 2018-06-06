@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.yuanyuanlai.legalapp.Base.BaseActivity;
+import com.example.yuanyuanlai.legalapp.Internet.NetworkType;
 import com.example.yuanyuanlai.legalapp.R;
 
 public class LoginActivity extends BaseActivity {
@@ -52,6 +53,16 @@ public class LoginActivity extends BaseActivity {
     private void initButton(){
         sendButton.setEnabled( true );
         countDown.setText( "时间" );
+    }
+
+    @Override
+    public void onNetDisconnected() {
+
+    }
+
+    @Override
+    public void onNetConnected(NetworkType networkType) {
+
     }
 
     @Override
