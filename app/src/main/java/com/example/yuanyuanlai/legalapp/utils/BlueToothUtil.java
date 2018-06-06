@@ -1,4 +1,4 @@
-package com.example.yuanyuanlai.legalapp.Utils;
+package com.example.yuanyuanlai.legalapp.utils;
 
 import android.support.v7.app.AlertDialog;
 

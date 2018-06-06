@@ -31,20 +31,20 @@ public class GuideActivity extends BaseActivity {
             super.handleMessage(msg);
             switch (msg.what){
                 case GO_MAIN:
-//                    Boolean il=sharedPreferences.getBoolean( isLogin,false );
-//                    if(!il){
-//                        mIntent = LoginActivity.newIntent( GuideActivity.this );
-//                        startActivity( mIntent );
-//                        finish();
-//                    }else {
-//                        mIntent = HomeActivity.newIntent(GuideActivity.this);
-//                        startActivity(mIntent);
-//                        finish();
-//                    }
-
+                    Boolean il=sharedPreferences.getBoolean( isLogin,false );
+                    if(!il){
+                        mIntent = LoginActivity.newIntent( GuideActivity.this );
+                        startActivity( mIntent );
+                        finish();
+                    }else {
                         mIntent = HomeActivity.newIntent(GuideActivity.this);
                         startActivity(mIntent);
                         finish();
+                    }
+
+//                        mIntent = HomeActivity.newIntent(GuideActivity.this);
+//                        startActivity(mIntent);
+//                        finish();
                     break;
                 default:
                     break;
