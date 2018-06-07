@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
-import com.example.yuanyuanlai.legalapp.Utils.NetworkUtils;
+import com.example.yuanyuanlai.legalapp.Utils.NetworkUtil;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class NetStateChangeReceiver extends BroadcastReceiver{
     public void onReceive(Context context, Intent intent) {
 
         if (ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction())){
-            NetworkType networkType = NetworkUtils.getNetworkType(context);
+            NetworkType networkType = NetworkUtil.getNetworkType(context);
             notifyObservers(networkType);
         }
 

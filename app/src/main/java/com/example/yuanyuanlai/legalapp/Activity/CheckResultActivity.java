@@ -45,6 +45,13 @@ public class CheckResultActivity extends BaseActivity {
         return  intent;
     }
 
+    @Override
+    public void onBlueToothDisconnected() {
 
+    }
 
+    @Override
+    public void onBlueToothConnected() {
+
+    }
 }

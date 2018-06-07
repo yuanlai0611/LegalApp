@@ -4,8 +4,8 @@ import com.example.yuanyuanlai.legalapp.Internet.NetworkType;
 
 public interface BlueToothChangeObserver {
 
-    void onNetDisconnected();
+    void onBlueToothDisconnected();
 
-    void onNetConnected(NetworkType networkType);
+    void onBlueToothConnected();
 
 }

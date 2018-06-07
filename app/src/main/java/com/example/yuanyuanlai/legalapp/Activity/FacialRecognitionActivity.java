@@ -108,4 +108,14 @@ public class FacialRecognitionActivity extends BaseActivity implements BaseActiv
     public void onNetConnected(NetworkType networkType) {
 
     }
+
+    @Override
+    public void onBlueToothDisconnected() {
+
+    }
+
+    @Override
+    public void onBlueToothConnected() {
+
+    }
 }

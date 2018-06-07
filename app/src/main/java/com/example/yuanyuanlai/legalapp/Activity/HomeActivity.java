@@ -120,4 +120,14 @@ public class HomeActivity extends BaseActivity implements BaseActivity.GetLocati
     public void onNetConnected(NetworkType networkType) {
 
     }
+
+    @Override
+    public void onBlueToothDisconnected() {
+
+    }
+
+    @Override
+    public void onBlueToothConnected() {
+
+    }
 }

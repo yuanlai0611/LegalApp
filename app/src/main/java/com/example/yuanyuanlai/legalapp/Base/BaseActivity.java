@@ -15,6 +15,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.yuanyuanlai.legalapp.BlueTooth.BlueToothChangeObserver;
+import com.example.yuanyuanlai.legalapp.BlueTooth.BlueToothChangeReceiver;
 import com.example.yuanyuanlai.legalapp.Internet.NetStateChangeObserver;
 import com.example.yuanyuanlai.legalapp.Internet.NetStateChangeReceiver;
 
@@ -25,7 +27,7 @@ import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 import pub.devrel.easypermissions.PermissionRequest;
 
-public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener, EasyPermissions.PermissionCallbacks, NetStateChangeObserver {
+public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener, EasyPermissions.PermissionCallbacks, NetStateChangeObserver,BlueToothChangeObserver {
 
     private static final int RC_CAMERA = 1000;
     private static final int RC_LOCATION = 1001;
@@ -50,6 +52,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
         NetStateChangeReceiver.registerObserver(this);
+        BlueToothChangeReceiver.registerObserver(this);
 
     }
 
@@ -57,6 +60,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     protected void onStop() {
         super.onStop();
         NetStateChangeReceiver.unRegisterObserver(this);
+        BlueToothChangeReceiver.unRegisterObserver(this);
     }
 
     public abstract void setContentView();
