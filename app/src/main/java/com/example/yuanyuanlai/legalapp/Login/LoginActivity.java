@@ -7,12 +7,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.example.yuanyuanlai.legalapp.Activity.ScanActivity;
 import android.widget.Toast;
 import com.example.yuanyuanlai.legalapp.Activity.HomeActivity;
 import com.example.yuanyuanlai.legalapp.Base.BaseActivity;
@@ -20,7 +23,7 @@ import com.example.yuanyuanlai.legalapp.Bean.LoginBean;
 import com.example.yuanyuanlai.legalapp.Bean.StatusBean;
 import com.example.yuanyuanlai.legalapp.Internet.NetworkType;
 import com.example.yuanyuanlai.legalapp.R;
-import com.example.yuanyuanlai.legalapp.Utils.OkhttpUtil;
+import com.example.yuanyuanlai.legalapp.utils.OkhttpUtil;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.List;
@@ -126,7 +129,7 @@ public class LoginActivity extends BaseActivity {
                         animator.end();
                     }
                     sendButton.setEnabled( true );
-                }else if (cookie.isEmpty()){
+                }else if (TextUtils.isEmpty( cookie )){
                     Toast.makeText(this, "请先获取验证码", Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -142,7 +145,7 @@ public class LoginActivity extends BaseActivity {
         @Override
         protected Void doInBackground(Void... mVoids) {
 
-            OkhttpUtil.getInstance().getVerificationCode("17607110024", new Callback() {
+            OkhttpUtil.getInstance().getVerificationCode(phoneEditText.getText().toString(), new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
                     Log.d(TAG, "获取验证码失败~~");

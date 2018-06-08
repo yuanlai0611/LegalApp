@@ -29,7 +29,7 @@ public class HomeActivity extends BaseActivity implements BaseActivity.GetLocati
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setGetLocation(this);
-        askForLocation();
+//        askForLocation();
     }
 
     public static Intent newIntent(Context context){
@@ -80,9 +80,13 @@ public class HomeActivity extends BaseActivity implements BaseActivity.GetLocati
              startActivity( intent );
              break;
          case R.id.myButton:
+             intent = ScanActivity.newIntent( this );
+             startActivity( intent );
+
+
 //             intent = MyActivity.newIntent(this);
 //             startActivity(intent);
-             askForLocation();
+//             askForLocation();
              break;
          default:
              break;
