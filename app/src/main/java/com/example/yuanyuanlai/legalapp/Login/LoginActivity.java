@@ -23,8 +23,12 @@ import com.example.yuanyuanlai.legalapp.R;
 import com.example.yuanyuanlai.legalapp.Utils.OkhttpUtil;
 import com.google.gson.Gson;
 import java.io.IOException;
+import java.util.List;
+
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.Cookie;
+import okhttp3.Headers;
 import okhttp3.Response;
 
 public class LoginActivity extends BaseActivity {
@@ -36,6 +40,7 @@ public class LoginActivity extends BaseActivity {
     private static final String TAG = "LoginActivity";
     private GetVerificationCodeTask getVerificationCodeTask;
     private LoginTask loginTask;
+    private String cookie;
 
     public static Intent newIntent(Context context){
         Intent intent=new Intent( context,LoginActivity.class );
@@ -114,14 +119,17 @@ public class LoginActivity extends BaseActivity {
             case R.id.loginButton:
                 Log.d(TAG, "点击了login按钮");
                 //登录
-                if (!verificationCodeEditText.getText().toString().isEmpty()){
+                if (!verificationCodeEditText.getText().toString().isEmpty()&&!cookie.isEmpty()){
                     loginTask = new LoginTask();
                     loginTask.execute();
                     if (animator!=null){
                         animator.end();
                     }
                     sendButton.setEnabled( true );
-                }else {
+                }else if (cookie.isEmpty()){
+                    Toast.makeText(this, "请先获取验证码", Toast.LENGTH_SHORT).show();
+                }
+                else {
                     Toast.makeText(this, "验证码没有填齐", Toast.LENGTH_SHORT).show();
                 }
                 break;
@@ -142,6 +150,20 @@ public class LoginActivity extends BaseActivity {
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
+
+
+                    Headers headers = response.headers();
+                    Log.d(TAG, "headers: "+headers.toString());
+                    List<String> cookies = headers.values("Set-Cookie");
+                    String session = cookies.get(0);
+                    cookie = session.substring(0, session.indexOf(";"));
+
+//                    Log.d(TAG, "get: "+headers.get("JSESSIONID"));
+//                    Log.d(TAG, "value: "+headers.value(0));
+//                    List<String> cookies = headers.values("Set-Cookie");
+//                    for (String cookie : cookies){
+//                        Log.d(TAG, cookie);
+//                    }
                     Gson gson = new Gson();
                     StatusBean statusBean = gson.fromJson(response.body().string(), StatusBean.class);
                     if (statusBean.getStatus().getCode() == 1){
@@ -165,7 +187,7 @@ public class LoginActivity extends BaseActivity {
 
             Log.d(TAG, "发起了网络请求");
 
-          OkhttpUtil.getInstance().login(phoneEditText.getText().toString(), Integer.parseInt(verificationCodeEditText.getText().toString()), new Callback() {
+          OkhttpUtil.getInstance().login(phoneEditText.getText().toString(), Integer.parseInt(verificationCodeEditText.getText().toString()), cookie, new Callback() {
               @Override
               public void onFailure(Call call, IOException e) {
                   Log.d(TAG, "登录失败");
@@ -174,6 +196,7 @@ public class LoginActivity extends BaseActivity {
               @Override
               public void onResponse(Call call, Response response) throws IOException {
 
+                  //Log.d(TAG, response.body().string());
                   Gson gson = new Gson();
                   LoginBean loginBean = gson.fromJson(response.body().string(), LoginBean.class);
                   if (loginBean.getStatus().getCode() == 1){
@@ -184,6 +207,7 @@ public class LoginActivity extends BaseActivity {
                       editor.apply();
                       Intent intent = HomeActivity.newIntent(LoginActivity.this);
                       startActivity(intent);
+                      finish();
                       Log.d(TAG, "登录成功");
                   }else if (loginBean.getStatus().getCode() == 0){
                       Log.d(TAG, loginBean.getStatus().getMessage());

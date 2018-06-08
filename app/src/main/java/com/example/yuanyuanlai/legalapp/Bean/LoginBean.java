@@ -4,6 +4,7 @@ public class LoginBean {
 
 
     private ObjectBean object;
+
     private Status status;
 
     public ObjectBean getObject() {
