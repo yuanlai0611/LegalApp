@@ -124,4 +124,14 @@ public class NotificationActivity extends BaseActivity implements View.OnClickLi
     public void onNetConnected(NetworkType networkType) {
 
     }
+
+    @Override
+    public void onBlueToothDisconnected() {
+
+    }
+
+    @Override
+    public void onBlueToothConnected() {
+
+    }
 }

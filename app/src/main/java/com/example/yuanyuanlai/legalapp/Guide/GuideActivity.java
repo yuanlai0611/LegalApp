@@ -41,10 +41,6 @@ public class GuideActivity extends BaseActivity {
                         startActivity(mIntent);
                         finish();
                     }
-
-//                        mIntent = HomeActivity.newIntent(GuideActivity.this);
-//                        startActivity(mIntent);
-//                        finish();
                     break;
                 default:
                     break;
@@ -55,7 +51,7 @@ public class GuideActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        sharedPreferences=getSharedPreferences( loginStatus,MODE_PRIVATE );
+        sharedPreferences = getSharedPreferences( loginStatus,MODE_PRIVATE );
         mHandler.sendEmptyMessageDelayed(GO_MAIN, TIME);
 
     }
@@ -87,6 +83,16 @@ public class GuideActivity extends BaseActivity {
 
     @Override
     public void onClick(View v) {
+
+    }
+
+    @Override
+    public void onBlueToothDisconnected() {
+
+    }
+
+    @Override
+    public void onBlueToothConnected() {
 
     }
 }

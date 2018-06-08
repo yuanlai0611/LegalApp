@@ -63,4 +63,15 @@ public class MyActivity extends BaseActivity implements BlueToothUtil.DeviceId{
     public void onNetConnected(NetworkType networkType) {
 
     }
+
+
+    @Override
+    public void onBlueToothDisconnected() {
+
+    }
+
+    @Override
+    public void onBlueToothConnected() {
+
+    }
 }

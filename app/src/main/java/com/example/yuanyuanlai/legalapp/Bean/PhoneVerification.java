@@ -7,6 +7,12 @@ public class PhoneVerification {
 
     private int verificationCode;
 
+    public PhoneVerification(String mPhone, int mVerificationCode) {
+
+        phone = mPhone;
+        verificationCode = mVerificationCode;
+    }
+
     public String getPhone() {
         return phone;
     }

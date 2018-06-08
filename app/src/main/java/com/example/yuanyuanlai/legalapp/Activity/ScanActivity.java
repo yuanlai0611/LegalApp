@@ -25,7 +25,8 @@ import com.sdk.bluetooth.interfaces.BluetoothManagerDeviceConnectListener;
 import com.sdk.bluetooth.interfaces.BluetoothManagerScanListener;
 import com.sdk.bluetooth.manage.AppsBluetoothManager;
 
-public class ScanActivity extends BaseActivity implements BlueToothChangeObserver{
+public class ScanActivity extends BaseActivity{
+    private final String TAG = "ScanActivity";
     private String mAddress;
     private String mDeviceName;
     private BluetoothAdapter mBluetoothAdapter;
@@ -36,24 +37,6 @@ public class ScanActivity extends BaseActivity implements BlueToothChangeObserve
         Intent intent=new Intent( context,ScanActivity.class );
         return intent;
     }
-
-//    private BlueToothChangeObserver blueToothChangeObserver=new BlueToothChangeObserver( ) {
-//        @Override
-//        public void BlueToothIsOpen() {
-//            if (alertDialog!=null){
-//                if (alertDialog.isShowing()){
-//                    alertDialog.dismiss();
-//                }
-//            }
-//            scanDevice();
-//        }
-//
-//        @Override
-//        public void BlueToothIsClose() {
-//            AppsBluetoothManager.getInstance(GlobalApp.getAppContext()).cancelDiscovery();
-//            alertDialog.show();
-//        }
-//    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +50,6 @@ public class ScanActivity extends BaseActivity implements BlueToothChangeObserve
         //获取蓝牙的系统服务
         BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothAdapter = bluetoothManager.getAdapter();
-
-        BlueToothChangeReceiver.registerReceiver( GlobalApp.getAppContext() );
 
         testbutton=findViewById(R.id.testbutton);
         testbutton.setOnClickListener( new View.OnClickListener( ) {
@@ -166,9 +147,11 @@ public class ScanActivity extends BaseActivity implements BlueToothChangeObserve
     private BluetoothManagerScanListener scanListener = new BluetoothManagerScanListener() {
         @Override
         public void onDeviceFound(BluetoothScanDevice scanDevice) {
+            Log.d( TAG,"调用了扫描回调！！！！！" );
             if (scanDevice != null && scanDevice.getBluetoothDevice() != null) {
                 BluetoothDevice bluetoothDevice = scanDevice.getBluetoothDevice();
                 if (null != bluetoothDevice.getName()) {
+                    Log.d( TAG,bluetoothDevice.getName()+scanDevice.getRssi() );
                     Toast.makeText( GlobalApp.getAppContext(),bluetoothDevice.getName()+scanDevice.getRssi(),Toast.LENGTH_SHORT );
                     //此处获得扫描i到的蓝牙设备
 //                    devAdapter.addDevice(devAdapter.new DevData(bluetoothDevice, scanDevice.getRssi()));
@@ -233,18 +216,18 @@ public class ScanActivity extends BaseActivity implements BlueToothChangeObserve
     }
 
     @Override
-    public void BlueToothIsOpen() {
-        if (alertDialog!=null){
-            if (alertDialog.isShowing()){
-                alertDialog.dismiss();
-                }
-        }
-        scanDevice();
+    public void onBlueToothDisconnected() {
+        AppsBluetoothManager.getInstance(GlobalApp.getAppContext()).cancelDiscovery();
+        alertDialog.show();
     }
 
     @Override
-    public void BlueToothIsClose() {
-        AppsBluetoothManager.getInstance(GlobalApp.getAppContext()).cancelDiscovery();
-        alertDialog.show();
+    public void onBlueToothConnected() {
+        if (alertDialog!=null){
+            if (alertDialog.isShowing()){
+                alertDialog.dismiss();
+            }
+        }
+        scanDevice();
     }
 }

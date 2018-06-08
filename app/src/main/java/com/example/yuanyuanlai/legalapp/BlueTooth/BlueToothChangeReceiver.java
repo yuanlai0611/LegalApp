@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
 
-import com.example.yuanyuanlai.legalapp.Internet.NetStateChangeObserver;
 import com.example.yuanyuanlai.legalapp.Internet.NetStateChangeReceiver;
 
 import java.util.ArrayList;
@@ -26,50 +25,11 @@ public class BlueToothChangeReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        Log.d(TAG,"调用了onReceive");
-        switch (intent.getAction()){
-            case BluetoothAdapter.ACTION_STATE_CHANGED:
-                int blueState = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE,0);
-                switch (blueState) {
-                    case BluetoothAdapter.STATE_TURNING_ON:
-                        Log.d(TAG,"STATE_TURNING_ON");
-                        break;
-                    case BluetoothAdapter.STATE_ON:
-                        for (BlueToothChangeObserver observer : mObservers) {
-                            observer.BlueToothIsOpen( );
-                        }
-                        Log.d(TAG,"STATE_ON");
-                        break;
-                    case BluetoothAdapter.STATE_TURNING_OFF:
-                        break;
-                    case BluetoothAdapter.STATE_OFF:
-                        Log.d(TAG,"STATE_OFF");
-                        for (BlueToothChangeObserver observer : mObservers) {
-                            observer.BlueToothIsClose( );
-                        }
-                        break;
-                }
-                break;
-            default:
-                break;
+        if (intent.getAction() == BluetoothAdapter.ACTION_STATE_CHANGED){
+            int blueToothState = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, 0);
+            notifyObservers(blueToothState);
         }
 
-    }
-
-    public static void registerObserver(BlueToothChangeObserver observer){
-        if (observer == null)
-            return;
-        if (!InstanceHolder.INSTANCE.mObservers.contains(observer)){
-            InstanceHolder.INSTANCE.mObservers.add(observer);
-        }
-    }
-
-    public static void unRegisterObserver(BlueToothChangeObserver observer){
-        if (observer == null)
-            return;
-        if (InstanceHolder.INSTANCE.mObservers == null)
-            return;
-        InstanceHolder.INSTANCE.mObservers.remove(observer);
     }
 
     public static void registerReceiver(Context context){
@@ -82,7 +42,35 @@ public class BlueToothChangeReceiver extends BroadcastReceiver {
         context.unregisterReceiver(InstanceHolder.INSTANCE);
     }
 
-    private void notifyObservers(String STATE){
+    public static void registerObserver(BlueToothChangeObserver observer){
+        if (observer == null)
+            return;
+        if (!BlueToothChangeReceiver.InstanceHolder.INSTANCE.mObservers.contains(observer)){
+            BlueToothChangeReceiver.InstanceHolder.INSTANCE.mObservers.add(observer);
+        }
+    }
+
+    public static void unRegisterObserver(BlueToothChangeObserver observer){
+        if (observer == null)
+            return;
+        if (BlueToothChangeReceiver.InstanceHolder.INSTANCE.mObservers == null)
+            return;
+        BlueToothChangeReceiver.InstanceHolder.INSTANCE.mObservers.remove(observer);
+    }
+
+    private void notifyObservers(int STATE){
+
+        if (STATE == BluetoothAdapter.STATE_ON){
+
+            for (BlueToothChangeObserver observer : mObservers){
+                observer.onBlueToothConnected();
+            }
+
+        }else if (STATE == BluetoothAdapter.STATE_OFF){
+            for (BlueToothChangeObserver observer : mObservers){
+                observer.onBlueToothDisconnected();
+            }
+        }
 
     }
 

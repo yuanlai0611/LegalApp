@@ -103,4 +103,14 @@ public class CheckActivity extends BaseActivity implements BaseActivity.OpenCame
     public void onNetConnected(NetworkType networkType) {
 
     }
+
+    @Override
+    public void onBlueToothDisconnected() {
+
+    }
+
+    @Override
+    public void onBlueToothConnected() {
+
+    }
 }

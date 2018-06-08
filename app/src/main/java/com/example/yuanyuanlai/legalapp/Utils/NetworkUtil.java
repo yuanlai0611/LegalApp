@@ -7,9 +7,9 @@ import android.support.annotation.RequiresPermission;
 import android.telephony.TelephonyManager;
 import com.example.yuanyuanlai.legalapp.Internet.NetworkType;
 
-public class NetworkUtils {
+public class NetworkUtil {
 
-    private NetworkUtils() {
+    private NetworkUtil() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 
