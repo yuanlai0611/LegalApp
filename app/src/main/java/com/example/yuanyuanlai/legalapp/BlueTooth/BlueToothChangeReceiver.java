@@ -7,23 +7,20 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
 
+import com.example.yuanyuanlai.legalapp.Internet.NetStateChangeObserver;
+import com.example.yuanyuanlai.legalapp.Internet.NetStateChangeReceiver;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class BlueToothChangeReceiver extends BroadcastReceiver {
 
     private static final String TAG = "BlueToothChangeReceiver";
-    private BlueToothChange mBlueToothChange = null;
+    private List<BlueToothChangeObserver> mObservers = new ArrayList<>();
 
     private static class InstanceHolder{
         private static final BlueToothChangeReceiver INSTANCE = new BlueToothChangeReceiver();
-    }
-
-    public interface BlueToothChange{
-        void BlueToothIsOpen();
-        void BlueToothIsClose();
-    }
-
-    public void setBlueToothListener(BlueToothChange blueToothListener){
-        mBlueToothChange = blueToothListener;
     }
 
     @Override
@@ -38,14 +35,18 @@ public class BlueToothChangeReceiver extends BroadcastReceiver {
                         Log.d(TAG,"STATE_TURNING_ON");
                         break;
                     case BluetoothAdapter.STATE_ON:
-                        mBlueToothChange.BlueToothIsOpen();
+                        for (BlueToothChangeObserver observer : mObservers) {
+                            observer.BlueToothIsOpen( );
+                        }
                         Log.d(TAG,"STATE_ON");
                         break;
                     case BluetoothAdapter.STATE_TURNING_OFF:
                         break;
                     case BluetoothAdapter.STATE_OFF:
-                        mBlueToothChange.BlueToothIsClose();
                         Log.d(TAG,"STATE_OFF");
+                        for (BlueToothChangeObserver observer : mObservers) {
+                            observer.BlueToothIsClose( );
+                        }
                         break;
                 }
                 break;
@@ -53,6 +54,22 @@ public class BlueToothChangeReceiver extends BroadcastReceiver {
                 break;
         }
 
+    }
+
+    public static void registerObserver(BlueToothChangeObserver observer){
+        if (observer == null)
+            return;
+        if (!InstanceHolder.INSTANCE.mObservers.contains(observer)){
+            InstanceHolder.INSTANCE.mObservers.add(observer);
+        }
+    }
+
+    public static void unRegisterObserver(BlueToothChangeObserver observer){
+        if (observer == null)
+            return;
+        if (InstanceHolder.INSTANCE.mObservers == null)
+            return;
+        InstanceHolder.INSTANCE.mObservers.remove(observer);
     }
 
     public static void registerReceiver(Context context){

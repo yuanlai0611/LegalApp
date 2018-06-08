@@ -10,10 +10,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.yuanyuanlai.legalapp.Application.GlobalApp;
 import com.example.yuanyuanlai.legalapp.Base.BaseActivity;
+import com.example.yuanyuanlai.legalapp.BlueTooth.BlueToothChangeObserver;
 import com.example.yuanyuanlai.legalapp.BlueTooth.BlueToothChangeReceiver;
 import com.example.yuanyuanlai.legalapp.Internet.NetworkType;
 import com.example.yuanyuanlai.legalapp.R;
@@ -23,16 +25,35 @@ import com.sdk.bluetooth.interfaces.BluetoothManagerDeviceConnectListener;
 import com.sdk.bluetooth.interfaces.BluetoothManagerScanListener;
 import com.sdk.bluetooth.manage.AppsBluetoothManager;
 
-public class ScanActivity extends BaseActivity{
+public class ScanActivity extends BaseActivity implements BlueToothChangeObserver{
     private String mAddress;
     private String mDeviceName;
     private BluetoothAdapter mBluetoothAdapter;
     private AlertDialog alertDialog;
+    private Button testbutton;
 
     public static Intent newIntent(Context context){
         Intent intent=new Intent( context,ScanActivity.class );
         return intent;
     }
+
+//    private BlueToothChangeObserver blueToothChangeObserver=new BlueToothChangeObserver( ) {
+//        @Override
+//        public void BlueToothIsOpen() {
+//            if (alertDialog!=null){
+//                if (alertDialog.isShowing()){
+//                    alertDialog.dismiss();
+//                }
+//            }
+//            scanDevice();
+//        }
+//
+//        @Override
+//        public void BlueToothIsClose() {
+//            AppsBluetoothManager.getInstance(GlobalApp.getAppContext()).cancelDiscovery();
+//            alertDialog.show();
+//        }
+//    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +68,17 @@ public class ScanActivity extends BaseActivity{
         BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothAdapter = bluetoothManager.getAdapter();
 
+        BlueToothChangeReceiver.registerReceiver( GlobalApp.getAppContext() );
+
+        testbutton=findViewById(R.id.testbutton);
+        testbutton.setOnClickListener( new View.OnClickListener( ) {
+            @Override
+            public void onClick(View view) {
+                scanDevice();
+            }
+        } );
+
+
         if (mBluetoothAdapter==null){
             //手机不支持蓝牙模块
         }else {
@@ -57,25 +89,6 @@ public class ScanActivity extends BaseActivity{
                 alertDialog.show();
             }
         }
-
-        BlueToothChangeReceiver blueToothChangeReceiver=new BlueToothChangeReceiver();
-        blueToothChangeReceiver.setBlueToothListener( new BlueToothChangeReceiver.BlueToothChange( ) {
-            @Override
-            public void BlueToothIsOpen() {
-                if (alertDialog!=null){
-                    if (alertDialog.isShowing()){
-                        alertDialog.dismiss();
-                    }
-                }
-                scanDevice();
-            }
-
-            @Override
-            public void BlueToothIsClose() {
-                AppsBluetoothManager.getInstance(GlobalApp.getAppContext()).cancelDiscovery();
-                alertDialog.show();
-            }
-        } );
 
     }
 
@@ -156,6 +169,7 @@ public class ScanActivity extends BaseActivity{
             if (scanDevice != null && scanDevice.getBluetoothDevice() != null) {
                 BluetoothDevice bluetoothDevice = scanDevice.getBluetoothDevice();
                 if (null != bluetoothDevice.getName()) {
+                    Toast.makeText( GlobalApp.getAppContext(),bluetoothDevice.getName()+scanDevice.getRssi(),Toast.LENGTH_SHORT );
                     //此处获得扫描i到的蓝牙设备
 //                    devAdapter.addDevice(devAdapter.new DevData(bluetoothDevice, scanDevice.getRssi()));
                 }
@@ -216,5 +230,21 @@ public class ScanActivity extends BaseActivity{
     @Override
     public void onNetConnected(NetworkType networkType) {
 
+    }
+
+    @Override
+    public void BlueToothIsOpen() {
+        if (alertDialog!=null){
+            if (alertDialog.isShowing()){
+                alertDialog.dismiss();
+                }
+        }
+        scanDevice();
+    }
+
+    @Override
+    public void BlueToothIsClose() {
+        AppsBluetoothManager.getInstance(GlobalApp.getAppContext()).cancelDiscovery();
+        alertDialog.show();
     }
 }
