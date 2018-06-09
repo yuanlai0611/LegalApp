@@ -9,6 +9,8 @@ import com.sdk.bluetooth.app.BluetoothApplicationContext;
 
 import org.litepal.LitePal;
 
+import cn.jpush.android.api.JPushInterface;
+
 /**
  * github.com/GongYunHaoyyy
  * Creste by GongYunHao on 2018/6/5
@@ -22,6 +24,8 @@ public class GlobalApp extends Application{
         super.onCreate( );
         context=this;
         LitePal.initialize( context );
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
         BluetoothApplicationContext.getInstance().init( context );
         //在这里注册监听网络状态变化的广播
         NetStateChangeReceiver.registerReceiver(context);

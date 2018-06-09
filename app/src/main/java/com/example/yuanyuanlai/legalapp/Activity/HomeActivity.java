@@ -14,6 +14,10 @@ import com.example.yuanyuanlai.legalapp.Base.BaseActivity;
 import com.example.yuanyuanlai.legalapp.Internet.NetworkType;
 import com.example.yuanyuanlai.legalapp.R;
 
+import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.JPushMessage;
+import cn.jpush.android.service.JPushMessageReceiver;
+
 public class HomeActivity extends BaseActivity implements BaseActivity.GetLocation{
 
     private Button facialRecognitionButton;
@@ -30,6 +34,7 @@ public class HomeActivity extends BaseActivity implements BaseActivity.GetLocati
         super.onCreate(savedInstanceState);
         setGetLocation(this);
         askForLocation();
+
     }
 
     public static Intent newIntent(Context context){
@@ -80,6 +85,7 @@ public class HomeActivity extends BaseActivity implements BaseActivity.GetLocati
              startActivity( intent );
              break;
          case R.id.myButton:
+             JPushInterface.setAlias(this, 2,  "17607110024");
 //             intent = MyActivity.newIntent(this);
 //             startActivity(intent);
              askForLocation();
@@ -130,4 +136,6 @@ public class HomeActivity extends BaseActivity implements BaseActivity.GetLocati
     public void onBlueToothConnected() {
 
     }
+
+
 }

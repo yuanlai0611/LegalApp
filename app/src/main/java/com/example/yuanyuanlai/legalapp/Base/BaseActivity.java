@@ -106,9 +106,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 
         if (EasyPermissions.hasPermissions(this, Manifest.permission.CAMERA)) {
             mOpenCamera.openCamera();
-        } else if (EasyPermissions.hasPermissions(this, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)){
-            mGetLocation.getLocation();
-        } else {
+        }  else {
             PermissionRequest request = new PermissionRequest.Builder(this, RC_CAMERA, Manifest.permission.CAMERA).build();
             EasyPermissions.requestPermissions(request);
         }
