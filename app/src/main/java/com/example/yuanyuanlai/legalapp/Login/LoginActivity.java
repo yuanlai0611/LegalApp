@@ -207,6 +207,7 @@ public class LoginActivity extends BaseActivity {
                       SharedPreferences sharedPreferences = getSharedPreferences("loginStatus", MODE_PRIVATE);
                       SharedPreferences.Editor editor = sharedPreferences.edit();
                       editor.putBoolean("isLogin", true);
+                      editor.putString( "userPhoneNumber",phoneEditText.getText().toString() );
                       editor.apply();
                       Intent intent = HomeActivity.newIntent(LoginActivity.this);
                       startActivity(intent);

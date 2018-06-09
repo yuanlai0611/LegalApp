@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.example.yuanyuanlai.legalapp.Utils.PollingUtils;
+import com.example.yuanyuanlai.legalapp.utils.PollingUtils;
 
 public class PollingReceiver extends BroadcastReceiver {
 

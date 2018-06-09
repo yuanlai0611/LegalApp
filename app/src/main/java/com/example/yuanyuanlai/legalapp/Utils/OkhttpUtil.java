@@ -71,11 +71,12 @@ public class OkhttpUtil {
     }
 
     public void login(String phone, int verificationCode, String cookie, Callback callback){
+        PhoneVerification a = new PhoneVerification( phone,verificationCode );
 
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("phone",phone);
-        jsonObject.addProperty("verificationCode",verificationCode);
-        String json = jsonObject.toString();
+//        JsonObject jsonObject = new JsonObject();
+//        jsonObject.addProperty("phone",phone);
+//        jsonObject.addProperty("verificationCode",verificationCode);
+        String json =new Gson().toJson( a );
         Log.d(TAG, json);
         RequestBody requestBody = RequestBody.create(JSON, json);
 

@@ -1,10 +1,14 @@
 package com.example.yuanyuanlai.legalapp.Activity;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -37,6 +41,32 @@ public class ScanActivity extends BaseActivity{
         Intent intent=new Intent( context,ScanActivity.class );
         return intent;
     }
+
+    @SuppressLint("HandlerLeak")
+    private Handler handler=new Handler(  ){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 1:
+//                    AppsBluetoothManager.getInstance(GlobalApp.getAppContext()).cancelDiscovery();
+//                    AlertDialog mdialog=new AlertDialog.Builder( ScanActivity.this )
+//                            .setTitle( "提示：" )
+//                            .setMessage( "扫描到设备：" )
+//                            .setCancelable( false )
+//                            .setPositiveButton( "连接", new DialogInterface.OnClickListener( ) {
+//                                @Override
+//                                public void onClick(DialogInterface dialogInterface, int i) {
+// //                                    AppsBluetoothManager.getInstance(GlobalApp.getAppContext()).cancelDiscovery();
+//                                    AppsBluetoothManager.getInstance(GlobalApp.getAppContext()).connectDevice(bluetoothDevice.getAddress());
+//
+//                                }
+//                            } )
+//                            .create();
+//                    mdialog.show();
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +146,6 @@ public class ScanActivity extends BaseActivity{
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    // AppsBluetoothManager.getInstance(GlobalApp.getAppContext()).createBound(device);
                     openBindDevice();
                 }
             });
@@ -137,7 +166,7 @@ public class ScanActivity extends BaseActivity{
         Log.i("DeviceName", mDeviceName);
 
         BluetoothConfig.setDefaultMac(GlobalApp.getAppContext(), mAddress);
-//        startActivity(new Intent(this, nextactivity.class));
+        startActivity(MyActivity.newIntent( this ));//此处超过4行就不能扫描，未知的bug
         finish();
     }
 
@@ -147,12 +176,30 @@ public class ScanActivity extends BaseActivity{
     private BluetoothManagerScanListener scanListener = new BluetoothManagerScanListener() {
         @Override
         public void onDeviceFound(BluetoothScanDevice scanDevice) {
-            Log.d( TAG,"调用了扫描回调！！！！！" );
+            Log.d( TAG,"----------回调了" );
             if (scanDevice != null && scanDevice.getBluetoothDevice() != null) {
-                BluetoothDevice bluetoothDevice = scanDevice.getBluetoothDevice();
+                final BluetoothDevice bluetoothDevice = scanDevice.getBluetoothDevice();
                 if (null != bluetoothDevice.getName()) {
+                    //判断是否是账号对应的设备名称
+//                    Message message=new Message();
+//                    message.what = 1;
+//                    handler.sendMessage( message );
+                    AppsBluetoothManager.getInstance(GlobalApp.getAppContext()).cancelDiscovery();
+                    AlertDialog mdialog=new AlertDialog.Builder( ScanActivity.this )
+                            .setTitle( "提示：" )
+                            .setMessage( "扫描到设备："+bluetoothDevice.getName() )
+                            .setCancelable( false )
+                            .setPositiveButton( "连接", new DialogInterface.OnClickListener( ) {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    //                                    AppsBluetoothManager.getInstance(GlobalApp.getAppContext()).cancelDiscovery();
+                                    AppsBluetoothManager.getInstance(GlobalApp.getAppContext()).connectDevice(bluetoothDevice.getAddress());
+
+                                }
+                            } )
+                            .create();
+                    mdialog.show();
                     Log.d( TAG,bluetoothDevice.getName()+scanDevice.getRssi() );
-                    Toast.makeText( GlobalApp.getAppContext(),bluetoothDevice.getName()+scanDevice.getRssi(),Toast.LENGTH_SHORT );
                     //此处获得扫描i到的蓝牙设备
 //                    devAdapter.addDevice(devAdapter.new DevData(bluetoothDevice, scanDevice.getRssi()));
                 }

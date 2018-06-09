@@ -1,5 +1,6 @@
 package com.example.yuanyuanlai.legalapp.utils;
 
+import android.content.Context;
 import android.support.v7.app.AlertDialog;
 
 import com.example.yuanyuanlai.legalapp.Application.GlobalApp;
@@ -63,10 +64,15 @@ public class BlueToothUtil {
     private DeviceVersion2 mDeviceVersion = null;
     private HeartRate mHeartRate = null;
     private AlertDialog alertDialog;
+    private Context context;
+
+    public BlueToothUtil(Context context) {
+        this.context = context;
+    }
 
     public void showTipDialog(String tip){
         if (alertDialog==null){
-            alertDialog=new AlertDialog.Builder( GlobalApp.getAppContext() )
+            alertDialog=new AlertDialog.Builder( context )
                     .setTitle( R.string.activityNotification )
                     .setCancelable( true )
                     .setMessage( tip )
@@ -81,9 +87,9 @@ public class BlueToothUtil {
         void getDeviceId(String id);
     }
 
-//    public void setDeviceId(DeviceId deviceId){
-//        mDeviceId = deviceId;
-//    }
+    public void setDeviceId(DeviceId deviceId){
+        mDeviceId = deviceId;
+    }
 
     public interface DeviceVersion2{
         Void getDeviceVersion(String deviceVersion);
@@ -352,6 +358,12 @@ public class BlueToothUtil {
             }
         }
     };
+
+    public void getVersion(){
+        DeviceVersion deviceVersion = new DeviceVersion(commandResultCallback, DeviceVersion.DeviceSoftVersion);
+        AppsBluetoothManager.getInstance(GlobalApp.getAppContext())
+                .sendCommand(deviceVersion);
+    }
 
     public void getWatchId(){
         AppsBluetoothManager.getInstance(GlobalApp.getAppContext())

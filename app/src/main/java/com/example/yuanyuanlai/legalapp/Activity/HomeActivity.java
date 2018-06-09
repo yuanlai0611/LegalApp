@@ -1,12 +1,15 @@
 package com.example.yuanyuanlai.legalapp.Activity;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,12 +27,14 @@ public class HomeActivity extends BaseActivity implements BaseActivity.GetLocati
     private LocationManager mLocationManager;
     private Location location;
     private static final String TAG = "HomeActivity";
+    private static final int REQUEST_FINE_LOCATION = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setGetLocation(this);
 //        askForLocation();
+        MayRequestLocation();
     }
 
     public static Intent newIntent(Context context){
@@ -45,6 +50,12 @@ public class HomeActivity extends BaseActivity implements BaseActivity.GetLocati
        myButton.setOnClickListener(this);
 
 
+    }
+
+    private void MayRequestLocation() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_FINE_LOCATION);
+        }
     }
 
     @SuppressLint("MissingPermission")

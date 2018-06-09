@@ -54,6 +54,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/phoneNumber"
                 android:textSize="@dimen/myTextSize"
                 android:gravity="center_vertical"
                 android:layout_marginStart="@dimen/myTextMarginLeft"
