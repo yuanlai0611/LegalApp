@@ -1,13 +1,23 @@
 package com.example.yuanyuanlai.legalapp.Activity;
 
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothManager;
+import android.content.Context;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.yuanyuanlai.legalapp.Application.GlobalApp;
+import com.example.yuanyuanlai.legalapp.Base.BaseActivity;
+import com.example.yuanyuanlai.legalapp.BlueTooth.BlueToothChangeObserver;
+import com.example.yuanyuanlai.legalapp.BlueTooth.BlueToothChangeReceiver;
+import com.example.yuanyuanlai.legalapp.Internet.NetworkType;
 import com.example.yuanyuanlai.legalapp.R;
 import com.sdk.bluetooth.bean.BluetoothScanDevice;
 import com.sdk.bluetooth.config.BluetoothConfig;
@@ -15,15 +25,74 @@ import com.sdk.bluetooth.interfaces.BluetoothManagerDeviceConnectListener;
 import com.sdk.bluetooth.interfaces.BluetoothManagerScanListener;
 import com.sdk.bluetooth.manage.AppsBluetoothManager;
 
-public class ScanActivity extends AppCompatActivity {
+public class ScanActivity extends BaseActivity{
+    private final String TAG = "ScanActivity";
     private String mAddress;
     private String mDeviceName;
+    private BluetoothAdapter mBluetoothAdapter;
+    private AlertDialog alertDialog;
+    private Button testbutton;
+
+    public static Intent newIntent(Context context){
+        Intent intent=new Intent( context,ScanActivity.class );
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_scan );
+        alertDialog=new AlertDialog.Builder( ScanActivity.this )
+                .setTitle(  "警告！！" )
+                .setMessage( "请打开手机蓝牙功能！" )
+                .setIcon( getResources().getDrawable( R.drawable.ic_priority_high_red_24dp ) )
+                .setCancelable( false )
+                .create();
+        //获取蓝牙的系统服务
+        BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+        mBluetoothAdapter = bluetoothManager.getAdapter();
+
+        testbutton=findViewById(R.id.testbutton);
+        testbutton.setOnClickListener( new View.OnClickListener( ) {
+            @Override
+            public void onClick(View view) {
+                scanDevice();
+            }
+        } );
+
+
+        if (mBluetoothAdapter==null){
+            //手机不支持蓝牙模块
+        }else {
+            if (mBluetoothAdapter.isEnabled()){
+                //蓝牙开启了
+                scanDevice();
+            }else {
+                alertDialog.show();
+            }
+        }
+
     }
+
+    /*
+     * 扫描蓝牙设备
+     */
+    private void scanDevice() {
+        if (mBluetoothAdapter == null) {
+            // showToast(getString(R.string.error_bluetooth_not_supported));
+            return;
+        }
+        if (mBluetoothAdapter.isEnabled()) {
+            mAddress = "";
+            // AppsBluetoothManager.getInstance(GlobalApp.getAppContext()).cancelDiscovery();
+//            devAdapter.clearList();
+            AppsBluetoothManager.getInstance(GlobalApp.getAppContext()).startDiscovery();
+            Toast.makeText( GlobalApp.getAppContext(),"在扫描",Toast.LENGTH_SHORT ).show();
+        } else {
+            // showToast(getString(R.string.turn_on_bluetooth_tips));
+        }
+    }
+
+
 
     /**
      * 蓝牙连接状态
@@ -78,9 +147,13 @@ public class ScanActivity extends AppCompatActivity {
     private BluetoothManagerScanListener scanListener = new BluetoothManagerScanListener() {
         @Override
         public void onDeviceFound(BluetoothScanDevice scanDevice) {
+            Log.d( TAG,"调用了扫描回调！！！！！" );
             if (scanDevice != null && scanDevice.getBluetoothDevice() != null) {
                 BluetoothDevice bluetoothDevice = scanDevice.getBluetoothDevice();
                 if (null != bluetoothDevice.getName()) {
+                    Log.d( TAG,bluetoothDevice.getName()+scanDevice.getRssi() );
+                    Toast.makeText( GlobalApp.getAppContext(),bluetoothDevice.getName()+scanDevice.getRssi(),Toast.LENGTH_SHORT );
+                    //此处获得扫描i到的蓝牙设备
 //                    devAdapter.addDevice(devAdapter.new DevData(bluetoothDevice, scanDevice.getRssi()));
                 }
             }
@@ -112,4 +185,49 @@ public class ScanActivity extends AppCompatActivity {
         AppsBluetoothManager.getInstance(GlobalApp.getAppContext()).addBluetoothManagerDeviceConnectListener(connectListener);
     }
 
+    @Override
+    public void setContentView() {
+        setContentView( R.layout.activity_scan );
+    }
+
+    @Override
+    public void initListener() {
+
+    }
+
+    @Override
+    public void findViewById() {
+
+    }
+
+    @Override
+    public void onClick(View view) {
+
+    }
+
+    @Override
+    public void onNetDisconnected() {
+
+    }
+
+    @Override
+    public void onNetConnected(NetworkType networkType) {
+
+    }
+
+    @Override
+    public void onBlueToothDisconnected() {
+        AppsBluetoothManager.getInstance(GlobalApp.getAppContext()).cancelDiscovery();
+        alertDialog.show();
+    }
+
+    @Override
+    public void onBlueToothConnected() {
+        if (alertDialog!=null){
+            if (alertDialog.isShowing()){
+                alertDialog.dismiss();
+            }
+        }
+        scanDevice();
+    }
 }

@@ -85,10 +85,13 @@ public class HomeActivity extends BaseActivity implements BaseActivity.GetLocati
              startActivity( intent );
              break;
          case R.id.myButton:
-             JPushInterface.setAlias(this, 2,  "17607110024");
+             intent = ScanActivity.newIntent( this );
+             startActivity( intent );
+
+
 //             intent = MyActivity.newIntent(this);
 //             startActivity(intent);
-             askForLocation();
+//             askForLocation();
              break;
          default:
              break;

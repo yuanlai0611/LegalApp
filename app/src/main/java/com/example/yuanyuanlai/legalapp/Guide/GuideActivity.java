@@ -41,7 +41,6 @@ public class GuideActivity extends BaseActivity {
                         startActivity(mIntent);
                         finish();
                     }
-
                     break;
                 default:
                     break;

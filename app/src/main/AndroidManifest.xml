@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.yuanyuanlai.legalapp">
 
-    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
@@ -38,7 +38,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity android:name=".Activity.HomeActivity"/>
         <activity android:name=".Guide.GuideActivity">
             <intent-filter>
@@ -47,14 +46,23 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".Login.LoginActivity" />
-        <activity android:name=".Activity.MyActivity" />
-        <activity android:name=".Activity.FacialRecognitionActivity" />
-        <activity android:name=".Activity.CheckActivity" />
-        <activity android:name=".Activity.NotificationActivity"
-                  android:theme="@style/MyTheme"/>
+
+        <activity android:name=".Login.LoginActivity"/>
+        <activity android:name=".Activity.ScanActivity"/>
+        <activity android:name=".Activity.MyActivity"/>
+        <activity android:name=".Activity.FacialRecognitionActivity"/>
+        <activity android:name=".Activity.CheckActivity"/>
+
+        <service android:name="com.sdk.bluetooth.manage.BluetoothService" />
+
+        <activity
+            android:name=".Activity.NotificationActivity"
+            android:theme="@style/MyTheme"/>
         <activity android:name=".Activity.CheckResultActivity"/>
+
+
         <service android:name=".BackgroundService.PollingService"/>
+
         <receiver android:name=".BackgroundService.PollingReceiver"/>
 
         <receiver android:name=".Jpush.JPushReceiver"

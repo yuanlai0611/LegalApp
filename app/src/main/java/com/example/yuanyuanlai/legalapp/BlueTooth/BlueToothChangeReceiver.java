@@ -16,7 +16,6 @@ import java.util.List;
 public class BlueToothChangeReceiver extends BroadcastReceiver {
 
     private static final String TAG = "BlueToothChangeReceiver";
-
     private List<BlueToothChangeObserver> mObservers = new ArrayList<>();
 
     private static class InstanceHolder{
@@ -26,34 +25,10 @@ public class BlueToothChangeReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-
         if (intent.getAction() == BluetoothAdapter.ACTION_STATE_CHANGED){
             int blueToothState = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, 0);
             notifyObservers(blueToothState);
         }
-
-//        Log.d(TAG,"调用了onReceive");
-//        switch (intent.getAction()){
-//            case BluetoothAdapter.ACTION_STATE_CHANGED:
-//                int blueState = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE,0);
-//                switch (blueState) {
-//                    case BluetoothAdapter.STATE_TURNING_ON:
-//                        Log.d(TAG,"STATE_TURNING_ON");
-//                        break;
-//                    case BluetoothAdapter.STATE_ON:
-//                        Log.d(TAG,"STATE_ON");
-//                        break;
-//                    case BluetoothAdapter.STATE_TURNING_OFF:
-//                        Log.d(TAG,"STATE_TURNING_OFF");
-//                        break;
-//                    case BluetoothAdapter.STATE_OFF:
-//                        Log.d(TAG,"STATE_OFF");
-//                        break;
-//                }
-//                break;
-//            default:
-//                break;
-//        }
 
     }
 
