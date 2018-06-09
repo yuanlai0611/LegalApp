@@ -27,7 +27,7 @@ public class HomeActivity extends BaseActivity implements BaseActivity.GetLocati
     private LocationManager mLocationManager;
     private Location location;
     private static final String TAG = "HomeActivity";
-    private static final int REQUEST_FINE_LOCATION = 101;
+    private static final int REQUEST_FINE_LOCATION = 1010;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
