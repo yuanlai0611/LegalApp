@@ -35,7 +35,7 @@ import com.example.yuanyuanlai.legalapp.Bean.LoginBean;
 import com.example.yuanyuanlai.legalapp.Bean.StatusBean;
 import com.example.yuanyuanlai.legalapp.Internet.NetworkType;
 import com.example.yuanyuanlai.legalapp.R;
-import com.example.yuanyuanlai.legalapp.utils.DialogUtil;
+sterimport com.example.yuanyuanlai.legalapp.utils.DialogUtil;
 import com.example.yuanyuanlai.legalapp.utils.OkhttpUtil;
 import com.google.gson.Gson;
 import com.sdk.bluetooth.bean.BluetoothScanDevice;

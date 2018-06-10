@@ -8,6 +8,7 @@ import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 import com.example.yuanyuanlai.legalapp.AlarmType;
 import com.example.yuanyuanlai.legalapp.Application.GlobalApp;
 import com.example.yuanyuanlai.legalapp.BackgroundService.PollingReceiver;
+
 import com.example.yuanyuanlai.legalapp.Base.BaseActivity;
 import com.example.yuanyuanlai.legalapp.Bean.AlarmSummaryInfo;
 import com.example.yuanyuanlai.legalapp.Internet.NetworkType;
@@ -258,8 +260,14 @@ public class HomeActivity extends BaseActivity implements BaseActivity.GetLocati
     public void onClick(View v) {
      switch (v.getId()){
          case R.id.facialRecognitionButton:
-             intent = FacialRecognitionActivity.newIntent(this);
-             startActivity(intent);
+             SharedPreferences sharedPreferences = getSharedPreferences("facialRecognition", MODE_PRIVATE);
+             boolean isSuccess = sharedPreferences.getBoolean("isFirstSuccess", false);
+             if (isSuccess){
+                 Toast.makeText(HomeActivity.this, "已经经过第一次登陆了", Toast.LENGTH_SHORT).show();
+             }else {
+                 intent = FacialRecognitionActivity.newIntent(this);
+                 startActivity(intent);
+             }
              break;
          case R.id.checkButton:
              intent = CheckActivity.newIntent(this);

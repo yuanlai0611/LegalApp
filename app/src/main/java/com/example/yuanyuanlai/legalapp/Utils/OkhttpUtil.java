@@ -1,4 +1,4 @@
-package com.example.yuanyuanlai.legalapp.utils;
+package com.example.yuanyuanlai.legalapp.Utils;
 
 import android.util.Log;
 
@@ -7,9 +7,11 @@ import com.example.yuanyuanlai.legalapp.Bean.PhoneVerification;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Callback;
 import okhttp3.Cookie;
@@ -17,6 +19,7 @@ import okhttp3.CookieJar;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -101,4 +104,23 @@ public class OkhttpUtil {
                 .newCall(request)
                 .enqueue(callback);
     }
+
+    public void uploadFile(String phone, File file, Callback callback){
+
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/octet-stream"),file);
+        String fileName = phone + System.currentTimeMillis() + ".jpg";
+        MultipartBody multipartBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                .addFormDataPart("uploadFile", fileName, requestBody)
+                .build();
+
+        Request request = new Request.Builder()
+                .url("http://47.94.100.108:8080/iot_server/face/faceCheck/" + phone)
+                .post(multipartBody).build();
+
+        mOkhttpClient.newBuilder().readTimeout(30000, TimeUnit.MILLISECONDS)
+                .build().newCall(request).enqueue(callback);
+
+
+    }
+
 }

@@ -57,8 +57,6 @@ public class JPushReceiver extends BroadcastReceiver {
               context.startActivity(i);
           }
 
-
-
           Log.d(TAG, "用户点击打开了通知");
       }
 }
