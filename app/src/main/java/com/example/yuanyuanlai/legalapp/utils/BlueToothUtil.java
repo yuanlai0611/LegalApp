@@ -117,6 +117,10 @@ public class BlueToothUtil {
         void getHeartRate(int heartrate);
     }
 
+    public void setHeartRate(HeartRate heartRate){
+        mHeartRate = heartRate;
+    }
+
     /**
      * 处理蓝牙命令回调
      */
@@ -409,7 +413,7 @@ public class BlueToothUtil {
     }
     public void getHeartRateData(){
         AppsBluetoothManager.getInstance(GlobalApp.getAppContext())
-                .sendCommand(new GetHeartData(commandResultCallback, 0, 0, (int) GlobalVarManager.getInstance().getHeartRateCount()));
+                .sendCommand(new GetHeartData(commandResultCallback, 1, 0, (int) GlobalVarManager.getInstance().getHeartRateCount()));
     }
 
 }

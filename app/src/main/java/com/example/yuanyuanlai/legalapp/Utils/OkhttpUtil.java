@@ -2,6 +2,7 @@ package com.example.yuanyuanlai.legalapp.utils;
 
 import android.util.Log;
 
+import com.example.yuanyuanlai.legalapp.Bean.AlarmSummaryInfo;
 import com.example.yuanyuanlai.legalapp.Bean.PhoneVerification;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -68,6 +69,16 @@ public class OkhttpUtil {
                 .get()
                 .build();
         mOkhttpClient.newCall(request).enqueue(callback);
+    }
+
+    public void alarmSummaryInfo(AlarmSummaryInfo alarmSummaryInfo,Callback callback){
+        String json = new Gson().toJson( alarmSummaryInfo );
+        RequestBody requestBody = RequestBody.create( JSON,json );
+        Request request = new Request.Builder()
+                .url( "http://47.94.100.108:8080/iot_server/alarm" )
+                .post( requestBody )
+                .build();
+        mOkhttpClient.newCall( request ).enqueue( callback );
     }
 
     public void login(String phone, int verificationCode, String cookie, Callback callback){

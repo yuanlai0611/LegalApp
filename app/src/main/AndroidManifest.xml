@@ -48,7 +48,6 @@
         </activity>
 
         <activity android:name=".Login.LoginActivity"/>
-        <activity android:name=".Activity.ScanActivity"/>
         <activity android:name=".Activity.MyActivity"/>
         <activity android:name=".Activity.FacialRecognitionActivity"/>
         <activity android:name=".Activity.CheckActivity"/>

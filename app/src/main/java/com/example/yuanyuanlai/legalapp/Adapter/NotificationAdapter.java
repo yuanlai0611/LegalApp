@@ -50,20 +50,29 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         MyNotifyViewHolder notiViewHolder=(MyNotifyViewHolder)holder;
         ItemNotification itemNotification=notificationBeanList.get( position );
-        if (itemNotification.getViewType()==ItemNotification.SHOW_DATE){
+        if (position==0){
             //显示日期item
             notiViewHolder.rela_date.setVisibility( View.VISIBLE );
             notiViewHolder.rela_mess.setVisibility( View.GONE );
-            notiViewHolder.mdate.setText( itemNotification.getDate().toString() );
+            notiViewHolder.mdate.setText( itemNotification.getDate());
             notiViewHolder.detail_time.setText( "" );
             notiViewHolder.detail_message.setText( "" );
         }else {
-            //显示messages
-            notiViewHolder.rela_date.setVisibility( View.GONE );
-            notiViewHolder.rela_mess.setVisibility( View.VISIBLE );
-            notiViewHolder.mdate.setText( "" );
-            notiViewHolder.detail_time.setText( itemNotification.getDate().toString() );
-            notiViewHolder.detail_message.setText( itemNotification.getDetail_notification() );
+            if ( !itemNotification.getDate().equals( notificationBeanList.get( position-1 ))){
+                //显示日期item
+                notiViewHolder.rela_date.setVisibility( View.VISIBLE );
+                notiViewHolder.rela_mess.setVisibility( View.GONE );
+                notiViewHolder.mdate.setText( itemNotification.getDate());
+                notiViewHolder.detail_time.setText( "" );
+                notiViewHolder.detail_message.setText( "" );
+            }else {
+                //显示messages
+                notiViewHolder.rela_date.setVisibility( View.GONE );
+                notiViewHolder.rela_mess.setVisibility( View.VISIBLE );
+                notiViewHolder.mdate.setText( "" );
+                notiViewHolder.detail_time.setText( itemNotification.getDate());
+                notiViewHolder.detail_message.setText( itemNotification.getDetail_notification() );
+                }
         }
     }
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
+import android.util.Log;
 
 import com.example.yuanyuanlai.legalapp.utils.NetworkUtil;
 
@@ -13,6 +14,8 @@ import java.util.List;
 
 
 public class NetStateChangeReceiver extends BroadcastReceiver{
+
+    private static final String TAG = "NetStateChangeReceiver";
 
     private static class InstanceHolder{
         private static final NetStateChangeReceiver INSTANCE = new NetStateChangeReceiver();
@@ -77,6 +80,7 @@ public class NetStateChangeReceiver extends BroadcastReceiver{
      */
     private void notifyObservers(NetworkType networkType){
         if (networkType == NetworkType.NETWORK_NO){
+            Log.d( TAG, "调用了NetStateChangeReceiver" );
             for (NetStateChangeObserver observer : mObservers){
                 observer.onNetDisconnected();
             }

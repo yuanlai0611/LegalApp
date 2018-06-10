@@ -10,4 +10,6 @@
     <color name="transparent">#00ffffff</color>
     <color name="colorBlack">#000000</color>
     <color name="colorButtonUpload">#00a1ff</color>
+    <color name="toast_bg_loading">#50000000</color>  //半透明
+
 </resources>

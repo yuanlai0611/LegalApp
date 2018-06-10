@@ -13,7 +13,7 @@ public class ItemNotification extends DataSupport{
     public static final int SHOW_MESSAGES = 2;
 
     private String detail_notification;
-    private Date date;
+    private String date;
     private int viewType;
 
     public int getViewType() {
@@ -32,11 +32,11 @@ public class ItemNotification extends DataSupport{
         this.detail_notification = detail_notification;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }

@@ -3,87 +3,77 @@ package com.example.yuanyuanlai.legalapp.Bean;
 import java.util.Date;
 
 public class WatchSummaryInfo {
-
     private String deviceId;
-    private Integer heartRate;
-    private String longitude;// 经度
-    private String latitude;// 纬度
-    private Integer sportSteps;
-    private Integer sportCal;
-    private Integer sportEnergy;
-    private Integer gpsId;
-    private Date timestamp;
 
-    public String getDeviceId() {
-        return deviceId;
-    }
+    private int gpsId;
 
-    public void setDeviceId(String deviceId) {
+    private int heartRate;
+
+    private String latitude;//纬度
+
+    private String longitude;//经度
+
+    private int sportCal;
+
+    private int sportEnergy;
+
+    private int sportSteps;
+
+    private String timestamp;
+
+    public void setDeviceId(String deviceId){
         this.deviceId = deviceId;
     }
-
-    public Integer getHeartRate() {
-        return heartRate;
+    public String getDeviceId(){
+        return this.deviceId;
     }
-
-    public void setHeartRate(Integer heartRate) {
-        this.heartRate = heartRate;
-    }
-
-    public String getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
-    }
-
-    public String getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
-
-    public Integer getSportSteps() {
-        return sportSteps;
-    }
-
-    public void setSportSteps(Integer sportSteps) {
-        this.sportSteps = sportSteps;
-    }
-
-    public Integer getSportCal() {
-        return sportCal;
-    }
-
-    public void setSportCal(Integer sportCal) {
-        this.sportCal = sportCal;
-    }
-
-    public Integer getSportEnergy() {
-        return sportEnergy;
-    }
-
-    public void setSportEnergy(Integer sportEnergy) {
-        this.sportEnergy = sportEnergy;
-    }
-
-    public Integer getGpsId() {
-        return gpsId;
-    }
-
-    public void setGpsId(Integer gpsId) {
+    public void setGpsId(int gpsId){
         this.gpsId = gpsId;
     }
-
-    public Date getTimestamp() {
-        return timestamp;
+    public int getGpsId(){
+        return this.gpsId;
     }
-
-    public void setTimestamp(Date timestamp) {
+    public void setHeartRate(int heartRate){
+        this.heartRate = heartRate;
+    }
+    public int getHeartRate(){
+        return this.heartRate;
+    }
+    public void setLatitude(String latitude){
+        this.latitude = latitude;
+    }
+    public String getLatitude(){
+        return this.latitude;
+    }
+    public void setLongitude(String longitude){
+        this.longitude = longitude;
+    }
+    public String getLongitude(){
+        return this.longitude;
+    }
+    public void setSportCal(int sportCal){
+        this.sportCal = sportCal;
+    }
+    public int getSportCal(){
+        return this.sportCal;
+    }
+    public void setSportEnergy(int sportEnergy){
+        this.sportEnergy = sportEnergy;
+    }
+    public int getSportEnergy(){
+        return this.sportEnergy;
+    }
+    public void setSportSteps(int sportSteps){
+        this.sportSteps = sportSteps;
+    }
+    public int getSportSteps(){
+        return this.sportSteps;
+    }
+    public void setTimestamp(String timestamp){
         this.timestamp = timestamp;
+    }
+    public String getTimestamp(){
+        return this.timestamp;
     }
 
 }
