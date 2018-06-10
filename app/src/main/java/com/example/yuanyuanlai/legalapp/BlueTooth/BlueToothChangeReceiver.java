@@ -16,6 +16,7 @@ import java.util.List;
 public class BlueToothChangeReceiver extends BroadcastReceiver {
 
     private static final String TAG = "BlueToothChangeReceiver";
+
     private List<BlueToothChangeObserver> mObservers = new ArrayList<>();
 
     private static class InstanceHolder{

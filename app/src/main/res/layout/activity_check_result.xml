@@ -51,6 +51,7 @@
                 android:layout_height="match_parent">
 
                 <TextView
+                    android:id="@+id/check_result"
                     android:textColor="@color/colorLogoTextBlack"
                     android:layout_marginTop="30dp"
                     android:textSize="22sp"
@@ -60,6 +61,7 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
+                    android:id="@+id/check_word"
                     android:textColor="@color/colorLogoTextBlack"
                     android:layout_marginTop="40dp"
                     android:textSize="26sp"
@@ -69,6 +71,7 @@
                     android:layout_height="wrap_content" />
 
                 <ImageView
+                    android:id="@+id/back"
                     android:src="@drawable/check_result_sign"
                     android:layout_marginTop="60dp"
                     android:layout_gravity="center_horizontal"

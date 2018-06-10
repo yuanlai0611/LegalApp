@@ -82,6 +82,8 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 
         if (requestCode == RC_CAMERA) {
             Toast.makeText(this, "同意了相机权限", Toast.LENGTH_SHORT).show();
+        }else if (requestCode == RC_LOCATION){
+            Toast.makeText(this, "同意了位置权限", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -104,10 +106,10 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     @AfterPermissionGranted(RC_CAMERA)
     public void askForCamera() {
 
-        if (EasyPermissions.hasPermissions(this, Manifest.permission.CAMERA)) {
+        if (EasyPermissions.hasPermissions(this, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             mOpenCamera.openCamera();
         }  else {
-            PermissionRequest request = new PermissionRequest.Builder(this, RC_CAMERA, Manifest.permission.CAMERA).build();
+            PermissionRequest request = new PermissionRequest.Builder(this, RC_CAMERA, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE).build();
             EasyPermissions.requestPermissions(request);
         }
 
@@ -121,7 +123,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         if (EasyPermissions.hasPermissions(this, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)) {
             mGetLocation.getLocation();
         }else {
-            PermissionRequest request = new PermissionRequest.Builder(this,RC_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION).build();
+            PermissionRequest request = new PermissionRequest.Builder(this,RC_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION).build();
             EasyPermissions.requestPermissions(request);
         }
 
