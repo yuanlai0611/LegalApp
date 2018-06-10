@@ -21,6 +21,7 @@ import com.sdk.bluetooth.protocol.command.clear.ClearHeartData;
 import com.sdk.bluetooth.protocol.command.clear.ClearSleepData;
 import com.sdk.bluetooth.protocol.command.clear.ClearSportData;
 import com.sdk.bluetooth.protocol.command.count.AllDataCount;
+import com.sdk.bluetooth.protocol.command.count.SportSleepCount;
 import com.sdk.bluetooth.protocol.command.data.DeviceDisplaySportSleep;
 import com.sdk.bluetooth.protocol.command.data.GetBloodData;
 import com.sdk.bluetooth.protocol.command.data.GetHeartData;
@@ -63,6 +64,7 @@ public class BlueToothUtil {
     private DeviceId mDeviceId = null;
     private DeviceVersion2 mDeviceVersion = null;
     private HeartRate mHeartRate = null;
+    private BatteryPower2 mbattery = null;
     private AlertDialog alertDialog;
     private Context context;
 
@@ -85,6 +87,9 @@ public class BlueToothUtil {
 
     public interface DeviceId{
         void getDeviceId(String id);
+    }
+    public void setBattery(BatteryPower2 batteryPower2){
+        mbattery = batteryPower2;
     }
 
     public void setDeviceId(DeviceId deviceId){
@@ -128,6 +133,7 @@ public class BlueToothUtil {
                 showTipDialog(localVersion);
             } else if (command instanceof BatteryPower) {
                 showTipDialog(GlobalVarManager.getInstance().getBatteryPower() + "%");
+                mbattery.getBatteryPower( GlobalVarManager.getInstance().getBatteryPower() );
             } else if (command instanceof TimeSurfaceSetting || command instanceof Unit) {
                 showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
             } else if (command instanceof Motor) {
@@ -368,6 +374,42 @@ public class BlueToothUtil {
     public void getWatchId(){
         AppsBluetoothManager.getInstance(GlobalApp.getAppContext())
                 .sendCommand(new WatchID(commandResultCallback));
+    }
+
+    public void getBattery(){
+        AppsBluetoothManager.getInstance(GlobalApp.getAppContext())
+                .sendCommand(new BatteryPower(commandResultCallback));
+    }
+
+    public void getSportDataCounts(){//获取运动条数
+        AppsBluetoothManager.getInstance(GlobalApp.getAppContext())
+                .sendCommand(new SportSleepCount( new BaseCommand.CommandResultCallback() {
+                    @Override
+                    public void onSuccess(BaseCommand command) {
+                        showTipDialog("SportCount:" + GlobalVarManager.getInstance().getSportCount());
+                    }
+
+                    @Override
+                    public void onFail(BaseCommand command) {
+                        showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.failed));
+                    }
+                }, 1, 0));
+    }
+
+    public void getSportDetailData(){
+        // 获取运动数据详情需要传入运动数据条数，所以在获取运动数据详情之前必需先获取运动数据条数。
+        // 如果运动条数为0，则运动详情数必定为0。所以如果获取到运动条数为0，则没有必要再去获取运动详情数据。
+        AppsBluetoothManager.getInstance(GlobalApp.getAppContext())
+                .sendCommand(new GetSportData(commandResultCallback, (int) GlobalVarManager.getInstance().getSportCount()));
+    }
+
+    public void openHeartRateSwitch(){
+        AppsBluetoothManager.getInstance(GlobalApp.getAppContext())
+                .sendCommand(new HeartStatus(commandResultCallback, 1));
+    }
+    public void getHeartRateData(){
+        AppsBluetoothManager.getInstance(GlobalApp.getAppContext())
+                .sendCommand(new GetHeartData(commandResultCallback, 0, 0, (int) GlobalVarManager.getInstance().getHeartRateCount()));
     }
 
 }

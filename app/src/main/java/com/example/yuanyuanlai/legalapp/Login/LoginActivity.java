@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.yuanyuanlai.legalapp.Activity.ScanActivity;
 import android.widget.Toast;
 import com.example.yuanyuanlai.legalapp.Activity.HomeActivity;
 import com.example.yuanyuanlai.legalapp.Base.BaseActivity;
@@ -28,9 +27,9 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.Cookie;
 import okhttp3.Headers;
 import okhttp3.Response;
 
@@ -160,13 +159,6 @@ public class LoginActivity extends BaseActivity {
                     List<String> cookies = headers.values("Set-Cookie");
                     String session = cookies.get(0);
                     cookie = session.substring(0, session.indexOf(";"));
-
-//                    Log.d(TAG, "get: "+headers.get("JSESSIONID"));
-//                    Log.d(TAG, "value: "+headers.value(0));
-//                    List<String> cookies = headers.values("Set-Cookie");
-//                    for (String cookie : cookies){
-//                        Log.d(TAG, cookie);
-//                    }
                     Gson gson = new Gson();
                     StatusBean statusBean = gson.fromJson(response.body().string(), StatusBean.class);
                     if (statusBean.getStatus().getCode() == 1){
@@ -204,6 +196,11 @@ public class LoginActivity extends BaseActivity {
                   LoginBean loginBean = gson.fromJson(response.body().string(), LoginBean.class);
                   if (loginBean.getStatus().getCode() == 1){
                       Log.d(TAG, loginBean.getStatus().getMessage());
+
+                      //初始化极光推送
+                      String phoneNumber = loginBean.getObject().getPhone();
+                      JPushInterface.setAlias(LoginActivity.this, 0, phoneNumber);
+
                       SharedPreferences sharedPreferences = getSharedPreferences("loginStatus", MODE_PRIVATE);
                       SharedPreferences.Editor editor = sharedPreferences.edit();
                       editor.putBoolean("isLogin", true);
