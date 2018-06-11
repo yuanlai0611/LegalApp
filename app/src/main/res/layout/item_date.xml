@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relative_date"
+    android:layout_width="match_parent"
+    android:layout_height="32dp">
+
+    <View
+        android:layout_width="80dp"
+        android:layout_height="1dp"
+        android:background="#beb8b8"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/date"
+        android:layout_marginRight="16dp"/>
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="2018年5月25日"
+        android:gravity="center"
+        android:layout_centerInParent="true"/>
+    <View
+        android:layout_width="80dp"
+        android:layout_height="1dp"
+        android:background="#beb8b8"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/date"
+        android:layout_marginLeft="16dp"/>
+
+</RelativeLayout>

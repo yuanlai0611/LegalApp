@@ -154,7 +154,6 @@ public class LoginActivity extends BaseActivity {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
 
-
                     Headers headers = response.headers();
                     Log.d(TAG, "headers: "+headers.toString());
                     List<String> cookies = headers.values("Set-Cookie");
@@ -167,6 +166,7 @@ public class LoginActivity extends BaseActivity {
                     }else {
                         Log.d(TAG, "获取验证码失败");
                     }
+
                 }
             });
 
@@ -205,6 +205,13 @@ public class LoginActivity extends BaseActivity {
                       SharedPreferences sharedPreferences = getSharedPreferences("loginStatus", MODE_PRIVATE);
                       SharedPreferences.Editor editor = sharedPreferences.edit();
                       editor.putBoolean("isLogin", true);
+                      editor.putString("bluetoothId", loginBean.getObject().getBluetoothId());
+                      editor.putString("createTime", loginBean.getObject().getCreateTime());
+                      editor.putString("deviceId", loginBean.getObject().getDeviceId());
+                      editor.putString("idCard", loginBean.getObject().getIdCard());
+                      editor.putBoolean("faceCheck", loginBean.getObject().isFaceCheck());
+                      editor.putString("phone", loginBean.getObject().getPhone());
+                      editor.putString("userName", loginBean.getObject().getUserName());
                       editor.apply();
                       Intent intent = HomeActivity.newIntent(LoginActivity.this);
                       startActivity(intent);

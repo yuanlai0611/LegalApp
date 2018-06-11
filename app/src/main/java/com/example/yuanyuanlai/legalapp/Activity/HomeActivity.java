@@ -5,21 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
 import com.example.yuanyuanlai.legalapp.Base.BaseActivity;
 import com.example.yuanyuanlai.legalapp.Internet.NetworkType;
 import com.example.yuanyuanlai.legalapp.R;
-
-import cn.jpush.android.api.JPushInterface;
-import cn.jpush.android.api.JPushMessage;
-import cn.jpush.android.service.JPushMessageReceiver;
 
 public class HomeActivity extends BaseActivity implements BaseActivity.GetLocation{
 
@@ -51,8 +45,6 @@ public class HomeActivity extends BaseActivity implements BaseActivity.GetLocati
        checkButton.setOnClickListener(this);
        notificationButton.setOnClickListener(this);
        myButton.setOnClickListener(this);
-
-
     }
 
     @SuppressLint("MissingPermission")
@@ -77,8 +69,10 @@ public class HomeActivity extends BaseActivity implements BaseActivity.GetLocati
      switch (v.getId()){
          case R.id.facialRecognitionButton:
              SharedPreferences sharedPreferences = getSharedPreferences("facialRecognition", MODE_PRIVATE);
+             SharedPreferences sharedPreferences1 = getSharedPreferences("loginStatus", MODE_PRIVATE);
+             boolean isFaceCheck = sharedPreferences1.getBoolean("faceCheck", false);
              boolean isSuccess = sharedPreferences.getBoolean("isFirstSuccess", false);
-             if (isSuccess){
+             if (isSuccess || isFaceCheck){
                  Toast.makeText(HomeActivity.this, "已经经过第一次登陆了", Toast.LENGTH_SHORT).show();
              }else {
                  intent = FacialRecognitionActivity.newIntent(this);

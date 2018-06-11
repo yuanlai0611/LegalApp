@@ -20,7 +20,7 @@
         android:layout_marginLeft="14dp"/>
 
     <TextView
-        android:id="@+id/notification_title_textview"
+        android:id="@+id/notification_title_textView"
         android:gravity="center"
         android:textSize="18sp"
         android:layout_width="wrap_content"
@@ -39,7 +39,7 @@
         android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/choose_date_textview"
+        android:id="@+id/choose_date_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -49,8 +49,7 @@
         android:text="2018-5-25"
         android:textColor="#ffffff"
         android:layout_toLeftOf="@id/choose_date_button"
-        android:paddingRight="12dp"
-        />
+        android:paddingRight="12dp"/>
 
     <ImageButton
         android:id="@+id/choose_date_button"
@@ -61,6 +60,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="18dp"
         android:layout_alignParentEnd="true"/>
+
 </RelativeLayout>
 
 </RelativeLayout>
