@@ -65,4 +65,7 @@
     <dimen name="myTextMarginLeft">30dp</dimen>
     <dimen name="myTextHeight">40dp</dimen>
 
+    <dimen name="big_corner">8dp</dimen>
+
+
 </resources>

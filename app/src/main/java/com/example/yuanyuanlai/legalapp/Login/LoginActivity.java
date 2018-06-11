@@ -1,12 +1,22 @@
 package com.example.yuanyuanlai.legalapp.Login;
 
+import android.Manifest;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -15,16 +25,25 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.yuanyuanlai.legalapp.Activity.ScanActivity;
 import android.widget.Toast;
+
 import com.example.yuanyuanlai.legalapp.Activity.HomeActivity;
+import com.example.yuanyuanlai.legalapp.Activity.MyActivity;
+import com.example.yuanyuanlai.legalapp.Application.GlobalApp;
 import com.example.yuanyuanlai.legalapp.Base.BaseActivity;
 import com.example.yuanyuanlai.legalapp.Bean.LoginBean;
 import com.example.yuanyuanlai.legalapp.Bean.StatusBean;
 import com.example.yuanyuanlai.legalapp.Internet.NetworkType;
 import com.example.yuanyuanlai.legalapp.R;
-import com.example.yuanyuanlai.legalapp.Utils.OkhttpUtil;
+sterimport com.example.yuanyuanlai.legalapp.utils.DialogUtil;
+import com.example.yuanyuanlai.legalapp.utils.OkhttpUtil;
 import com.google.gson.Gson;
+import com.sdk.bluetooth.bean.BluetoothScanDevice;
+import com.sdk.bluetooth.config.BluetoothConfig;
+import com.sdk.bluetooth.interfaces.BluetoothManagerDeviceConnectListener;
+import com.sdk.bluetooth.interfaces.BluetoothManagerScanListener;
+import com.sdk.bluetooth.manage.AppsBluetoothManager;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -34,7 +53,7 @@ import okhttp3.Callback;
 import okhttp3.Headers;
 import okhttp3.Response;
 
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity{
 
     private Button loginButton, sendButton;
     private TextView countDown;
@@ -44,6 +63,7 @@ public class LoginActivity extends BaseActivity {
     private GetVerificationCodeTask getVerificationCodeTask;
     private LoginTask loginTask;
     private String cookie;
+    private AlertDialog mloadingDialog;
 
     public static Intent newIntent(Context context){
         Intent intent=new Intent( context,LoginActivity.class );
@@ -53,6 +73,9 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mloadingDialog = DialogUtil.showProgressDialog( LoginActivity.this,"登录中...",false );
+
+        MayRequestLocation();
 
     }
 
@@ -69,11 +92,17 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void findViewById() {
-        loginButton = (Button)findViewById( R.id.loginButton );
-        sendButton = (Button)findViewById( R.id.sendButton );
-        countDown = (TextView)findViewById( R.id.countDown );
-        phoneEditText = (EditText)findViewById(R.id.phone_number);
-        verificationCodeEditText = (EditText)findViewById(R.id.verification_code);
+        loginButton = findViewById( R.id.loginButton );
+        sendButton = findViewById( R.id.sendButton );
+        countDown = findViewById( R.id.countDown );
+        phoneEditText = findViewById(R.id.phone_number);
+        verificationCodeEditText = findViewById(R.id.verification_code);
+    }
+
+    private void MayRequestLocation() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE}, 12);
+        }
     }
 
     private void initButton(){
@@ -125,6 +154,7 @@ public class LoginActivity extends BaseActivity {
                 if (!verificationCodeEditText.getText().toString().isEmpty()&&!cookie.isEmpty()){
                     loginTask = new LoginTask();
                     loginTask.execute();
+                    mloadingDialog.show();
                     if (animator!=null){
                         animator.end();
                     }
@@ -153,8 +183,6 @@ public class LoginActivity extends BaseActivity {
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-
-
                     Headers headers = response.headers();
                     Log.d(TAG, "headers: "+headers.toString());
                     List<String> cookies = headers.values("Set-Cookie");
@@ -166,6 +194,8 @@ public class LoginActivity extends BaseActivity {
                         Log.d(TAG, "获取验证码成功");
                     }else {
                         Log.d(TAG, "获取验证码失败");
+                        mloadingDialog.dismiss();
+                        Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -186,6 +216,8 @@ public class LoginActivity extends BaseActivity {
           OkhttpUtil.getInstance().login(phoneEditText.getText().toString(), Integer.parseInt(verificationCodeEditText.getText().toString()), cookie, new Callback() {
               @Override
               public void onFailure(Call call, IOException e) {
+                  mloadingDialog.dismiss();
+                  Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_SHORT).show();
                   Log.d(TAG, "登录失败");
               }
 
@@ -205,14 +237,21 @@ public class LoginActivity extends BaseActivity {
                       SharedPreferences sharedPreferences = getSharedPreferences("loginStatus", MODE_PRIVATE);
                       SharedPreferences.Editor editor = sharedPreferences.edit();
                       editor.putBoolean("isLogin", true);
+                      editor.putString( "userPhoneNumber",phoneEditText.getText().toString() );
                       editor.apply();
+
+                      //登录成功
                       Intent intent = HomeActivity.newIntent(LoginActivity.this);
                       startActivity(intent);
                       finish();
                       Log.d(TAG, "登录成功");
                   }else if (loginBean.getStatus().getCode() == 0){
                       Log.d(TAG, loginBean.getStatus().getMessage());
+                      mloadingDialog.dismiss();
+                      Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_SHORT).show();
                   }else {
+                      mloadingDialog.dismiss();
+                      Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_SHORT).show();
                       Log.d(TAG, "登录失败");
                   }
               }
@@ -222,13 +261,13 @@ public class LoginActivity extends BaseActivity {
         }
     };
 
+
+
     @Override
     public void onBlueToothDisconnected() {
-        Log.d(TAG, "调用了onBlueToothDisconnected");
     }
 
     @Override
     public void onBlueToothConnected() {
-        Log.d(TAG, "调用了onBlueToothConnected");
     }
 }

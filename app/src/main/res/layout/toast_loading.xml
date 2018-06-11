@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tool="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:gravity="center"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/bg_toast_loading">
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avl"
+        app:indicatorColor="#fefefe"
+        app:indicatorName="LineSpinFadeLoaderIndicator"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_margin="5dp"/>
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#fefefe"
+        android:maxEms="12"
+        tool:text="登录"
+        android:layout_margin="5dp"
+        android:textSize="16sp"/>
+</LinearLayout>
