@@ -5,14 +5,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
 import com.example.yuanyuanlai.legalapp.AlarmType;
 import com.example.yuanyuanlai.legalapp.Bean.AlarmSummaryInfo;
-import com.example.yuanyuanlai.legalapp.Internet.NetStateChangeReceiver;
-import com.example.yuanyuanlai.legalapp.R;
-import com.example.yuanyuanlai.legalapp.utils.OkhttpUtil;
+import com.example.yuanyuanlai.legalapp.Utils.OkhttpUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;

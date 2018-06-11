@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.example.yuanyuanlai.legalapp.Bean.AlarmSummaryInfo;
 import com.example.yuanyuanlai.legalapp.Bean.PhoneVerification;
+import com.example.yuanyuanlai.legalapp.Bean.WatchSummaryInfo;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -72,6 +73,16 @@ public class OkhttpUtil {
                 .get()
                 .build();
         mOkhttpClient.newCall(request).enqueue(callback);
+    }
+
+    public void sendWatchSummary(WatchSummaryInfo watchSummaryInfo,Callback callback){
+        String json = new Gson().toJson( watchSummaryInfo );
+        RequestBody requestBody = RequestBody.create( JSON,json );
+        Request request=new Request.Builder()
+                .url( "http://47.94.100.108:8080/iot_server/watch" )
+                .post( requestBody )
+                .build();
+        mOkhttpClient.newCall( request ).enqueue( callback );
     }
 
     public void alarmSummaryInfo(AlarmSummaryInfo alarmSummaryInfo,Callback callback){

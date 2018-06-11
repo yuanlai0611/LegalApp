@@ -1,7 +1,11 @@
-package com.example.yuanyuanlai.legalapp.utils;
+package com.example.yuanyuanlai.legalapp.Utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 
 import com.example.yuanyuanlai.legalapp.Application.GlobalApp;
 import com.example.yuanyuanlai.legalapp.R;
@@ -65,25 +69,29 @@ public class BlueToothUtil {
     private DeviceVersion2 mDeviceVersion = null;
     private HeartRate mHeartRate = null;
     private BatteryPower2 mbattery = null;
+    private SportData msportData = null;
+    private SportDataCounts msportcounts = null;
+    private openHeartSet mohs = null;
     private AlertDialog alertDialog;
     private Context context;
+    private final String TAG = "BlueToothUtil";
 
-    public BlueToothUtil(Context context) {
-        this.context = context;
-    }
-
-    public void showTipDialog(String tip){
-        if (alertDialog==null){
-            alertDialog=new AlertDialog.Builder( context )
-                    .setTitle( R.string.activityNotification )
-                    .setCancelable( true )
-                    .setMessage( tip )
-                    .create();
-        }else {
-            alertDialog.setMessage( tip );
-        }
-        alertDialog.show();
-    }
+//    public BlueToothUtil(Context context) {
+//        this.context = context;
+//    }
+//
+//    public void showTipDialog(String tip){
+//        if (alertDialog==null){
+//            alertDialog=new AlertDialog.Builder( context )
+//                    .setTitle( R.string.activityNotification )
+//                    .setCancelable( true )
+//                    .setMessage( tip )
+//                    .create();
+//        }else {
+//            alertDialog.setMessage( tip );
+//        }
+//        alertDialog.show();
+//    }
 
     public interface DeviceId{
         void getDeviceId(String id);
@@ -97,7 +105,19 @@ public class BlueToothUtil {
     }
 
     public interface DeviceVersion2{
-        Void getDeviceVersion(String deviceVersion);
+        void getDeviceVersion(String deviceVersion);
+    }
+
+    public interface openHeartSet{
+        void isHeartSetOpen();
+    }
+
+    public void setIsOpenHeart(openHeartSet openHeart){
+        mohs=openHeart;
+    }
+
+    public interface SportData{
+        void getSportDetailData(int step, int calorie, int energy);
     }
 
     public interface BatteryPower2{
@@ -117,6 +137,18 @@ public class BlueToothUtil {
         void getHeartRate(int heartrate);
     }
 
+    public void setSportCount(SportDataCounts sportcounts){
+        msportcounts=sportcounts;
+    }
+
+    public interface SportDataCounts{
+        void getSportData();
+    }
+
+    public void setSportDetailData(SportData sportData){
+        msportData = sportData;
+    }
+
     public void setHeartRate(HeartRate heartRate){
         mHeartRate = heartRate;
     }
@@ -130,51 +162,51 @@ public class BlueToothUtil {
             if ((command instanceof WatchID)) {
                 String watch = GlobalVarManager.getInstance().getWatchID();
                 mDeviceId.getDeviceId( watch );
-                showTipDialog(watch);
+//                showTipDialog(watch);
             } else if (command instanceof DeviceVersion) {
                 String localVersion = GlobalVarManager.getInstance().getSoftVersion();
                 mDeviceVersion.getDeviceVersion( localVersion );
-                showTipDialog(localVersion);
+//                showTipDialog(localVersion);
             } else if (command instanceof BatteryPower) {
-                showTipDialog(GlobalVarManager.getInstance().getBatteryPower() + "%");
+//                showTipDialog(GlobalVarManager.getInstance().getBatteryPower() + "%");
                 mbattery.getBatteryPower( GlobalVarManager.getInstance().getBatteryPower() );
             } else if (command instanceof TimeSurfaceSetting || command instanceof Unit) {
-                showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
+//                showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
             } else if (command instanceof Motor) {
-                showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful) + "  " + GlobalVarManager.getInstance().getMotor());
+//                showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful) + "  " + GlobalVarManager.getInstance().getMotor());
             } else if (command instanceof SportSleepMode) {
                 if (GlobalVarManager.getInstance().getSportSleepMode() == 0) {
-                    showTipDialog("sport model");
+//                    showTipDialog("sport model");
                 } else {
-                    showTipDialog("sleep model");
+//                    showTipDialog("sleep model");
                 }
             } else if (command instanceof DeviceDisplaySportSleep) {
-                showTipDialog("Step:" + GlobalVarManager.getInstance().getDeviceDisplayStep() + "step" +
-                        "\n Calorie:" + GlobalVarManager.getInstance().getDeviceDisplayCalorie() + "cal" +
-                        "\n Distance:" + GlobalVarManager.getInstance().getDeviceDisplayDistance() + "m" +
-                        "\n Sleep time:" + GlobalVarManager.getInstance().getDeviceDisplaySleep() + "min");
+//                showTipDialog("Step:" + GlobalVarManager.getInstance().getDeviceDisplayStep() + "step" +
+//                        "\n Calorie:" + GlobalVarManager.getInstance().getDeviceDisplayCalorie() + "cal" +
+//                        "\n Distance:" + GlobalVarManager.getInstance().getDeviceDisplayDistance() + "m" +
+//                        "\n Sleep time:" + GlobalVarManager.getInstance().getDeviceDisplaySleep() + "min");
             } else if (command instanceof BindStart || command instanceof UserInfo
                     || command instanceof BindEnd
                     || command instanceof GoalsSetting
                     || command instanceof RestoreFactory || command instanceof Language) {
-                showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
+//                showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
             } else if (command instanceof DateTime) {
                 if (command.getAction() == CommandConstant.ACTION_CHECK) {
-                    showTipDialog(GlobalVarManager.getInstance().getDeviceDateTime());
+//                    showTipDialog(GlobalVarManager.getInstance().getDeviceDateTime());
                 }
                 if (command.getAction() == CommandConstant.ACTION_SET) {
-                    showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
+//                    showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
                 }
             } else if (command instanceof AutoSleep) {
                 if (command.getAction() == CommandConstant.ACTION_CHECK) {
-                    showTipDialog("enter sleep:" + GlobalVarManager.getInstance().getEnterSleepHour() + "hour" +
-                            "\n enter sleep:" + GlobalVarManager.getInstance().getEnterSleepMin() + "min" +
-                            "\n quit sleep:" + GlobalVarManager.getInstance().getQuitSleepHour() + "hour" +
-                            "\n quit sleep:" + GlobalVarManager.getInstance().getQuitSleepMin() + "min" +
-                            "\n remind sleep cycle:" + GlobalVarManager.getInstance().getRemindSleepCycle());
+//                    showTipDialog("enter sleep:" + GlobalVarManager.getInstance().getEnterSleepHour() + "hour" +
+//                            "\n enter sleep:" + GlobalVarManager.getInstance().getEnterSleepMin() + "min" +
+//                            "\n quit sleep:" + GlobalVarManager.getInstance().getQuitSleepHour() + "hour" +
+//                            "\n quit sleep:" + GlobalVarManager.getInstance().getQuitSleepMin() + "min" +
+//                            "\n remind sleep cycle:" + GlobalVarManager.getInstance().getRemindSleepCycle());
                 }
                 if (command.getAction() == CommandConstant.ACTION_SET) {
-                    showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
+//                    showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
                 }
             } else if (command instanceof GetSportData) {
                 //
@@ -182,19 +214,20 @@ public class BlueToothUtil {
                 int calorie = 0;
                 int distance = 0;
                 if (GlobalDataManager.getInstance().getSportsDatas() == null) {
-                    showTipDialog("null");
+//                    showTipDialog("null");
                 } else {
                     for (SportsData sportsData : GlobalDataManager.getInstance().getSportsDatas()) {
                         step += sportsData.sport_steps;
                         calorie += sportsData.sport_cal;
                         distance += sportsData.sport_energy;
                     }
-                    showTipDialog("Step:" + step + "step" +
+                    msportData.getSportDetailData( step, calorie, distance );
+                    Log.d(TAG,"Step:" + step + "step" +
                             "\n Calorie:" + calorie + "cal");
                 }
             } else if (command instanceof GetSleepData) {
                 if (GlobalDataManager.getInstance().getSleepDatas() == null) {
-                    showTipDialog("null");
+//                    showTipDialog("null");
                 } else {
                     // sleepData.sleep_type
                     // 0：睡着
@@ -209,12 +242,12 @@ public class BlueToothUtil {
                     for (SleepData sleepData : GlobalDataManager.getInstance().getSleepDatas()) {
                         sleepStr = sleepStr + DateUtil.dateToSec(DateUtil.timeStampToDate(sleepData.sleep_time_stamp * 1000)) + " 类型:" + sleepData.sleep_type + "\n";
                     }
-                    showTipDialog(sleepStr);
+//                    showTipDialog(sleepStr);
                 }
             } else if (command instanceof ClearSportData) {
-                showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
+//                showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
             } else if (command instanceof ClearSleepData) {
-                showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
+//                showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
             } else if (command instanceof SwitchSetting) {
                 if (command.getAction() == CommandConstant.ACTION_CHECK) {
                     // 防丢开关
@@ -240,99 +273,103 @@ public class BlueToothUtil {
                     // WHATSAPP开关
                     // LINE开关
 
-                    showTipDialog("isAntiLostSwitch:" + GlobalVarManager.getInstance().isAntiLostSwitch()
-                            + "\n isAutoSyncSwitch:" + GlobalVarManager.getInstance().isAutoSyncSwitch()
-                            + "\n isSleepSwitch:" + GlobalVarManager.getInstance().isSleepSwitch()
-                            + "\n isSleepStateSwitch:" + GlobalVarManager.getInstance().isSleepStateSwitch()
-                            + "\n isIncomePhoneSwitch:" + GlobalVarManager.getInstance().isIncomePhoneSwitch()
-                            + "\n isMissPhoneSwitch:" + GlobalVarManager.getInstance().isMissPhoneSwitch()
-                            + "\n isSmsSwitch:" + GlobalVarManager.getInstance().isSmsSwitch()
-                            + "\n isSocialSwitch:" + GlobalVarManager.getInstance().isSocialSwitch()
-                            + "\n isMailSwitch:" + GlobalVarManager.getInstance().isMailSwitch()
-                            + "\n isCalendarSwitch:" + GlobalVarManager.getInstance().isCalendarSwitch()
-                            + "\n isSedentarySwitch:" + GlobalVarManager.getInstance().isSedentarySwitch()
-                            + "\n isLowPowerSwitch:" + GlobalVarManager.getInstance().isLowPowerSwitch()
-                            + "\n isSecondRemindSwitch:" + GlobalVarManager.getInstance().isSecondRemindSwitch()
-
-                            + "\n isSportHRSwitch:" + GlobalVarManager.getInstance().isSportHRSwitch()
-                            + "\n isFacebookSwitch:" + GlobalVarManager.getInstance().isFacebookSwitch()
-                            + "\n isTwitterSwitch:" + GlobalVarManager.getInstance().isTwitterSwitch()
-                            + "\n isInstagamSwitch:" + GlobalVarManager.getInstance().isInstagamSwitch()
-                            + "\n isQqSwitch:" + GlobalVarManager.getInstance().isQqSwitch()
-                            + "\n isWechatSwitch:" + GlobalVarManager.getInstance().isWechatSwitch()
-                            + "\n isWhatsappSwitch:" + GlobalVarManager.getInstance().isWhatsappSwitch()
-                            + "\n isLineSwitch:" + GlobalVarManager.getInstance().isLineSwitch()
-                    );
+//                    showTipDialog("isAntiLostSwitch:" + GlobalVarManager.getInstance().isAntiLostSwitch()
+//                            + "\n isAutoSyncSwitch:" + GlobalVarManager.getInstance().isAutoSyncSwitch()
+//                            + "\n isSleepSwitch:" + GlobalVarManager.getInstance().isSleepSwitch()
+//                            + "\n isSleepStateSwitch:" + GlobalVarManager.getInstance().isSleepStateSwitch()
+//                            + "\n isIncomePhoneSwitch:" + GlobalVarManager.getInstance().isIncomePhoneSwitch()
+//                            + "\n isMissPhoneSwitch:" + GlobalVarManager.getInstance().isMissPhoneSwitch()
+//                            + "\n isSmsSwitch:" + GlobalVarManager.getInstance().isSmsSwitch()
+//                            + "\n isSocialSwitch:" + GlobalVarManager.getInstance().isSocialSwitch()
+//                            + "\n isMailSwitch:" + GlobalVarManager.getInstance().isMailSwitch()
+//                            + "\n isCalendarSwitch:" + GlobalVarManager.getInstance().isCalendarSwitch()
+//                            + "\n isSedentarySwitch:" + GlobalVarManager.getInstance().isSedentarySwitch()
+//                            + "\n isLowPowerSwitch:" + GlobalVarManager.getInstance().isLowPowerSwitch()
+//                            + "\n isSecondRemindSwitch:" + GlobalVarManager.getInstance().isSecondRemindSwitch()
+//
+//                            + "\n isSportHRSwitch:" + GlobalVarManager.getInstance().isSportHRSwitch()
+//                            + "\n isFacebookSwitch:" + GlobalVarManager.getInstance().isFacebookSwitch()
+//                            + "\n isTwitterSwitch:" + GlobalVarManager.getInstance().isTwitterSwitch()
+//                            + "\n isInstagamSwitch:" + GlobalVarManager.getInstance().isInstagamSwitch()
+//                            + "\n isQqSwitch:" + GlobalVarManager.getInstance().isQqSwitch()
+//                            + "\n isWechatSwitch:" + GlobalVarManager.getInstance().isWechatSwitch()
+//                            + "\n isWhatsappSwitch:" + GlobalVarManager.getInstance().isWhatsappSwitch()
+//                            + "\n isLineSwitch:" + GlobalVarManager.getInstance().isLineSwitch()
+//                    );
                 }
                 if (command.getAction() == CommandConstant.ACTION_SET) {
-                    showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
+//                    showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
                 }
             } else if (command instanceof MsgCountPush) {
-                showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
+//                showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
             } else if (command instanceof TurnPointers) {
-                showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
+//                showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
             } else if (command instanceof AutomaticCorrectionTime) {
-                showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
+//                showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
             } else if (command instanceof CorrectionTime) {
-                showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
+//                showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
             } else if (command instanceof Point2Zero) {
-                showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
+//                showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
             } else if(command instanceof FastCorrectTime){
-                showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
+//                showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
             } else if(command instanceof FinishCorroctionTime){
-                showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
+//                showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
             }
             //提醒相关
             else if (command instanceof RemindCount) {
-                showTipDialog(GlobalVarManager.getInstance().getRemindCount() + "");
+//                showTipDialog(GlobalVarManager.getInstance().getRemindCount() + "");
             } else if (command instanceof RemindSetting) {
-                showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
+//                showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
             }
 
             // all data count
             if (command instanceof AllDataCount) {
-                showTipDialog("SportCount:" + GlobalVarManager.getInstance().getSportCount()
-                        + "\n SleepCount:" + GlobalVarManager.getInstance().getSleepCount()
-                        + "\n HeartRateCount:" + GlobalVarManager.getInstance().getHeartRateCount()
-                        + "\n BloodCount:" + GlobalVarManager.getInstance().getBloodCount()
-                );
+//                showTipDialog("SportCount:" + GlobalVarManager.getInstance().getSportCount()
+//                        + "\n SleepCount:" + GlobalVarManager.getInstance().getSleepCount()
+//                        + "\n HeartRateCount:" + GlobalVarManager.getInstance().getHeartRateCount()
+//                        + "\n BloodCount:" + GlobalVarManager.getInstance().getBloodCount()
+//                );
             }
 
             // 心率
             if (command instanceof HeartRateAlarm) {
                 if (command.getAction() == CommandConstant.ACTION_SET) {   //设置
-                    showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
+
                 }
                 if (command.getAction() == CommandConstant.ACTION_CHECK) {    //查询
                     //获取设备的心率预警状态(暂时获取本地的)
-                    showTipDialog(
-                            "HighLimit：" + GlobalVarManager.getInstance().getHighHeartLimit() + " bpm \n" +
-                                    "LowLimit：" + GlobalVarManager.getInstance().getLowHeartLimit() + " bpm \n" +
-                                    "AutoHeart：" + GlobalVarManager.getInstance().getAutoHeart() + " min \n" +
-                                    "isHeartAlarm：" + GlobalVarManager.getInstance().isHeartAlarm() + "\n" +
-                                    "isAutoHeart：" + GlobalVarManager.getInstance().isAutoHeart()
-                    );
+//                    showTipDialog(
+//                            "HighLimit：" + GlobalVarManager.getInstance().getHighHeartLimit() + " bpm \n" +
+//                                    "LowLimit：" + GlobalVarManager.getInstance().getLowHeartLimit() + " bpm \n" +
+//                                    "AutoHeart：" + GlobalVarManager.getInstance().getAutoHeart() + " min \n" +
+//                                    "isHeartAlarm：" + GlobalVarManager.getInstance().isHeartAlarm() + "\n" +
+//                                    "isAutoHeart：" + GlobalVarManager.getInstance().isAutoHeart()
+//                    );
                 }
             }
 
             if (command instanceof GetHeartData) {
-                String heartDatas = "";
+//                String heartDatas = "";
+                int mheartratetest = 0;
                 for (HeartData heartData : GlobalDataManager.getInstance().getHeartDatas()) {
-                    heartDatas += "value:" + heartData.heartRate_value + "---time:" + DateUtil.dateToSec(DateUtil.timeStampToDate(heartData.time_stamp * 1000)) + "\n";
-                    mHeartRate.getHeartRate( heartData.heartRate_value );
+                    Log.d( TAG, "heartRate_value:"+heartData.heartRate_value );
+//                    heartDatas += "value:" + heartData.heartRate_value + "---time:" + DateUtil.dateToSec(DateUtil.timeStampToDate(heartData.time_stamp * 1000)) + "\n";
+                    mheartratetest = heartData.heartRate_value;
                 }
-
-                showTipDialog(heartDatas);
+                mHeartRate.getHeartRate( mheartratetest );
+                Log.d( TAG, "-------心率获取到了，是"+mheartratetest );
+//                showTipDialog(heartDatas);
             }
             if (command instanceof ClearHeartData) {
-                showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
+//                showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
             }
             if (command instanceof HeartStatus) {
                 if (command.getAction() == CommandConstant.ACTION_CHECK) {
-                    showTipDialog("status:" + GlobalVarManager.getInstance().isHeartMeasure());
+//                    showTipDialog("status:" + GlobalVarManager.getInstance().isHeartMeasure());
                 }
                 if (command.getAction() == CommandConstant.ACTION_SET) {
-                    showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
+                    Log.d( TAG, "--------打开心率调用了" );
+                    mohs.isHeartSetOpen();
                 }
             }
 
@@ -342,18 +379,18 @@ public class BlueToothUtil {
                 for (BloodData bloodData : GlobalDataManager.getInstance().getBloodDatas()) {
                     bloodDatas += "bigValue:" + bloodData.bigValue + "minValue:" + bloodData.minValue + "---time:" + DateUtil.dateToSec(DateUtil.timeStampToDate(bloodData.time_stamp * 1000)) + "\n";
                 }
-                showTipDialog(bloodDatas);
+//                showTipDialog(bloodDatas);
             }
             if (command instanceof ClearBloodData) {
-                showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
+//                showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.successful));
             }
 
             if (command instanceof BloodStatus) {
                 if (command.getAction() == CommandConstant.ACTION_CHECK) {
-                    showTipDialog("status:" + GlobalVarManager.getInstance().isBloodMeasure());
+//                    showTipDialog("status:" + GlobalVarManager.getInstance().isBloodMeasure());
                 }
                 if (command.getAction() == CommandConstant.ACTION_SET) {
-                    showTipDialog(GlobalApp.getAppContext().getResources().getString( R.string.successful));
+//                    showTipDialog(GlobalApp.getAppContext().getResources().getString( R.string.successful));
                 }
             }
         }
@@ -364,7 +401,7 @@ public class BlueToothUtil {
             } else if (command instanceof DeviceVersion) {
             } else if (command instanceof BatteryPower) {
             } else {
-                showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.failed));
+//                showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.failed));
             }
         }
     };
@@ -390,12 +427,15 @@ public class BlueToothUtil {
                 .sendCommand(new SportSleepCount( new BaseCommand.CommandResultCallback() {
                     @Override
                     public void onSuccess(BaseCommand command) {
-                        showTipDialog("SportCount:" + GlobalVarManager.getInstance().getSportCount());
+                        Log.d( TAG, "获取到了运动条数:"+GlobalVarManager.getInstance().getSportCount() );
+                        AppsBluetoothManager.getInstance(GlobalApp.getAppContext())
+                                .sendCommand(new GetSportData(commandResultCallback, (int) GlobalVarManager.getInstance().getSportCount()));
+                        //                        showTipDialog("SportCount:" + GlobalVarManager.getInstance().getSportCount());
                     }
 
                     @Override
                     public void onFail(BaseCommand command) {
-                        showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.failed));
+//                        showTipDialog(GlobalApp.getAppContext().getResources().getString(R.string.failed));
                     }
                 }, 1, 0));
     }
@@ -405,6 +445,7 @@ public class BlueToothUtil {
         // 如果运动条数为0，则运动详情数必定为0。所以如果获取到运动条数为0，则没有必要再去获取运动详情数据。
         AppsBluetoothManager.getInstance(GlobalApp.getAppContext())
                 .sendCommand(new GetSportData(commandResultCallback, (int) GlobalVarManager.getInstance().getSportCount()));
+
     }
 
     public void openHeartRateSwitch(){
@@ -413,7 +454,7 @@ public class BlueToothUtil {
     }
     public void getHeartRateData(){
         AppsBluetoothManager.getInstance(GlobalApp.getAppContext())
-                .sendCommand(new GetHeartData(commandResultCallback, 1, 0, (int) GlobalVarManager.getInstance().getHeartRateCount()));
+                .sendCommand(new GetHeartData(commandResultCallback, 0, 0, (int) GlobalVarManager.getInstance().getHeartRateCount()));
     }
 
 }

@@ -1,6 +1,5 @@
 package com.example.yuanyuanlai.legalapp.Activity;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -10,42 +9,27 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.yuanyuanlai.legalapp.AlarmType;
 import com.example.yuanyuanlai.legalapp.Application.GlobalApp;
 import com.example.yuanyuanlai.legalapp.BackgroundService.PollingReceiver;
 
 import com.example.yuanyuanlai.legalapp.Base.BaseActivity;
-import com.example.yuanyuanlai.legalapp.Bean.AlarmSummaryInfo;
 import com.example.yuanyuanlai.legalapp.Internet.NetworkType;
-import com.example.yuanyuanlai.legalapp.Login.LoginActivity;
 import com.example.yuanyuanlai.legalapp.R;
-import com.example.yuanyuanlai.legalapp.utils.DialogUtil;
-import com.example.yuanyuanlai.legalapp.utils.OkhttpUtil;
-import com.example.yuanyuanlai.legalapp.utils.PollingUtils;
+import com.example.yuanyuanlai.legalapp.Utils.DialogUtil;
+import com.example.yuanyuanlai.legalapp.Utils.PollingUtils;
 import com.sdk.bluetooth.bean.BluetoothScanDevice;
 import com.sdk.bluetooth.config.BluetoothConfig;
 import com.sdk.bluetooth.interfaces.BluetoothManagerDeviceConnectListener;
 import com.sdk.bluetooth.interfaces.BluetoothManagerScanListener;
 import com.sdk.bluetooth.manage.AppsBluetoothManager;
-
-import java.io.IOException;
-
-import cn.jpush.android.api.JPushInterface;
-import cn.jpush.android.api.JPushMessage;
-import cn.jpush.android.service.JPushMessageReceiver;
-import okhttp3.Call;
-import okhttp3.Response;
 
 public class HomeActivity extends BaseActivity implements BaseActivity.GetLocation{
 
@@ -173,7 +157,7 @@ public class HomeActivity extends BaseActivity implements BaseActivity.GetLocati
         Log.i("DeviceName", mDeviceName);
 
         BluetoothConfig.setDefaultMac(GlobalApp.getAppContext(), mAddress);
-//        startActivity( HomeActivity.newIntent( this ));//此处超过4行就不能扫描，未知的bug
+//        startActivity( MyActivity.newIntent( this ));//此处超过4行就不能扫描，未知的bug
 //        finish();
     }
 

@@ -21,6 +21,18 @@ public class WatchSummaryInfo {
 
     private String timestamp;
 
+    public WatchSummaryInfo(String deviceId, int gpsId, int heartRate, String latitude, String longitude, int sportCal, int sportEnergy, int sportSteps, String timestamp) {
+        this.deviceId = deviceId;
+        this.gpsId = gpsId;
+        this.heartRate = heartRate;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.sportCal = sportCal;
+        this.sportEnergy = sportEnergy;
+        this.sportSteps = sportSteps;
+        this.timestamp = timestamp;
+    }
+
     public void setDeviceId(String deviceId){
         this.deviceId = deviceId;
     }
