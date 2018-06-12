@@ -15,7 +15,7 @@ public class PollingReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         Log.d(TAG, "调用了onReceive");
-        PollingUtils.startExactAgain(context, 60, PollingReceiver.class, PollingUtils.ACTION);
+        PollingUtils.startExactAgain(context, 180, PollingReceiver.class, PollingUtils.ACTION);
         Intent i = PollingService.newIntent(context);
         context.startService(i);
 

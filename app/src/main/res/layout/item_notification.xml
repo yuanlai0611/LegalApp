@@ -1,50 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relativeLayout_message"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#ebeaea"
-    android:orientation="vertical">
-
-    <RelativeLayout
-        android:id="@+id/relative_date"
-        android:layout_width="match_parent"
-        android:layout_height="32dp">
-
-        <View
-            android:layout_width="80dp"
-            android:layout_height="1dp"
-            android:background="#beb8b8"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/recycler_date_tv"
-            android:layout_marginRight="16dp"/>
-
-        <TextView
-            android:id="@+id/recycler_date_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="2018年5月25日"
-            android:gravity="center"
-            android:layout_centerInParent="true"/>
-
-        <View
-            android:layout_width="80dp"
-            android:layout_height="1dp"
-            android:background="#beb8b8"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/recycler_date_tv"
-            android:layout_marginLeft="16dp"/>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/relative_message"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#faf8f8">
+    android:background="#faf8f8">
 
     <TextView
-        android:id="@+id/notif_detail"
+        android:id="@+id/notification_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="呵呵呵黑恶hi了自己哦v骄傲奥里"
@@ -53,7 +16,7 @@
         android:paddingTop="18dp"/>
 
     <TextView
-        android:id="@+id/notif_detail_time"
+        android:id="@+id/notification_detail_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="end|center"
@@ -61,8 +24,12 @@
         android:paddingRight="18dp"
         android:paddingBottom="18dp"
         android:layout_marginTop="6dp"
-        android:layout_below="@id/notif_detail"/>
+        android:layout_below="@id/notification_detail"/>
+
+    <View
+        android:background="@android:color/darker_gray"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
 
 </RelativeLayout>
-
-</LinearLayout>

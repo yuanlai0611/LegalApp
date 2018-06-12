@@ -19,12 +19,12 @@ import android.widget.Toast;
 
 import com.example.yuanyuanlai.legalapp.Application.GlobalApp;
 import com.example.yuanyuanlai.legalapp.BackgroundService.PollingReceiver;
-
 import com.example.yuanyuanlai.legalapp.Base.BaseActivity;
 import com.example.yuanyuanlai.legalapp.Internet.NetworkType;
 import com.example.yuanyuanlai.legalapp.R;
 import com.example.yuanyuanlai.legalapp.Utils.DialogUtil;
 import com.example.yuanyuanlai.legalapp.Utils.PollingUtils;
+
 import com.sdk.bluetooth.bean.BluetoothScanDevice;
 import com.sdk.bluetooth.config.BluetoothConfig;
 import com.sdk.bluetooth.interfaces.BluetoothManagerDeviceConnectListener;
@@ -77,8 +77,6 @@ public class HomeActivity extends BaseActivity implements BaseActivity.GetLocati
        checkButton.setOnClickListener(this);
        notificationButton.setOnClickListener(this);
        myButton.setOnClickListener(this);
-
-
     }
 
     @SuppressLint("MissingPermission")
@@ -245,8 +243,10 @@ public class HomeActivity extends BaseActivity implements BaseActivity.GetLocati
      switch (v.getId()){
          case R.id.facialRecognitionButton:
              SharedPreferences sharedPreferences = getSharedPreferences("facialRecognition", MODE_PRIVATE);
+             SharedPreferences sharedPreferences1 = getSharedPreferences("loginStatus", MODE_PRIVATE);
+             boolean isFaceCheck = sharedPreferences1.getBoolean("faceCheck", false);
              boolean isSuccess = sharedPreferences.getBoolean("isFirstSuccess", false);
-             if (isSuccess){
+             if (isSuccess || isFaceCheck){
                  Toast.makeText(HomeActivity.this, "已经经过第一次登陆了", Toast.LENGTH_SHORT).show();
              }else {
                  intent = FacialRecognitionActivity.newIntent(this);

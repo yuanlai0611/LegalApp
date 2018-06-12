@@ -5,18 +5,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.example.yuanyuanlai.legalapp.Bean.ItemNotification;
 import com.example.yuanyuanlai.legalapp.R;
-import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Creste by GongYunHao on 2018/5/31
- */
+
 public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
-    private List<ItemNotification> notificationBeanList=new ArrayList<>(  );
+
+    private List<ItemNotification> notificationBeanList;
     private Context mContext;
 
     public NotificationAdapter(Context context, List<ItemNotification> notificationBeanList) {
@@ -25,54 +22,56 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_notification,parent,false);
-        return new MyNotifyViewHolder(view);
+    public int getItemViewType(int position) {
+        if (notificationBeanList.get(position).getViewType() == ItemNotification.SHOW_DATE){
+            return ItemNotification.SHOW_DATE;
+        }else {
+            return ItemNotification.SHOW_MESSAGES;
+        }
     }
 
-    class MyNotifyViewHolder extends RecyclerView.ViewHolder{
-        View notifyview;
-        TextView detail_message,detail_time,mdate;
-        RelativeLayout rela_date,rela_mess;
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == ItemNotification.SHOW_MESSAGES){
+            View view = LayoutInflater.from(mContext).inflate(R.layout.item_notification, parent, false);
+            return new NotificationViewHolder(view);
+        }else {
+            View view = LayoutInflater.from(mContext).inflate(R.layout.item_date, parent, false);
+            return new DateViewHolder(view);
+        }
+    }
 
-        public MyNotifyViewHolder(View itemView) {
-            super( itemView );
-            notifyview=itemView;
-            detail_message=itemView.findViewById( R.id.notif_detail );
-            detail_time=itemView.findViewById( R.id.notif_detail_time );
-            mdate=itemView.findViewById( R.id.recycler_date_tv );
-            rela_date=itemView.findViewById( R.id.relative_date );
-            rela_mess=itemView.findViewById( R.id.relative_message );
+     public class NotificationViewHolder extends RecyclerView.ViewHolder{
+        View notificationView;
+        TextView detailMessageTextView;
+
+        public NotificationViewHolder(View itemView) {
+            super(itemView);
+            notificationView = itemView;
+            detailMessageTextView = (TextView)itemView.findViewById(R.id.notification_detail);
+        }
+    }
+
+    public class DateViewHolder extends RecyclerView.ViewHolder{
+        View dateView;
+        TextView dateTextView;
+        public DateViewHolder(View itemView){
+            super(itemView);
+            dateView = itemView;
+            dateTextView = (TextView)itemView.findViewById(R.id.date);
+
         }
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        MyNotifyViewHolder notiViewHolder=(MyNotifyViewHolder)holder;
-        ItemNotification itemNotification=notificationBeanList.get( position );
-        if (position==0){
-            //显示日期item
-            notiViewHolder.rela_date.setVisibility( View.VISIBLE );
-            notiViewHolder.rela_mess.setVisibility( View.GONE );
-            notiViewHolder.mdate.setText( itemNotification.getDate());
-            notiViewHolder.detail_time.setText( "" );
-            notiViewHolder.detail_message.setText( "" );
+
+        if (holder instanceof NotificationViewHolder){
+            NotificationViewHolder notificationViewHolder = (NotificationViewHolder)holder;
+            notificationViewHolder.detailMessageTextView.setText(notificationBeanList.get(position).getContent());
         }else {
-            if ( !itemNotification.getDate().equals( notificationBeanList.get( position-1 ))){
-                //显示日期item
-                notiViewHolder.rela_date.setVisibility( View.VISIBLE );
-                notiViewHolder.rela_mess.setVisibility( View.GONE );
-                notiViewHolder.mdate.setText( itemNotification.getDate());
-                notiViewHolder.detail_time.setText( "" );
-                notiViewHolder.detail_message.setText( "" );
-            }else {
-                //显示messages
-                notiViewHolder.rela_date.setVisibility( View.GONE );
-                notiViewHolder.rela_mess.setVisibility( View.VISIBLE );
-                notiViewHolder.mdate.setText( "" );
-                notiViewHolder.detail_time.setText( itemNotification.getDate());
-                notiViewHolder.detail_message.setText( itemNotification.getDetail_notification() );
-                }
+            DateViewHolder dateViewHolder = (DateViewHolder)holder;
+            dateViewHolder.dateTextView.setText(notificationBeanList.get(position).getCreateTime());
         }
     }
 

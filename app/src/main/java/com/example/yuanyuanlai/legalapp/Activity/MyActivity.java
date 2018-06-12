@@ -7,57 +7,37 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.yuanyuanlai.legalapp.AlarmType;
 import com.example.yuanyuanlai.legalapp.Base.BaseActivity;
-import com.example.yuanyuanlai.legalapp.Bean.AlarmSummaryInfo;
 import com.example.yuanyuanlai.legalapp.Internet.NetworkType;
 import com.example.yuanyuanlai.legalapp.R;
 import com.example.yuanyuanlai.legalapp.Utils.BlueToothUtil;
-import com.example.yuanyuanlai.legalapp.Utils.OkhttpUtil;
-
-import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.Response;
 
 public class MyActivity extends BaseActivity{
-    private TextView phoneNumber;
+    private TextView phoneNumber,watchName,userName,userID,deviceID;
     private BlueToothUtil blueToothUtil;
     private String number,name,watchId,userId,bluetoothcode;//身份证号,蓝牙配码
-    //获取个人信息标识位，当标识位到达5时才去setData显示数据
-    private int mtag = 0;
     private final String TAG="MyActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         SharedPreferences sharedPreferences=getSharedPreferences( "loginStatus", MODE_PRIVATE );
-        number=sharedPreferences.getString( "userPhoneNumber" ,"");
-        if (!TextUtils.isEmpty( number )){
-            mtag++;
-        }
-//        Log.d( TAG,"-----------"+number );
+        number=sharedPreferences.getString( "phone" ,"");
+        name=sharedPreferences.getString( "userName", "" );
+        userId=sharedPreferences.getString( "idCard", "" );
+        watchId=sharedPreferences.getString( "bluetoothId", "" );
+
         blueToothUtil = new BlueToothUtil();
-//        blueToothUtil.getWatchId();
+        blueToothUtil.getWatchId();
         blueToothUtil.setDeviceId( new BlueToothUtil.DeviceId( ) {
             @Override
             public void getDeviceId(String id) {
-                watchId = id;
-                mtag++;
-                if (mtag>=5) setUserData();
+                bluetoothcode = id;
+                setUserData();
             }
         } );
-
-        blueToothUtil.setHeartRate( new BlueToothUtil.HeartRate( ) {
-            @Override
-            public void getHeartRate(int heartrate) {
-                Log.d( TAG, ""+heartrate );
-            }
-        } );
-
 
     }
 
@@ -67,7 +47,11 @@ public class MyActivity extends BaseActivity{
     }
 
     private void setUserData(){
-        phoneNumber.setText( number );
+        phoneNumber.setText( "手机号:"+number );
+        watchName.setText( "设配号:"+watchId );
+        userName.setText( "姓名:"+name );
+        userID.setText( "身份证:"+userId );
+        deviceID.setText( "蓝牙配码:"+bluetoothcode );
     }
 
     @Override
@@ -78,6 +62,10 @@ public class MyActivity extends BaseActivity{
     @Override
     public void findViewById() {
         phoneNumber=findViewById( R.id.phoneNumber );
+        watchName=findViewById( R.id.watch_name );
+        userName=findViewById( R.id.name_textview );
+        userID=findViewById( R.id.userid );
+        deviceID=findViewById( R.id.device_id );
     }
 
     @Override

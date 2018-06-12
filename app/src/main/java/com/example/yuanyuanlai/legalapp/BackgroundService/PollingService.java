@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -74,19 +75,23 @@ public class PollingService extends IntentService implements NetStateChangeObser
         Date date = new Date(System.currentTimeMillis());
         timestamp=simpleDateFormat.format(date).toString();
         mflag++;
+        SharedPreferences sharedPreferences = getSharedPreferences("loginStatus", MODE_PRIVATE);
+        deviceId = sharedPreferences.getString( "deviceId", "" );
+
         getLocation();
         Log.d( TAG, timestamp );
         blueToothUtil = new BlueToothUtil();
-        blueToothUtil.getWatchId();
-        blueToothUtil.setDeviceId( new BlueToothUtil.DeviceId( ) {
-            @Override
-            public void getDeviceId(String id) {
-                deviceId=id;
-                mflag++;
-                Log.d( TAG, "deviceId：" +deviceId );
-                blueToothUtil.getSportDataCounts();
-            }
-        } );
+        blueToothUtil.getSportDataCounts();
+//        blueToothUtil.getWatchId();
+//        blueToothUtil.setDeviceId( new BlueToothUtil.DeviceId( ) {
+//            @Override
+//            public void getDeviceId(String id) {
+//                deviceId=id;
+//                mflag++;
+//                Log.d( TAG, "deviceId：" +deviceId );
+//                blueToothUtil.getSportDataCounts();
+//            }
+//        } );
         blueToothUtil.setHeartRate( new BlueToothUtil.HeartRate( ) {
             @Override
                 public void getHeartRate(int heartrate) {

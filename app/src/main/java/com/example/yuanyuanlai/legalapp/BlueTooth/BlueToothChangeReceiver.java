@@ -6,15 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
-
 import com.example.yuanyuanlai.legalapp.AlarmType;
 import com.example.yuanyuanlai.legalapp.Bean.AlarmSummaryInfo;
 import com.example.yuanyuanlai.legalapp.Utils.OkhttpUtil;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import okhttp3.Call;
 import okhttp3.Response;
 

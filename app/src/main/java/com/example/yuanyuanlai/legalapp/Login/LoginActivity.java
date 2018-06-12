@@ -18,9 +18,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import android.widget.Toast;
-
 import com.example.yuanyuanlai.legalapp.Activity.HomeActivity;
 import com.example.yuanyuanlai.legalapp.Base.BaseActivity;
 import com.example.yuanyuanlai.legalapp.Bean.LoginBean;
@@ -30,10 +28,8 @@ import com.example.yuanyuanlai.legalapp.R;
 import com.example.yuanyuanlai.legalapp.Utils.DialogUtil;
 import com.example.yuanyuanlai.legalapp.Utils.OkhttpUtil;
 import com.google.gson.Gson;
-
 import java.io.IOException;
 import java.util.List;
-
 import cn.jpush.android.api.JPushInterface;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -61,7 +57,6 @@ public class LoginActivity extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mloadingDialog = DialogUtil.showProgressDialog( LoginActivity.this,"登录中...",false );
-
         MayRequestLocation();
 
     }
@@ -138,7 +133,7 @@ public class LoginActivity extends BaseActivity{
             case R.id.loginButton:
                 Log.d(TAG, "点击了login按钮");
                 //登录
-                if (!verificationCodeEditText.getText().toString().isEmpty()&&!cookie.isEmpty()){
+                if (!verificationCodeEditText.getText().toString().isEmpty()&&!(cookie == null)){
                     loginTask = new LoginTask();
                     loginTask.execute();
                     mloadingDialog.show();
@@ -170,6 +165,7 @@ public class LoginActivity extends BaseActivity{
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
+
                     Headers headers = response.headers();
                     Log.d(TAG, "headers: "+headers.toString());
                     List<String> cookies = headers.values("Set-Cookie");
@@ -181,9 +177,16 @@ public class LoginActivity extends BaseActivity{
                         Log.d(TAG, "获取验证码成功");
                     }else {
                         Log.d(TAG, "获取验证码失败");
-                        mloadingDialog.dismiss();
-                        Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_SHORT).show();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mloadingDialog.dismiss();
+                                Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
                     }
+
                 }
             });
 
@@ -203,8 +206,14 @@ public class LoginActivity extends BaseActivity{
           OkhttpUtil.getInstance().login(phoneEditText.getText().toString(), Integer.parseInt(verificationCodeEditText.getText().toString()), cookie, new Callback() {
               @Override
               public void onFailure(Call call, IOException e) {
-                  mloadingDialog.dismiss();
-                  Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_SHORT).show();
+                  runOnUiThread(new Runnable() {
+                      @Override
+                      public void run() {
+                          mloadingDialog.dismiss();
+                          Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_SHORT).show();
+                      }
+                  });
+
                   Log.d(TAG, "登录失败");
               }
 
@@ -224,7 +233,14 @@ public class LoginActivity extends BaseActivity{
                       SharedPreferences sharedPreferences = getSharedPreferences("loginStatus", MODE_PRIVATE);
                       SharedPreferences.Editor editor = sharedPreferences.edit();
                       editor.putBoolean("isLogin", true);
-                      editor.putString( "userPhoneNumber",phoneEditText.getText().toString() );
+
+                      editor.putString("bluetoothId", loginBean.getObject().getBluetoothId());
+                      editor.putString("createTime", loginBean.getObject().getCreateTime());
+                      editor.putString("deviceId", loginBean.getObject().getDeviceId());
+                      editor.putString("idCard", loginBean.getObject().getIdCard());
+                      editor.putBoolean("faceCheck", loginBean.getObject().isFaceCheck());
+                      editor.putString("phone", loginBean.getObject().getPhone());
+                      editor.putString("userName", loginBean.getObject().getUserName());
                       editor.apply();
 
                       //登录成功
@@ -234,11 +250,23 @@ public class LoginActivity extends BaseActivity{
                       Log.d(TAG, "登录成功");
                   }else if (loginBean.getStatus().getCode() == 0){
                       Log.d(TAG, loginBean.getStatus().getMessage());
-                      mloadingDialog.dismiss();
-                      Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_SHORT).show();
+                      runOnUiThread(new Runnable() {
+                          @Override
+                          public void run() {
+                              mloadingDialog.dismiss();
+                              Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_SHORT).show();
+                          }
+                      });
+
                   }else {
-                      mloadingDialog.dismiss();
-                      Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_SHORT).show();
+                      runOnUiThread(new Runnable() {
+                          @Override
+                          public void run() {
+                              mloadingDialog.dismiss();
+                              Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_SHORT).show();
+                          }
+                      });
+
                       Log.d(TAG, "登录失败");
                   }
               }

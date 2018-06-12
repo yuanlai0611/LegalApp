@@ -17,6 +17,7 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.Callback;
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
+import okhttp3.FormBody;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
@@ -68,11 +69,13 @@ public class OkhttpUtil {
     }
 
     public void getVerificationCode(String phoneNumber, Callback callback){
+
         Request request = new Request.Builder()
                 .url("http://47.94.100.108:8080/iot_server/user/sms/"+phoneNumber)
                 .get()
                 .build();
         mOkhttpClient.newCall(request).enqueue(callback);
+
     }
 
     public void sendWatchSummary(WatchSummaryInfo watchSummaryInfo,Callback callback){
@@ -96,11 +99,8 @@ public class OkhttpUtil {
     }
 
     public void login(String phone, int verificationCode, String cookie, Callback callback){
-        PhoneVerification a = new PhoneVerification( phone,verificationCode );
 
-//        JsonObject jsonObject = new JsonObject();
-//        jsonObject.addProperty("phone",phone);
-//        jsonObject.addProperty("verificationCode",verificationCode);
+        PhoneVerification a = new PhoneVerification( phone,verificationCode );
         String json =new Gson().toJson( a );
         Log.d(TAG, json);
         RequestBody requestBody = RequestBody.create(JSON, json);
@@ -114,6 +114,7 @@ public class OkhttpUtil {
         mOkhttpClient
                 .newCall(request)
                 .enqueue(callback);
+
     }
 
     public void uploadFile(String phone, File file, Callback callback){
@@ -130,6 +131,16 @@ public class OkhttpUtil {
 
         mOkhttpClient.newBuilder().readTimeout(30000, TimeUnit.MILLISECONDS)
                 .build().newCall(request).enqueue(callback);
+
+    }
+
+    public void getNotification(String phone, String start, String end, Callback callback){
+
+        Request request = new Request.Builder()
+                .url("http://47.94.100.108:8080/iot_server/push/date/" + phone + "/" + start + "/" +end)
+                .get()
+                .build();
+        mOkhttpClient.newCall(request).enqueue(callback);
 
 
     }
