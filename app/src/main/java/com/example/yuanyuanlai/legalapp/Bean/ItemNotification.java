@@ -13,6 +13,7 @@ public class ItemNotification extends DataSupport {
 
     public static final int SHOW_MESSAGES = 2;
 
+
     public String getContent() {
         return content;
     }
@@ -35,6 +36,12 @@ public class ItemNotification extends DataSupport {
 
     public void setTitle(String mTitle) {
         title = mTitle;
+    }
+
+    public ItemNotification(String mContent, String mCreateTime, int mViewType) {
+        content = mContent;
+        createTime = mCreateTime;
+        viewType = mViewType;
     }
 
     private String content;

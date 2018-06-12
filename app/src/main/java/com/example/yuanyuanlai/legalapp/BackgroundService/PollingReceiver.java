@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.example.yuanyuanlai.legalapp.Utils.PollingUtils;
+import com.example.yuanyuanlai.legalapp.utils.PollingUtils;
 
 public class PollingReceiver extends BroadcastReceiver {
 
@@ -15,7 +15,7 @@ public class PollingReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         Log.d(TAG, "调用了onReceive");
-        PollingUtils.startExactAgain(context, 60, PollingReceiver.class, PollingUtils.ACTION);
+        PollingUtils.startExactAgain(context, 10, PollingReceiver.class, PollingUtils.ACTION);
         Intent i = PollingService.newIntent(context);
         context.startService(i);
 

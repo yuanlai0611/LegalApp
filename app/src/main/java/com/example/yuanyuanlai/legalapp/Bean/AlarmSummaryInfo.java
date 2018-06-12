@@ -4,17 +4,25 @@ import java.util.Date;
 
 public class AlarmSummaryInfo {
 
-    private Integer typeId;
+    private int typeId;
     private String deviceId;
     private String longitude; // 经度
     private String latitude;  // 纬度
-    private Date timestamp;
+    private String timestamp;
 
-    public Integer getTypeId() {
+    public AlarmSummaryInfo(int typeId, String deviceId, String longitude, String latitude, String timestamp) {
+        this.typeId = typeId;
+        this.deviceId = deviceId;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.timestamp = timestamp;
+    }
+
+    public int getTypeId() {
         return typeId;
     }
 
-    public void setTypeId(Integer typeId) {
+    public void setTypeId(int typeId) {
         this.typeId = typeId;
     }
 
@@ -42,11 +50,11 @@ public class AlarmSummaryInfo {
         this.latitude = latitude;
     }
 
-    public Date getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 }

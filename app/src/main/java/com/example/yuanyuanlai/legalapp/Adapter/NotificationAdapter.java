@@ -65,16 +65,13 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof NotificationViewHolder){
 
+        if (holder instanceof NotificationViewHolder){
             NotificationViewHolder notificationViewHolder = (NotificationViewHolder)holder;
             notificationViewHolder.detailMessageTextView.setText(notificationBeanList.get(position).getContent());
-
         }else {
-
             DateViewHolder dateViewHolder = (DateViewHolder)holder;
             dateViewHolder.dateTextView.setText(notificationBeanList.get(position).getCreateTime());
-
         }
     }
 

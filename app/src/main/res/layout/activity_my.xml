@@ -53,7 +53,19 @@
 
             </LinearLayout>
 
+            <Button
+                android:id="@+id/openheartrate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="打开心率开关"/>
+            <Button
+                android:id="@+id/getheartretedate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="获取心率数据"/>
+
             <TextView
+                android:id="@+id/phoneNumber"
                 android:textSize="@dimen/myTextSize"
                 android:gravity="center_vertical"
                 android:layout_marginStart="@dimen/myTextMarginLeft"
@@ -83,7 +95,7 @@
                 android:layout_marginStart="@dimen/myTextMarginLeft"
                 android:text="@string/myId"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/myTextHeight" />
+                android:layout_height="42dp" />
 
             <TextView
                 android:textSize="@dimen/myTextSize"
@@ -103,6 +115,6 @@
         android:layout_alignParentBottom="true"
         android:src="@drawable/my_top_background"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/myTopBackground" />
+        android:layout_height="50dp" />
 
 </RelativeLayout>

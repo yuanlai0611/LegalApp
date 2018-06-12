@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -22,9 +23,12 @@ import com.example.yuanyuanlai.legalapp.Bean.NotificationArrayBean;
 import com.example.yuanyuanlai.legalapp.Bean.NotificationBean;
 import com.example.yuanyuanlai.legalapp.Internet.NetworkType;
 import com.example.yuanyuanlai.legalapp.R;
+import com.example.yuanyuanlai.legalapp.Utils.DialogUtil;
 import com.example.yuanyuanlai.legalapp.Utils.OkhttpUtil;
 import com.google.gson.Gson;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -47,18 +51,23 @@ public class NotificationActivity extends BaseActivity implements View.OnClickLi
     private NotificationAdapter notificationAdapter;
     private List<ItemNotification> notificationList = new ArrayList<>();
     private GetNotification getNotification;
+    private AlertDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences sharedPreferences = getSharedPreferences("loginStatus", MODE_PRIVATE);
         phone = sharedPreferences.getString("phone", "");
-        start = sharedPreferences.getString("createTime", "");
-        start = parseDate( start);
+        start = getCurrentDate();
         end = getNextDate();
+        Log.d(TAG, "END-->"+end);
         super.onCreate(savedInstanceState);
+        loadingDialog = DialogUtil.showProgressDialog(this, "加载通知", false);
+        initRecyclerView();
+        loadingDialog.show();
         getNotification = new GetNotification();
         getNotification.execute();
-        initRecyclerView();
+        dateTextView.setText("今天");
+
     }
 
     public static Intent newIntent(Context context){
@@ -94,11 +103,15 @@ public class NotificationActivity extends BaseActivity implements View.OnClickLi
             fromMonth = month+1;
             fromDay = dayOfMonth;
             start = getYYYYMMDD(fromYear, fromMonth, fromDay);
+            end = getNextDate(start);
             Log.d(TAG, "fromYear："+fromYear+" fromMonth："+fromMonth+" fromDay："+fromDay);
             if (Integer.parseInt(start) > Integer.parseInt(end)){
                 Toast.makeText(NotificationActivity.this, "日期选择错误", Toast.LENGTH_SHORT).show();
             }{
                 dateTextView.setText(fromYear + "-" + fromMonth + "-" + fromDay);
+                loadingDialog.show();
+                getNotification = new GetNotification();
+                getNotification.execute();
             }
         }
     };
@@ -112,7 +125,6 @@ public class NotificationActivity extends BaseActivity implements View.OnClickLi
                 int year = calendar.get(Calendar.YEAR);
                 int month = calendar.get(Calendar.MONTH);
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
-                end = getCurrentDate();
                 DatePickerDialog dialog = new DatePickerDialog(this, DatePickerDialog.THEME_HOLO_LIGHT, dateSetListener, year, month, day);
                 dialog.show();
                 break;
@@ -152,31 +164,45 @@ public class NotificationActivity extends BaseActivity implements View.OnClickLi
                 @Override
                 public void onFailure(Call call, IOException e) {
                         Log.d(TAG, "请求失败");
+                        loadingDialog.dismiss();
                 }
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
 
                     Gson gson = new Gson();
-                    NotificationArrayBean notificationArrayBean = gson.fromJson(response.body().string(), NotificationArrayBean.class);
-                    if (notificationArrayBean.getStatus().getCode() == 1){
+                    NotificationArrayBean notificationArrayBean = gson
+                            .fromJson(response.body().string(), NotificationArrayBean.class);
+                   if (notificationArrayBean.getStatus().getCode() == 1){
 
-                        NotificationBean []notificationBeans = notificationArrayBean.getObject();
-                        for (int i=0 ; i<notificationBeans.length ; i++){
-                            ItemNotification itemNotification = new ItemNotification();
-                            itemNotification.setContent(notificationBeans[i].getContent());
-                            itemNotification.setCreateTime(notificationBeans[i].getCreateTime());
-                            itemNotification.setViewType(ItemNotification.SHOW_MESSAGES);
-                            notificationList.add(itemNotification);
+                       notificationList.clear();
+                       Log.d(TAG, "获取数据成功");
+                       List<NotificationBean> notificationBeanList = notificationArrayBean.getObject();
 
-                            Log.d(TAG, notificationBeans[i].getContent());
-                            Log.d(TAG, notificationBeans[i].getCreateTime());
-                            Log.d(TAG, parseDate(notificationBeans[i].getCreateTime()));
-                        }
+                       if (notificationBeanList == null){
 
-                    }else{
-                        Log.d(TAG, "请求成功，获取通知失败");
-                    }
+
+                       }else {
+                           for (NotificationBean notificationBean : notificationBeanList){
+                               ItemNotification itemNotification = new ItemNotification(notificationBean.getContent(), notificationBean.getCreateTime(), ItemNotification.SHOW_MESSAGES);
+                               notificationList.add(itemNotification);
+                           }
+                           runOnUiThread(new Runnable() {
+                               @Override
+                               public void run() {
+                                   notificationAdapter.notifyDataSetChanged();
+                               }
+                           });
+                       }
+
+
+
+                   }else {
+                        Log.d(TAG, "获取数据失败");
+                   }
+
+
+                    loadingDialog.dismiss();
 
                 }
             });
@@ -192,21 +218,19 @@ public class NotificationActivity extends BaseActivity implements View.OnClickLi
 
     private String getYYYYMMDD(int year, int month, int day){
 
-        String result = null;
-        result = result + String.valueOf(year);
+        StringBuilder result = new StringBuilder();
+        result.append(String.valueOf(year));
         if (month >= 10){
-            result = result + String.valueOf(month);
+            result.append(String.valueOf(month));
         }else {
-            result = result + "0";
-            result = result + String.valueOf(month);
+            result.append("0").append(String.valueOf(month));
         }
         if (day >= 10){
-            result = result + String.valueOf(day);
+            result.append(String.valueOf(day));
         }else {
-            result = result + "0";
-            result = result + String.valueOf(day);
+            result.append("0").append(String.valueOf(day));
         }
-        return result;
+        return result.toString();
 
     }
 
@@ -230,10 +254,30 @@ public class NotificationActivity extends BaseActivity implements View.OnClickLi
 
     }
 
+
+
     private String getNextDate(){
 
         //获取明天的时间
         Date date = new Date();
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        calendar.add(calendar.DATE, 1);
+        date = calendar.getTime();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        return simpleDateFormat.format(date);
+
+    }
+
+    private String getNextDate(String dateString) {
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+        Date date = null;
+        try {
+            date = dateFormat.parse(dateString);
+        } catch (ParseException mE) {
+            mE.printStackTrace();
+        }
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(date);
         calendar.add(calendar.DATE, 1);
