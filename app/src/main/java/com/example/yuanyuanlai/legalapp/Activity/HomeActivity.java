@@ -16,19 +16,20 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
 import com.example.yuanyuanlai.legalapp.Application.GlobalApp;
 import com.example.yuanyuanlai.legalapp.BackgroundService.PollingReceiver;
 import com.example.yuanyuanlai.legalapp.Base.BaseActivity;
 import com.example.yuanyuanlai.legalapp.Internet.NetworkType;
 import com.example.yuanyuanlai.legalapp.R;
 import com.example.yuanyuanlai.legalapp.Utils.DialogUtil;
-import com.example.yuanyuanlai.legalapp.utils.PollingUtils;
+import com.example.yuanyuanlai.legalapp.Utils.PollingUtils;
+
 import com.sdk.bluetooth.bean.BluetoothScanDevice;
 import com.sdk.bluetooth.config.BluetoothConfig;
 import com.sdk.bluetooth.interfaces.BluetoothManagerDeviceConnectListener;
 import com.sdk.bluetooth.interfaces.BluetoothManagerScanListener;
 import com.sdk.bluetooth.manage.AppsBluetoothManager;
-
 
 public class HomeActivity extends BaseActivity implements BaseActivity.GetLocation{
 
@@ -154,7 +155,7 @@ public class HomeActivity extends BaseActivity implements BaseActivity.GetLocati
         Log.i("DeviceName", mDeviceName);
 
         BluetoothConfig.setDefaultMac(GlobalApp.getAppContext(), mAddress);
-//        startActivity( HomeActivity.newIntent( this ));//此处超过4行就不能扫描，未知的bug
+//        startActivity( MyActivity.newIntent( this ));//此处超过4行就不能扫描，未知的bug
 //        finish();
     }
 
@@ -203,38 +204,38 @@ public class HomeActivity extends BaseActivity implements BaseActivity.GetLocati
         }
     };
 
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        AppsBluetoothManager.getInstance(GlobalApp.getAppContext()).removeBluetoothManagerScanListeners(scanListener);
-//        AppsBluetoothManager.getInstance(GlobalApp.getAppContext()).removeBluetoothManagerDeviceConnectListeners(connectListener);
-//    }
-//
-//    @Override
-//    protected void onStart() {
-//        super.onStart( );
-//        //获取蓝牙的系统服务
-//        BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
-//        mBluetoothAdapter = bluetoothManager.getAdapter();
-//    }
-//
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        AppsBluetoothManager.getInstance(GlobalApp.getAppContext()).addBluetoothManagerScanListeners(scanListener);
-//        AppsBluetoothManager.getInstance(GlobalApp.getAppContext()).addBluetoothManagerDeviceConnectListener(connectListener);
-//
-//        if (mBluetoothAdapter==null){
-//            //手机不支持蓝牙模块
-//        }else {
-//            if (mBluetoothAdapter.isEnabled()){
-//                //蓝牙开启了
-//                scanDevice();
-//            }else {
-//                alertDialog.show();
-//            }
-//        }
-//    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        AppsBluetoothManager.getInstance(GlobalApp.getAppContext()).removeBluetoothManagerScanListeners(scanListener);
+        AppsBluetoothManager.getInstance(GlobalApp.getAppContext()).removeBluetoothManagerDeviceConnectListeners(connectListener);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart( );
+        //获取蓝牙的系统服务
+        BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+        mBluetoothAdapter = bluetoothManager.getAdapter();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AppsBluetoothManager.getInstance(GlobalApp.getAppContext()).addBluetoothManagerScanListeners(scanListener);
+        AppsBluetoothManager.getInstance(GlobalApp.getAppContext()).addBluetoothManagerDeviceConnectListener(connectListener);
+
+        if (mBluetoothAdapter==null){
+            //手机不支持蓝牙模块
+        }else {
+            if (mBluetoothAdapter.isEnabled()){
+                //蓝牙开启了
+                scanDevice();
+            }else {
+                alertDialog.show();
+            }
+        }
+    }
 
     @SuppressLint("MissingPermission")
     @Override
