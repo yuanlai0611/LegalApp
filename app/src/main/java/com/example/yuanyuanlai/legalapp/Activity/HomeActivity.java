@@ -45,13 +45,17 @@ public class HomeActivity extends BaseActivity implements BaseActivity.GetLocati
     private AlertDialog mloadingDialog;
     private AlertDialog alertDialog;
     private BluetoothAdapter mBluetoothAdapter;
+    private String deviceId;
     private static final String TAG = "HomeActivity";
     private static final int REQUEST_FINE_LOCATION = 1010;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setGetLocation(this);
+        sharedPreferences=getSharedPreferences( "loginStatus", MODE_PRIVATE );
+        deviceId=sharedPreferences.getString( "bluetoothId" ,"");
         PollingUtils.startPollingService( this, 10, PollingReceiver.class, PollingUtils.ACTION );
 
         alertDialog=new AlertDialog.Builder( HomeActivity.this )
@@ -170,22 +174,24 @@ public class HomeActivity extends BaseActivity implements BaseActivity.GetLocati
                 final BluetoothDevice bluetoothDevice = scanDevice.getBluetoothDevice();
                 if (null != bluetoothDevice.getName()) {
                     //判断是否是账号对应的设备名称
-                    AppsBluetoothManager.getInstance(GlobalApp.getAppContext()).cancelDiscovery();
-                    AlertDialog mdialog=new AlertDialog.Builder( HomeActivity.this )
-                            .setTitle( "提示：" )
-                            .setMessage( "扫描到设备："+bluetoothDevice.getName() )
-                            .setCancelable( false )
-                            .setPositiveButton( "连接", new DialogInterface.OnClickListener( ) {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    //                                    AppsBluetoothManager.getInstance(GlobalApp.getAppContext()).cancelDiscovery();
-                                    AppsBluetoothManager.getInstance(GlobalApp.getAppContext()).connectDevice(bluetoothDevice.getAddress());
+                    if (deviceId.equals( bluetoothDevice.getName() )){
+                        AppsBluetoothManager.getInstance(GlobalApp.getAppContext()).cancelDiscovery();
+                        AlertDialog mdialog=new AlertDialog.Builder( HomeActivity.this )
+                                .setTitle( "提示：" )
+                                .setMessage( "扫描到设备："+bluetoothDevice.getName() )
+                                .setCancelable( false )
+                                .setPositiveButton( "连接", new DialogInterface.OnClickListener( ) {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        //                                    AppsBluetoothManager.getInstance(GlobalApp.getAppContext()).cancelDiscovery();
+                                        AppsBluetoothManager.getInstance(GlobalApp.getAppContext()).connectDevice(bluetoothDevice.getAddress());
 
-                                }
-                            } )
-                            .create();
-                    mdialog.show();
-                    Log.d( TAG,bluetoothDevice.getName()+scanDevice.getRssi() );
+                                    }
+                                } )
+                                .create();
+                        mdialog.show();
+                    }
+//                    Log.d( TAG,bluetoothDevice.getName()+scanDevice.getRssi() );
                     //此处获得扫描i到的蓝牙设备
                     //                    devAdapter.addDevice(devAdapter.new DevData(bluetoothDevice, scanDevice.getRssi()));
                 }
