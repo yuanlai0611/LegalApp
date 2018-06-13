@@ -4,30 +4,31 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
-
 import com.example.yuanyuanlai.legalapp.Base.BaseActivity;
 import com.example.yuanyuanlai.legalapp.Internet.NetworkType;
 import com.example.yuanyuanlai.legalapp.R;
 import com.example.yuanyuanlai.legalapp.Utils.BlueToothUtil;
 
 public class MyActivity extends BaseActivity{
+
     private TextView phoneNumber,watchName,userName,userID,deviceID;
     private BlueToothUtil blueToothUtil;
     private String number,name,watchId,userId,bluetoothcode;//身份证号,蓝牙配码
     private final String TAG="MyActivity";
+    private Button backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate( savedInstanceState );
-        SharedPreferences sharedPreferences=getSharedPreferences( "loginStatus", MODE_PRIVATE );
-        number=sharedPreferences.getString( "phone" ,"");
-        name=sharedPreferences.getString( "userName", "" );
-        userId=sharedPreferences.getString( "idCard", "" );
-        watchId=sharedPreferences.getString( "bluetoothId", "" );
+        
+        super.onCreate(savedInstanceState);
+        SharedPreferences sharedPreferences=getSharedPreferences("loginStatus", MODE_PRIVATE );
+        number = sharedPreferences.getString("phone" ,"");
+        name = sharedPreferences.getString("userName", "" );
+        userId = sharedPreferences.getString("idCard", "");
+        watchId = sharedPreferences.getString("bluetoothId", "");
 
         blueToothUtil = new BlueToothUtil();
         blueToothUtil.getWatchId();
@@ -42,35 +43,45 @@ public class MyActivity extends BaseActivity{
     }
 
     public static Intent newIntent(Context context){
+
         Intent intent = new Intent(context,MyActivity.class);
         return intent;
+
     }
 
     private void setUserData(){
+
         phoneNumber.setText( "手机号:"+number );
         watchName.setText( "设配号:"+watchId );
         userName.setText( "姓名:"+name );
         userID.setText( "身份证:"+userId );
         deviceID.setText( "蓝牙配码:"+bluetoothcode );
+
     }
 
     @Override
     public void setContentView() {
+
         setContentView(R.layout.activity_my);
+
     }
 
     @Override
     public void findViewById() {
-        phoneNumber=findViewById( R.id.phoneNumber );
-        watchName=findViewById( R.id.watch_name );
-        userName=findViewById( R.id.name_textview );
-        userID=findViewById( R.id.userid );
-        deviceID=findViewById( R.id.device_id );
+
+        phoneNumber = findViewById(R.id.phoneNumber);
+        watchName = findViewById(R.id.watch_name);
+        userName = findViewById(R.id.name_textview);
+        userID = findViewById(R.id.userid);
+        deviceID = findViewById(R.id.device_id);
+        backButton = findViewById(R.id.back_button);
+
     }
 
     @Override
     public void initListener() {
-        phoneNumber.setOnClickListener( this );
+        phoneNumber.setOnClickListener(this);
+        backButton.setOnClickListener(this);
     }
 
     @Override
@@ -90,6 +101,11 @@ public class MyActivity extends BaseActivity{
 //                        Log.d( TAG,result );
 //                    }
 //                } );
+                break;
+            case R.id.back_button:
+                finish();
+                break;
+            default:
                 break;
         }
     }

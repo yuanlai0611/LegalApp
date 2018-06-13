@@ -42,11 +42,14 @@ public class FacialRecognitionActivity extends BaseActivity implements BaseActiv
             .getAbsolutePath()+"/test/"+System.currentTimeMillis()+".jpg";
     private static final String TAG = "FacialActivity";
     private UploadFile uploadFile;
+    private String phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setOpenCamera(this);
         askForCamera();
+        SharedPreferences sharedPreferences = getSharedPreferences("loginStatus", MODE_PRIVATE);
+        phone = sharedPreferences.getString("phone", "");
         super.onCreate(savedInstanceState);
 
     }
@@ -150,7 +153,7 @@ public class FacialRecognitionActivity extends BaseActivity implements BaseActiv
 
         @Override
         protected Void doInBackground(Void... mVoids) {
-            OkhttpUtil.getInstance().uploadFile("17607110024", file, new Callback() {
+            OkhttpUtil.getInstance().uploadFile(phone, file, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
 

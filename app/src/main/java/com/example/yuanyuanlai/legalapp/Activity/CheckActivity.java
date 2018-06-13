@@ -2,6 +2,7 @@ package com.example.yuanyuanlai.legalapp.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -38,11 +39,14 @@ public class CheckActivity extends BaseActivity implements BaseActivity.OpenCame
             .getAbsolutePath()+"/test/"+System.currentTimeMillis()+".jpg";
     private static final String TAG = "CheckActivity";
     private UploadFile uploadFile;
+    private String phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setOpenCamera(this);
         askForCamera();
+        SharedPreferences sharedPreferences = getSharedPreferences("loginStatus", MODE_PRIVATE);
+        phone = sharedPreferences.getString("phone", "");
         super.onCreate(savedInstanceState);
 
     }
@@ -147,7 +151,7 @@ public class CheckActivity extends BaseActivity implements BaseActivity.OpenCame
         @Override
         protected Void doInBackground(Void... mVoids) {
 
-            OkhttpUtil.getInstance().uploadFile("17607110024", file, new Callback() {
+            OkhttpUtil.getInstance().uploadFile(phone, file, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
 
